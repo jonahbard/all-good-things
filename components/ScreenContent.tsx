@@ -1,23 +1,29 @@
-import { Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, Text } from 'react-native';
 
-import { EditScreenInfo } from './EditScreenInfo';
+import ArticlePreview from './ArticlePreview';
 
-type ScreenContentProps = {
+type Article = {
   title: string;
-  path: string;
-  children?: React.ReactNode;
+  description: string;
 };
 
-export const ScreenContent = ({ title, path, children }: ScreenContentProps) => {
+export default function ScreenContent() {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    fetch('https://project-api-all-good-things.onrender.com/api/articles')
+      .then((response) => response.json())
+      .then((data) => setArticles(data));
+  }, []);
   return (
-    <View className={styles.container}>
-      <EditScreenInfo path={path} />
-      {children}
-    </View>
+    <SafeAreaView>
+      <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">Articles</Text>
+      <ScrollView>
+        {articles.map((article, index) => (
+          <ArticlePreview key={index} title={article.title} description={article.description} />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
-};
-const styles = {
-  container: `items-center flex-1 justify-center`,
-  separator: `h-[1px] my-7 w-4/5 bg-gray-200`,
-  title: `text-xl font-bold`,
-};
+}
