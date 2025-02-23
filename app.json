@@ -1,32 +1,27 @@
 {
   "expo": {
     "newArchEnabled": true,
-
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "all-good-thing",
+    "slug": "all-good-things",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
     "plugins": [],
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -35,6 +30,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b7fc238b-8575-4ae1-ab94-64cd7e985939"
+      }
+    },
+    "owner": "jonahbard"
   }
 }
