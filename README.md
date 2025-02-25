@@ -1,4 +1,3 @@
-
 # All Good Things
 
 ![Team Photo](src/content/group-selfie.jpg)
@@ -58,7 +57,7 @@ Join our community of developers creating universal apps.
 
 ## Deployment
 
-
+Potentially test flight
 
 ## Authors
 
