@@ -1,16 +1,12 @@
 import { Text, View } from 'react-native';
 
-export default function ArticlePreview({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
+import { Article } from '../src/types';
+
+export default function ArticlePreview({ article }: { article: Article }) {
   return (
-    <View className="m-2 flex flex-col rounded-sm bg-gray-100 p-2">
-      <Text className="font-bold">{title}</Text>
-      <Text>{description}</Text>
+    <View className="mx-2 my-1 flex flex-col rounded-md bg-gray-100 p-3">
+      <Text className="font-bold">{article.title}</Text>
+      <Text>{article.description}</Text>
     </View>
   );
 }
