@@ -1,8 +1,9 @@
-import ScreenContent from 'components/ScreenContent';
 import React from 'react';
+
+import Navigator from './Navigator';
 
 import '../global.css';
 
 export default function App() {
-  return <ScreenContent />;
+  return <Navigator />;
 }

@@ -1,8 +1,14 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, Text } from 'react-native';
 
+import ArticleDetail from './ArticleDetail';
 import ArticlePreview from './ArticlePreview';
+import HomeFeed from './HomeFeed';
 import { Article } from '../src/types';
+
+const Stack = createNativeStackNavigator();
 
 export default function ScreenContent() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -11,15 +17,19 @@ export default function ScreenContent() {
     fetch('https://project-api-all-good-things.onrender.com/api/articles')
       .then((response) => response.json())
       .then((data) => setArticles(data));
+    console.log('articles:', articles);
   }, []);
+
   return (
-    <SafeAreaView>
-      <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">Articles</Text>
-      <ScrollView>
-        {articles.map((article, index) => (
-          <ArticlePreview key={index} article={article} />
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" options={{ title: 'Articles', headerShown: false }}>
+        {(props) => <HomeFeed {...props} articles={articles} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }

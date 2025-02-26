@@ -1,8 +1,9 @@
 export type Article = {
-  title: 'string';
-  description: 'string';
-  image: 'string';
-  tags: ['string'];
-  url: 'string';
+  title: string;
+  description: string;
+  img: string;
+  tags: string[];
+  link: string;
+  source: string;
   publishedDate: Date;
 };
