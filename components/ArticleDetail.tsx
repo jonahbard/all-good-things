@@ -4,7 +4,7 @@ import React from 'react';
 import { Text, View, Image, SafeAreaView, Linking, Button } from 'react-native';
 import { titleCase } from 'title-case';
 
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 export default function ArticleDetail() {
   const route = useRoute();

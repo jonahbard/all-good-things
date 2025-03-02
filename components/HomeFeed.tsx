@@ -3,7 +3,7 @@ import React from 'react';
 import { ScrollView, Text, SafeAreaView } from 'react-native';
 
 import ArticlePreview from './ArticlePreview';
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 // Define the type for the navigation prop
 type HomeFeedNavigationProp = NativeStackNavigationProp<

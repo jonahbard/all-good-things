@@ -1,7 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, View, TouchableOpacity } from 'react-native';
 
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 // Define the type for the navigation prop
 type ArticlePreviewNavigationProp = NativeStackNavigationProp<
