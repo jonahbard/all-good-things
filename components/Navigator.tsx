@@ -25,7 +25,13 @@ function HomeStack() {
       <Stack.Screen
         name="ArticleDetail"
         component={ArticleDetail}
-        options={{ title: 'Article Detail', headerShown: false }}
+        options={{
+          title: 'Article Detail',
+          // headerShown: false,
+          headerStyle: {
+            backgroundColor: '#6C8D9F', // Set the same color as your header
+          },
+        }}
       />
     </Stack.Navigator>
   );

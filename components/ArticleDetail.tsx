@@ -1,6 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Button, SafeAreaView, Text } from 'react-native';
+import { View, Button, SafeAreaView, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { titleCase } from 'title-case';
 
@@ -67,10 +68,28 @@ export default function ArticleDetail() {
   `;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-        <Button title="⏴ Back" onPress={() => navigation.goBack()} />
-        <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{titleCase(article.source)}</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#66858A' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: 10,
+          backgroundColor: '#66858A',
+        }}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={{ backgroundColor: '#C1E1E0', padding: 2, borderRadius: 20 }}>
+            <Ionicons name="chevron-back" color="#000000" size={24} />,
+          </View>
+        </TouchableOpacity>
+        <Text style={{ marginLeft: 10, fontWeight: 'bold', color: '#FFFFFF' }}>
+          {titleCase(article.source)}
+        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={{ backgroundColor: '#C1E1E0', padding: 2, borderRadius: 20 }}>
+            <Ionicons name="ellipsis-horizontal" color="#000000" size={24} />,
+          </View>
+        </TouchableOpacity>
       </View>
       <WebView
         source={{ uri: article.link }}
