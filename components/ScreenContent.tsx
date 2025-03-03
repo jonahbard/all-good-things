@@ -6,7 +6,7 @@ import { SafeAreaView, ScrollView, Text } from 'react-native';
 import ArticleDetail from './ArticleDetail';
 import ArticlePreview from './ArticlePreview';
 import HomeFeed from './HomeFeed';
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 const Stack = createNativeStackNavigator();
 

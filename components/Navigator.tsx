@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -70,10 +71,45 @@ export default function NavBar() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Bookmark" component={BookmarkStack} />
-        <Tab.Screen name="Customize" component={CustomizeStack} />
+        <Tab.Screen
+          name="Home"
+          component={HomeStack}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
+            tabBarActiveTintColor: '#E5A07D',
+          }}
+        />
+        <Tab.Screen
+          name="Explore"
+          component={ExploreStack}
+          options={{
+            tabBarLabel: 'Explore',
+            tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
+            tabBarActiveTintColor: '#E5A07D',
+          }}
+        />
+        <Tab.Screen
+          name="Bookmark"
+          component={BookmarkStack}
+          options={{
+            tabBarLabel: 'Bookmark',
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+              <Ionicons name="bookmark" color={color} size={size} />
+            ),
+            tabBarActiveTintColor: '#E5A07D',
+          }}
+        />
+        <Tab.Screen
+          name="Customize"
+          component={CustomizeStack}
+          options={{
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+              <Ionicons name="options" size={size} color={color} />
+            ),
+            tabBarActiveTintColor: '#E5A07D',
+          }}
+        />
         {/* <Tab.Screen
           name="Onboarding"
           component={Onboarding}

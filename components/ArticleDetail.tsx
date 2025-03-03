@@ -1,9 +1,10 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Button, SafeAreaView, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { titleCase } from 'title-case';
 
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 // Webview
 export default function ArticleDetail() {
@@ -69,7 +70,7 @@ export default function ArticleDetail() {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
         <Button title="⏴ Back" onPress={() => navigation.goBack()} />
-        <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{article.source}</Text>
+        <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{titleCase(article.source)}</Text>
       </View>
       <WebView
         source={{ uri: article.link }}
