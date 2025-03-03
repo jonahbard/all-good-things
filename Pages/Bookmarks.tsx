@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Bookmark = () => {
+const Bookmarks= () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Bookmark Page</Text>
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Bookmark;
+export default Bookmarks;
