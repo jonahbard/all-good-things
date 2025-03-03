@@ -2,8 +2,9 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Button, SafeAreaView, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { titleCase } from 'title-case';
 
-import { Article } from '../src/types';
+import { Article } from '../types';
 
 // Webview
 export default function ArticleDetail() {
