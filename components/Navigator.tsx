@@ -51,6 +51,11 @@ function BookmarkStack() {
         headerShown: false,
       }}>
       <Stack.Screen name="Bookmarks" component={Bookmarks} />
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ title: 'Article Detail', headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -73,7 +78,7 @@ export default function NavBar() {
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Bookmark" component={BookmarkStack} />
+        <Tab.Screen name="Bookmarks" component={BookmarkStack} />
         <Tab.Screen name="Customize" component={CustomizeStack} />
         {/* <Tab.Screen
           name="Onboarding"

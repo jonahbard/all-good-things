@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView, Text, SafeAreaView } from 'react-native';
+import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
 import ArticlePreview from './ArticlePreview';
 import { Article } from '../types';
@@ -29,6 +29,7 @@ export default function HomeFeed({
         ) : (
           <Text>Loading...</Text>
         )}
+        <View style={{ height: 160 }} />
       </ScrollView>
     </SafeAreaView>
   );
