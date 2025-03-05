@@ -3,7 +3,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
-
 import { RootStackParamList } from '../types';
 
 type OnboardingNavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding1'>;
@@ -12,9 +11,9 @@ const Onboarding1: React.FC = () => {
   const navigation = useNavigation<OnboardingNavigationProp>();
   const barWidth = 300;
   const barHeight = 23;
-  const categories = [{ Art: 'src' }];
 
-  
+
+  // should only render once
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
