@@ -15,6 +15,9 @@ export const getBookmarks = async () => {
 };
 
 export const addBookmark = async (article: Article) => {
+  if (await isBookmarked(article)) {
+    return;
+  }
   try {
     const bookmarks = await getBookmarks();
     bookmarks.push(article);

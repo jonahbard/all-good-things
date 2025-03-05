@@ -40,11 +40,11 @@ export default function Bookmarks({ navigation }: { navigation: BookmarksNavigat
               onRemove={fetchBookmarks}
             />
           ))}
+          <View style={{ height: 80 }} />
         </ScrollView>
       ) : (
         <Text style={{ margin: 12, width: '100%' }}>No bookmarks yet!</Text>
       )}
-      <View style={{ height: 100 }} />
     </SafeAreaView>
   );
 }
