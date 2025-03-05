@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-
+import { userStore } from 'store/userStore';
 import { RootStackParamList } from '../types'; // Adjust the import path as necessary
 
 type Onboarding2NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
@@ -16,7 +16,10 @@ interface Category {
 
 const Onboarding2: React.FC = () => {
   const navigation = useNavigation<Onboarding2NavigationProp>();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const selectedCategories = userStore((state)=> state.userSlice.categories);
+  const setSelectedCategories = userStore((state)=> state.userSlice.setCategories);
+
+
   const categories = [
     { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
     { id: 2, name: 'Nature', image: require('../assets/categories/nature.png') },
@@ -42,17 +45,11 @@ const Onboarding2: React.FC = () => {
     { id: 22, name: 'Education', image: require('../assets/categories/default.png') },
     { id: 23, name: 'Fashion', image: require('../assets/categories/default.png') },
     { id: 24, name: 'Music', image: require('../assets/categories/default.png') },
+    { id: 25, name: 'Love', image: require('../assets/categories/default.png') },
   ];
 
   const handleSelect = (categoryName: string) => {
-    if (selectedCategories.includes(categoryName)) {
-      // handles deselct
-      const newList = selectedCategories.filter((name) => name !== categoryName);
-      setSelectedCategories(newList);
-    } else {
-      // select the category
-      setSelectedCategories([...selectedCategories, categoryName]);
-    }
+    setSelectedCategories(categoryName);
   };
 
   const displayCategories = (category: Category): JSX.Element => {
