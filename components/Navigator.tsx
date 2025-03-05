@@ -8,6 +8,8 @@ import Explore from 'Pages/Explore';
 import React from 'react';
 
 import ArticleDetail from './ArticleDetail';
+import Onboarding1 from './Onboarding1';
+import Onboarding2 from './Onboarding2';
 import Onboarding from '../Pages/Onboarding';
 import ScreenContent from '../Pages/ScreenContent';
 
@@ -17,11 +19,11 @@ const Stack = createStackNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator
-      initialRouteName="HomeMain"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="HomeMain" component={ScreenContent} />
+      <Stack.Screen name="Home" component={ScreenContent} />
       <Stack.Screen
         name="ArticleDetail"
         component={ArticleDetail}
@@ -73,55 +75,66 @@ function CustomizeStack() {
   );
 }
 
+function OnboardingStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Onboarding1"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Onboarding1" component={Onboarding1} />
+      <Stack.Screen name="Onboarding2" component={Onboarding2} />
+    </Stack.Navigator>
+  );
+}
+
 export default function NavBar() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen
-          name="Home"
-          component={HomeStack}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
-            tabBarActiveTintColor: '#E5A07D',
-          }}
-        />
-        <Tab.Screen
-          name="Explore"
-          component={ExploreStack}
-          options={{
-            tabBarLabel: 'Explore',
-            tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
-            tabBarActiveTintColor: '#E5A07D',
-          }}
-        />
-        <Tab.Screen
-          name="Bookmark"
-          component={BookmarkStack}
-          options={{
-            tabBarLabel: 'Bookmark',
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name="bookmark" color={color} size={size} />
-            ),
-            tabBarActiveTintColor: '#E5A07D',
-          }}
-        />
-        <Tab.Screen
-          name="Customize"
-          component={CustomizeStack}
-          options={{
-            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-              <Ionicons name="options" size={size} color={color} />
-            ),
-            tabBarActiveTintColor: '#E5A07D',
-          }}
-        />
-        {/* <Tab.Screen
-          name="Onboarding"
-          component={Onboarding}
-          options={{ tabBarLabel: 'Onboarding' }}
-        /> */}
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Home"
+        component={HomeStack}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
+          tabBarActiveTintColor: '#E5A07D',
+        }}
+      />
+      <Tab.Screen
+        name="Explore"
+        component={ExploreStack}
+        options={{
+          tabBarLabel: 'Explore',
+          tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
+          tabBarActiveTintColor: '#E5A07D',
+        }}
+      />
+      <Tab.Screen
+        name="Bookmark"
+        component={BookmarkStack}
+        options={{
+          tabBarLabel: 'Bookmark',
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <Ionicons name="bookmark" color={color} size={size} />
+          ),
+          tabBarActiveTintColor: '#E5A07D',
+        }}
+      />
+      <Tab.Screen
+        name="Customize"
+        component={CustomizeStack}
+        options={{
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
+            <Ionicons name="options" size={size} color={color} />
+          ),
+          tabBarActiveTintColor: '#E5A07D',
+        }}
+      />
+      {/* <Tab.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{ tabBarLabel: 'Onboarding' }}
+      /> */}
+    </Tab.Navigator>
   );
 }

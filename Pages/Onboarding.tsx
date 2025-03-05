@@ -1,11 +1,11 @@
+import Onboarding1 from 'components/Onboarding1';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
-const Onboarding = () => {
+const OnboardingScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to onboarding!</Text>
-      <Text style={styles.subtitle}>Let's get started with the onboarding process.</Text>
+      <Onboarding1 />
     </View>
   );
 };
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Onboarding;
+export default OnboardingScreen;

@@ -1,21 +1,24 @@
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Text, View, TouchableOpacity } from 'react-native';
 
-import { Article } from '../types';
+import { RootStackParamList, Article } from '../types';
 
 // Define the type for the navigation prop
-type ArticlePreviewNavigationProp = NativeStackNavigationProp<
-  { Home: undefined; ArticleDetail: { article: Article } },
-  'Home' | 'ArticleDetail'
->;
-
+// type ArticlePreviewNavigationProp = NativeStackNavigationProp<
+//   { Home: undefined; ArticleDetail: { article: Article } },
+//   'Home' | 'ArticleDetail'
+// >;
+type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
 export default function ArticlePreview({
-  navigation,
+  // navigateToArticle,
   article,
 }: {
-  navigation: ArticlePreviewNavigationProp;
+  // navigation: ArticlePreviewNavigationProp;
   article: Article;
 }) {
+  const navigation = useNavigation<ArticlePreviewNavigationProp>();
   const handlePress = () => {
     navigation.navigate('ArticleDetail', { article });
   };
