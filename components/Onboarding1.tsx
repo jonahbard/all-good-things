@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
+
 import { RootStackParamList } from '../types';
 
 type OnboardingNavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding1'>;
@@ -18,8 +20,13 @@ const Onboarding1: React.FC = () => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => {
-            navigation.push('Onboarding2'); // Push ensures it stays within the OnboardingStack
+          setTimeout( async () => {
+            const status = await AsyncStorage.getItem('onboardingComplete');
+            if (status) {
+              navigation.push('Tabs');
+            }else {
+              navigation.push('Onboarding2'); // Push ensures it stays within the OnboardingStack
+            }
           }, 500);
           return 100;
         } else {

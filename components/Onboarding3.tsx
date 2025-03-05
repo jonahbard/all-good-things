@@ -59,6 +59,7 @@ const Onboarding3: React.FC = () => {
       console.error('Error saving onboarding status:', error);
     }
   };
+  
   const handleSelect = (categoryName: string) => {
     if (selectedSources.includes(categoryName)) {
       // handles deselct
@@ -88,7 +89,7 @@ const Onboarding3: React.FC = () => {
       </TouchableOpacity>
     );
   };
-  
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Text className="z-50 mt-10 text-center font-[SourceSerif4] text-[24px] font-medium leading-[45px] tracking-[-0.48px] text-black">

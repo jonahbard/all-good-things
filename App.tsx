@@ -12,12 +12,17 @@ export default function App() {
 
   useEffect(() => {
     const checkNewUserStatus = async () => {
-      const status = await AsyncStorage.getItem('onboardingComplete');
-      setInitialOpen(status !== 'false');
+      try {
+        const status = await AsyncStorage.getItem('onboardingComplete');
+        setInitialOpen(status !== 'true'); // If 'true', it skips onboarding
+      } catch (error) {
+        console.error('Error checking onboarding status:', error);
+      }
     };
     checkNewUserStatus();
   }, []);
 
+  // moving this to outside of onboarding 
   if (initialOpen === null) return null;
 
   return (

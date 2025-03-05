@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Bookmark from 'Pages/Bookmark';
 import Customize from 'Pages/Customize';
 import Explore from 'Pages/Explore';
 import React from 'react';
@@ -12,6 +11,8 @@ import Onboarding1 from './Onboarding1';
 import Onboarding2 from './Onboarding2';
 import Onboarding from '../Pages/Onboarding';
 import ScreenContent from '../Pages/ScreenContent';
+
+import Bookmarks from '~/Pages/Bookmarks';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,7 +59,12 @@ function BookmarkStack() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Bookmarks" component={Bookmark} />
+      <Stack.Screen name="Bookmarks" component={Bookmarks} />
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ title: 'Article Detail', headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

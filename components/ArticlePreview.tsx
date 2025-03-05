@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Text, View, TouchableOpacity } from 'react-native';
 
 import { RootStackParamList, Article } from '../types';
+import { addBookmark } from '../lib/bookmark-functionality';
 
 // Define the type for the navigation prop
 // type ArticlePreviewNavigationProp = NativeStackNavigationProp<
@@ -28,6 +29,9 @@ export default function ArticlePreview({
       <View className="mx-2 my-1 flex flex-col rounded-md bg-white p-3">
         <Text className="font-bold">{article.title}</Text>
         <Text>{article.description}</Text>
+        <TouchableOpacity onPress={() => addBookmark(article)}>
+          <Text className="text-blue-500">Bookmark</Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

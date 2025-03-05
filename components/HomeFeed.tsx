@@ -2,7 +2,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { ScrollView, Text, SafeAreaView } from 'react-native';
+import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
 import { RootStackParamList, Article } from '../types';
 import ArticlePreview from './ArticlePreview';
@@ -36,6 +36,7 @@ export default function HomeFeed({
         ) : (
           <Text>Loading...</Text>
         )}
+        <View style={{ height: 160 }} />
       </ScrollView>
     </SafeAreaView>
   );
