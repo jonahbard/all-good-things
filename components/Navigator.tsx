@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Bookmark from 'Pages/Bookmark';
 import Customize from 'Pages/Customize';
 import Explore from 'Pages/Explore';
 import React from 'react';
@@ -9,6 +8,8 @@ import React from 'react';
 import ArticleDetail from './ArticleDetail';
 import Onboarding from '../Pages/Onboarding';
 import ScreenContent from '../Pages/ScreenContent';
+
+import Bookmarks from '~/Pages/Bookmarks';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -49,7 +50,12 @@ function BookmarkStack() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Bookmarks" component={Bookmark} />
+      <Stack.Screen name="Bookmarks" component={Bookmarks} />
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ title: 'Article Detail', headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -72,7 +78,7 @@ export default function NavBar() {
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Bookmark" component={BookmarkStack} />
+        <Tab.Screen name="Bookmarks" component={BookmarkStack} />
         <Tab.Screen name="Customize" component={CustomizeStack} />
         {/* <Tab.Screen
           name="Onboarding"
