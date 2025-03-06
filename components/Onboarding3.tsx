@@ -15,6 +15,8 @@ import { Svg, Path } from 'react-native-svg';
 
 import { RootStackParamList } from '../types';
 
+import { userStore } from '~/store/userStore';
+
 type Onboarding3NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
 interface Source {
   id: number;
@@ -23,7 +25,10 @@ interface Source {
 }
 const Onboarding3: React.FC = () => {
   const navigation = useNavigation<Onboarding3NavigationProp>();
-  const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const selectedSources = userStore((state) => state.userSlice.sources);
+  const setSelectedSources = userStore((state) => state.userSlice.setSources);
+  const { categories, bookmarks } = userStore((state) => state.userSlice);
+  const createNewUser = userStore((state) => state.userSlice.createNewUser);
   const sources = [
     { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
     { id: 2, name: 'Nature', image: require('../assets/categories/nature.png') },
@@ -54,21 +59,20 @@ const Onboarding3: React.FC = () => {
   const completeOnboarding = async () => {
     try {
       await AsyncStorage.setItem('onboardingComplete', 'true');
+      const userData = {
+        categories: categories,
+        sources: selectedSources,
+        bookmarks: bookmarks,
+      };
+      createNewUser(userData);
       navigation.navigate('Tabs'); // cannot use replace home as it is a tab navigator (note to self)
     } catch (error) {
       console.error('Error saving onboarding status:', error);
     }
   };
-  
-  const handleSelect = (categoryName: string) => {
-    if (selectedSources.includes(categoryName)) {
-      // handles deselct
-      const newList = selectedSources.filter((name) => name !== categoryName);
-      setSelectedSources(newList);
-    } else {
-      // select the category
-      setSelectedSources([...selectedSources, categoryName]);
-    }
+
+  const handleSelect = (sourceName: string) => {
+    setSelectedSources(sourceName);
   };
 
   const displayCategories = (source: Source): JSX.Element => {

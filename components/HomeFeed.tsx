@@ -7,6 +7,8 @@ import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 import { RootStackParamList, Article } from '../types';
 import ArticlePreview from './ArticlePreview';
 
+import { userStore } from '~/store/userStore';
+
 // Define the type for the navigation prop
 // type HomeFeedNavigationProp = NativeStackNavigationProp<
 //   { Home: undefined; ArticleDetail: { article: Article } },
@@ -21,6 +23,7 @@ export default function HomeFeed({
   navigation: HomeFeedNavigationProp;
   articles: Article[];
 }) {
+
   return (
     <SafeAreaView>
       <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">all good things</Text>

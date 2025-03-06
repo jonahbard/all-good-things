@@ -5,12 +5,22 @@ import OnboardingStack from 'components/OnboardingStack';
 import React, { useEffect, useState } from 'react';
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
+import { userStore } from './store/userStore';
 
 export default function App() {
   const [initialOpen, setInitialOpen] = useState<boolean | null>(null);
   const Stack = createStackNavigator();
 
+  const resetOnboarding = async () => { // for testing phase
+    try {
+      await AsyncStorage.removeItem('onboardingComplete'); 
+      console.log('Onboarding reset!');
+    } catch (error) {
+      console.error('Error resetting onboarding:', error);
+    }
+  };
   useEffect(() => {
+    resetOnboarding();
     const checkNewUserStatus = async () => {
       try {
         const status = await AsyncStorage.getItem('onboardingComplete');
@@ -22,9 +32,8 @@ export default function App() {
     checkNewUserStatus();
   }, []);
 
-  // moving this to outside of onboarding 
+  // moving this to outside of onboarding
   if (initialOpen === null) return null;
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -11,6 +11,7 @@ export interface UserSlice {
   userID: string;
   categories: string[];
   sources: string[];
+  bookmarks:[];
   setCategories: (categoryName: string) => void;
   setSources: (sourceName: string) => void;
   createNewUser: (info: NewUserInfo) => void;
@@ -42,6 +43,7 @@ function createUserSlice(set: any, get: any): UserSlice {
     userID: '',
     categories: [],
     sources: [],
+    bookmarks: [],
     setCategories: (categoryName: string) => {
       set((state: { userSlice: UserSlice }) => {
         if (state.userSlice.categories.includes(categoryName)) {
@@ -71,10 +73,11 @@ function createUserSlice(set: any, get: any): UserSlice {
         });
         const data = await handleApiResponse(response, set);
         if (!data) return;
+        console.log("data", data);
         set((state: { userSlice: UserSlice }) => {
-            state.userSlice.userID = data.id
+            state.userSlice.userID = data.uderId
         })
-
+        console.log("new user:", data.userId)
       } catch (error) {
         handleApiError(error, get);
       }
