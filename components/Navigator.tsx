@@ -72,7 +72,7 @@ function CustomizeStack() {
   );
 }
 
-export default function NavBar() {
+export default function Navigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
