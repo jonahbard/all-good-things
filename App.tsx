@@ -5,33 +5,38 @@ import OnboardingStack from 'components/OnboardingStack';
 import React, { useEffect, useState } from 'react';
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import { userStore } from './store/userStore';
 
 export default function App() {
   const [initialOpen, setInitialOpen] = useState<boolean | null>(null);
   const Stack = createStackNavigator();
 
-  const resetOnboarding = async () => { // for testing phase
-    try {
-      await AsyncStorage.removeItem('onboardingComplete'); 
-      console.log('Onboarding reset!');
-    } catch (error) {
-      console.error('Error resetting onboarding:', error);
-    }
-  };
+  // const resetAsyncStorage = async () => {
+  //   await AsyncStorage.clear();
+  //   console.log('AsyncStorage reset!');
+  // };
+
+  // AsyncStorage: {"userID":"67ca18d70f194467e4f39c15","categories":["Science","Animals"],"sources":["Science"],"bookmarks":[]}
+
   useEffect(() => {
-    resetOnboarding();
+    //  resetAsyncStorage();
     const checkNewUserStatus = async () => {
       try {
-        const status = await AsyncStorage.getItem('onboardingComplete');
-        setInitialOpen(status !== 'true'); // If 'true', it skips onboarding
+        const storedUser = await AsyncStorage.getItem('user-storage');
+        const userData = storedUser ? JSON.parse(storedUser) : null; // can just chekc if
+        console.log('is id found', userData?.userSlice?.userID);
+        if (userData?.userID && userData?.userID !== '') {
+          setInitialOpen(false); // Skip onboarding
+          return;
+        }
+        setInitialOpen(true); // we need go through on boarding
       } catch (error) {
         console.error('Error checking onboarding status:', error);
       }
     };
     checkNewUserStatus();
   }, []);
-
   // moving this to outside of onboarding
   if (initialOpen === null) return null;
   return (

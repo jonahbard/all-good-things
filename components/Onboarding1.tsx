@@ -1,11 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import { RootStackParamList } from '../types';
+
+import { userStore } from '~/store/userStore';
 
 type OnboardingNavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding1'>;
 const Onboarding1: React.FC = () => {
@@ -20,11 +22,13 @@ const Onboarding1: React.FC = () => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout( async () => {
-            const status = await AsyncStorage.getItem('onboardingComplete');
-            if (status) {
+          setTimeout(async () => {
+            const storedUser = await AsyncStorage.getItem('user-storage');
+            const userData = storedUser ? JSON.parse(storedUser) : null; // can just chekc if
+            if (userData?.userID && userData?.userID !== '') {
+              console.log('is id found', userData?.userID);
               navigation.push('Tabs');
-            }else {
+            } else {
               navigation.push('Onboarding2'); // Push ensures it stays within the OnboardingStack
             }
           }, 500);
@@ -37,7 +41,8 @@ const Onboarding1: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
+  // const userID = userStore((state) => state.userSlice.userID);
+  // console.log('userid', userID);
   return (
     <View style={styles.container}>
       <Image source={require('../assets/logo.png')} style={{ width: 214, height: 209 }} />

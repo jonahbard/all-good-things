@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { userStore } from 'store/userStore';
+
 import { RootStackParamList } from '../types'; // Adjust the import path as necessary
 
 type Onboarding2NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
@@ -16,9 +17,8 @@ interface Category {
 
 const Onboarding2: React.FC = () => {
   const navigation = useNavigation<Onboarding2NavigationProp>();
-  const selectedCategories = userStore((state)=> state.userSlice.categories);
-  const setSelectedCategories = userStore((state)=> state.userSlice.setCategories);
-
+  const selectedCategories = userStore((state) => state.userSlice.categories);
+  const setCategories = userStore((state) => state.userSlice.setCategories);
 
   const categories = [
     { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
@@ -49,7 +49,7 @@ const Onboarding2: React.FC = () => {
   ];
 
   const handleSelect = (categoryName: string) => {
-    setSelectedCategories(categoryName);
+    setCategories(categoryName);
   };
 
   const displayCategories = (category: Category): JSX.Element => {

@@ -58,13 +58,14 @@ const Onboarding3: React.FC = () => {
 
   const completeOnboarding = async () => {
     try {
-      await AsyncStorage.setItem('onboardingComplete', 'true');
       const userData = {
-        categories: categories,
-        sources: selectedSources,
-        bookmarks: bookmarks,
+        categories: userStore.getState().userSlice.categories,
+        sources: userStore.getState().userSlice.sources,
+        bookmarks: userStore.getState().userSlice.bookmarks,
       };
       createNewUser(userData);
+      
+      await AsyncStorage.setItem('user-storage', JSON.stringify(userData));
       navigation.navigate('Tabs'); // cannot use replace home as it is a tab navigator (note to self)
     } catch (error) {
       console.error('Error saving onboarding status:', error);

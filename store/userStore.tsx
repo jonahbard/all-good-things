@@ -1,8 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-
-export interface NewUserInfo {
+export interface UserInfo {
   categories: string[];
   sources: string[];
   bookmarks: string[];
@@ -11,10 +11,13 @@ export interface UserSlice {
   userID: string;
   categories: string[];
   sources: string[];
-  bookmarks:[];
+  bookmarks: [];
   setCategories: (categoryName: string) => void;
   setSources: (sourceName: string) => void;
-  createNewUser: (info: NewUserInfo) => void;
+  createNewUser: (info: UserInfo) => void;
+  fetchUserCateogries: (userID: string) => void;
+  fetchUserSources: (userID: string) => void;
+  updateUserSetting: (info: UserInfo, userID: string) => void;
 }
 
 type StoreState = {
@@ -64,7 +67,47 @@ function createUserSlice(set: any, get: any): UserSlice {
         }
       });
     },
-    createNewUser: async (info: NewUserInfo) => {
+    fetchUserCateogries: async (userID: string) => {
+      try {
+        const response = await fetch(`${API_URL}/user/categories/${userID}`);
+        const data = await handleApiResponse(response, set);
+        if (!data) return;
+        set((state: { userSlice: UserSlice }) => {
+          state.userSlice.categories = data;
+        });
+      } catch (error) {
+        handleApiError(error, get);
+      }
+    },
+    fetchUserSources: async (userID: string) => {
+      try {
+        const response = await fetch(`${API_URL}/user/sources/${userID}`);
+        const data = await handleApiResponse(response, set);
+        if (!data) return;
+        set((state: { userSlice: UserSlice }) => {
+          state.userSlice.sources = data;
+        });
+      } catch (error) {
+        handleApiError(error, get);
+      }
+    },
+    
+    updateUserSetting: async (info: UserInfo, userID: string) => {
+      try {
+        const response = await fetch(`${API_URL}/user/updateUser/${userID}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(info),
+        });
+        const data = await handleApiResponse(response, set);
+        if (!data) return;
+        console.log("User settings updated successfully", data);
+      } catch (error) {
+        handleApiError(error, get);
+      }
+    },
+
+    createNewUser: async (info: UserInfo) => {
       try {
         const response = await fetch(`${API_URL}/user/createUser`, {
           method: 'POST',
@@ -73,11 +116,15 @@ function createUserSlice(set: any, get: any): UserSlice {
         });
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        console.log("data", data);
+        console.log('data', data);
         set((state: { userSlice: UserSlice }) => {
-            state.userSlice.userID = data.uderId
-        })
-        console.log("new user:", data.userId)
+          state.userSlice.userID = data.uderId;
+        });
+        const userData = {
+          userID: data.userId,
+        };
+        await AsyncStorage.setItem('user-storage', JSON.stringify(userData)); // ensure its saved
+        console.log('new user:', data.userId);
       } catch (error) {
         handleApiError(error, get);
       }
@@ -87,8 +134,14 @@ function createUserSlice(set: any, get: any): UserSlice {
 
 export const userStore = create<StoreState>()(
   devtools(
-    immer((set, get) => ({
-      userSlice: createUserSlice(set, get),
-    }))
+    persist(
+      immer((set: any, get: any) => ({
+        userSlice: createUserSlice(set, get),
+      })),
+      {
+        name: 'user-storage', // unique name
+        storage: createJSONStorage(() => AsyncStorage), // storage provider
+      }
+    )
   )
 );
