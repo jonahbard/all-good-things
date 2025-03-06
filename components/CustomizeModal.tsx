@@ -1,53 +1,110 @@
 import React from 'react';
-import { View, Text, StyleSheet, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import ActionSheet, { SheetManager, SheetProvider } from 'react-native-actions-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Document reference: https://www.npmjs.com/package/react-native-actions-sheet
 
-interface CustomizeModalProps {
-  visible: boolean;
-  onClose: () => void;
+interface ListStructure {
+  id: number;
+  name: string;
+  image: any;
 }
 
+interface CustomizeModalProps {
+  optionList: ListStructure[];
+}
 
+const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList }) => {
+  // Need add filter out items that are currently existing on user list
+  const renderItem = ({ item }: { item: ListStructure }) => (
+    <TouchableOpacity style={styles.option}>
+      <Image source={item.image} style={styles.optionImage} />
+      <Text style={styles.optionText}>{item.name}</Text>
+      <TouchableOpacity style={styles.addButton}>
+        <Text style={styles.addButtonText}>+</Text>
+      </TouchableOpacity>
+    </TouchableOpacity>
+  );
 
-const CustomizeModal: React.FC<CustomizeModalProps> = ({ visible, onClose }) => {
   return (
-    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>This is a customizable modal!</Text>
-          <Button title="Close" onPress={onClose} />
-        </View>
-      </View>
-    </Modal>
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SheetProvider context="global">
+          {/* Button to open the action sheet */}
+          <TouchableOpacity
+            onPress={() => SheetManager.show('customize-sheet')}
+            style={styles.openButton}>
+            <Text style={styles.openButtonText}>Open Customize</Text>
+          </TouchableOpacity>
+
+          {/* The ActionSheet */}
+          <ActionSheet
+            id="customize-sheet"
+            gestureEnabled
+            closeOnTouchBackdrop
+            onClose={() => console.log('Sheet closed')}>
+            <View style={styles.sheetContainer}>
+              <Text style={styles.sheetTitle}>Suggested</Text>
+              <FlatList
+                data={optionList}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={renderItem}
+              />
+            </View>
+          </ActionSheet>
+        </SheetProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+  openButton: {
+    padding: 10,
+    backgroundColor: '#FECC5F',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  openButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  sheetContainer: {
+    padding: 20,
+  },
+  sheetTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  optionImage: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  optionText: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    fontSize: 16,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  addButton: {
+    padding: 5,
+    backgroundColor: '#FECC5F',
+    borderRadius: 5,
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  addButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 
