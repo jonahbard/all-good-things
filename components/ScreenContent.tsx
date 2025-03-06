@@ -14,7 +14,13 @@ export default function ScreenContent() {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    fetch('https://project-api-all-good-things.onrender.com/api/articles')
+    fetch('https://project-api-all-good-things.onrender.com/api/articles/categories', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ categories: ['Health'] }),
+    })
       .then((response) => response.json())
       .then((data) => setArticles(data));
     console.log('articles:', articles);
