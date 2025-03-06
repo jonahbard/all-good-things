@@ -3,15 +3,11 @@ import Navigator from 'components/Navigator';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
-
 import './global.css';
 
-export default function App() {
-  return <Navigator />;
-}
-
+// Configure notification handler
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -20,34 +16,70 @@ Notifications.setNotificationHandler({
   }),
 });
 
-async function sendPushNotification(expoPushToken: string) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
-  };
+// Fetch notification text from backend
+const fetchNotificationText = async () => {
+  try {
+    console.log('Fetching notification text...');
+    const response = await fetch('http://localhost:9090/api/notification');
+    const data = await response.json();
+    return data.text;
+  } catch (error) {
+    console.error('Error fetching notification text:', error);
+    return 'Default notification message'; // Fallback message
+  }
+};
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
+const scheduleNotifications = async () => {
+  try {
+    // Cancel existing notifications first
+    await Notifications.cancelAllScheduledNotificationsAsync();
 
+    const times = [
+      { hour: 4, minute: 13 }, // 3:30 AM
+      { hour: 8, minute: 0 }, // 8:00 AM
+      { hour: 12, minute: 0 }, // 12:00 PM
+      { hour: 16, minute: 0 }, // 4:00 PM
+      { hour: 20, minute: 0 }, // 8:00 PM
+    ]; // Hours in 24-hour format
+    console.log('Scheduling notifications for times:', times);
+
+    for (const time of times) {
+      const message = await fetchNotificationText(); // Fetch latest text
+
+      // Define the trigger with proper typing
+      const trigger = {
+        hour: time.hour,
+        minute: time.minute,
+        repeats: true,
+      } as Notifications.NotificationTriggerInput;
+
+      const identifier = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Reminder',
+          body: message, // Dynamic content from API
+        },
+        trigger,
+      });
+
+      console.log(
+        `Scheduled notification for ${time.hour}:${time.minute.toString().padStart(2, '0')}, ID: ${identifier}`
+      );
+    }
+  } catch (error) {
+    console.error('Failed to schedule notifications:', error);
+  }
+};
+
+// Error handler for registration
 function handleRegistrationError(errorMessage: string) {
-  alert(errorMessage);
-  throw new Error(errorMessage);
+  console.error(errorMessage);
+  return null;
 }
 
+// Register for push notifications
 async function registerForPushNotificationsAsync() {
   if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
+    await Notifications.setNotificationChannelAsync('default', {
       name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
@@ -55,68 +87,100 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      handleRegistrationError('Permission not granted to get push token for push notification!');
-      return;
-    }
-    const projectId =
-      Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
-    if (!projectId) {
-      handleRegistrationError('Project ID not found');
-    }
-    try {
-      const pushTokenString = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId,
-        })
-      ).data;
-      console.log(pushTokenString);
-      return pushTokenString;
-    } catch (e: unknown) {
-      handleRegistrationError(`${e}`);
-    }
-  } else {
-    handleRegistrationError('Must use physical device for push notifications');
+  if (!Device.isDevice) {
+    return handleRegistrationError('Must use physical device for push notifications');
+  }
+
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    return handleRegistrationError('Permission not granted for push notifications');
+  }
+
+  const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+
+  if (!projectId) {
+    return handleRegistrationError('Project ID not found');
+  }
+
+  try {
+    const token = await Notifications.getExpoPushTokenAsync({ projectId });
+    console.log('Push token:', token.data);
+    return token.data;
+  } catch (e) {
+    return handleRegistrationError(`Error getting push token: ${e}`);
   }
 }
 
+// Send a push notification
+async function sendPushNotification(expoPushToken: string) {
+  if (!expoPushToken) return;
+
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'Test Notification',
+    body: 'This is a test notification!',
+    data: { someData: 'goes here' },
+  };
+
+  try {
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+    console.log('Notification sent successfully');
+  } catch (error) {
+    console.error('Error sending notification:', error);
+  }
+}
+
+// Notifications component
 export function NotificationsComponent() {
   const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState<Notifications.Notification | undefined>(
-    undefined
-  );
-  const notificationListener = useRef<Notifications.EventSubscription>();
-  const responseListener = useRef<Notifications.EventSubscription>();
+  const [notification, setNotification] = useState<Notifications.Notification | null>(null);
+  const notificationListener = useRef<Notifications.Subscription | null>(null);
+  const responseListener = useRef<Notifications.Subscription | null>(null);
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then((token) => setExpoPushToken(token ?? ''))
-      .catch((error: any) => setExpoPushToken(`${error}`));
+    // Register for push notifications
+    registerForPushNotificationsAsync().then((token) => {
+      if (token) setExpoPushToken(token);
+    });
 
+    // Set up notification listeners
     notificationListener.current = Notifications.addNotificationReceivedListener(
-      (notification: any) => {
+      (notification: Notifications.Notification) => {
         setNotification(notification);
       }
     );
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response: any) => {
-        console.log(response);
-      }
-    );
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log('Notification response:', response);
+    });
 
+    // Schedule daily notifications
+    scheduleNotifications();
+
+    // Clean up listeners on unmount
     return () => {
-      notificationListener.current &&
+      if (notificationListener.current) {
         Notifications.removeNotificationSubscription(notificationListener.current);
-      responseListener.current &&
+      }
+      if (responseListener.current) {
         Notifications.removeNotificationSubscription(responseListener.current);
+      }
     };
   }, []);
 
@@ -124,16 +188,32 @@ export function NotificationsComponent() {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
       <Text>Your Expo push token: {expoPushToken}</Text>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+        <Text>Title: {notification?.request?.content?.title || 'No notification yet'}</Text>
+        <Text>Body: {notification?.request?.content?.body || ''}</Text>
+        <Text>
+          Data:{' '}
+          {notification?.request?.content?.data
+            ? JSON.stringify(notification.request.content.data)
+            : ''}
+        </Text>
       </View>
       <Button
-        title="Press to Send Notification"
+        title="Send Test Notification"
         onPress={async () => {
           await sendPushNotification(expoPushToken);
         }}
       />
+      <Button title="Schedule Daily Notifications" onPress={scheduleNotifications} />
     </View>
+  );
+}
+
+// Main App component
+export default function App() {
+  return (
+    <>
+      <NotificationsComponent />
+      <Navigator />
+    </>
   );
 }
