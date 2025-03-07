@@ -2,12 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import NavBar from 'components/Navigator';
 import OnboardingStack from 'components/OnboardingStack';
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState } from 'react';
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text } from 'react-native';
-import { userStore } from './store/userStore';
+
 import { registerForPushNotifications, setupNotificationListeners } from './lib/notifications';
+import { userStore } from './store/userStore';
 
 export default function App() {
   const [initialOpen, setInitialOpen] = useState<boolean | null>(null);
