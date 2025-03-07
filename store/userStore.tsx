@@ -38,7 +38,7 @@ export const handleApiError = (error: unknown, get: any) => {
   console.error('Fetch Error:', message);
 };
 
-const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
 
 function createUserSlice(set: any, get: any): UserSlice {
   return {

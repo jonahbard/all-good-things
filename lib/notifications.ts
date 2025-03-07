@@ -2,7 +2,9 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-const API_REGISTER_PUSH_TOKEN = 'http://172.27.148.119:9090/api/register-token';
+import { API_URL } from '~/store/userStore';
+
+const API_REGISTER_PUSH_TOKEN = `${API_URL}/register-token`;
 
 // Configure notification behavior
 Notifications.setNotificationHandler({
