@@ -19,7 +19,7 @@ export default function ScreenContent() {
       .then((data) => setArticles(data));
     console.log('articles:', articles);
   }, []);
-  
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" options={{ title: 'Articles', headerShown: false }}>

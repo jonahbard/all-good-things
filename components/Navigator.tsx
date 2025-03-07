@@ -24,8 +24,12 @@ function HomeStack() {
       screenOptions={{
         headerShown: false,
       }}>
-     <Stack.Screen name="HomeScreen" component={ScreenContent} /> 
-     <Stack.Screen name="ArticleDetail" component={ArticleDetail} options={{ title: 'Article Detail' }} />
+      <Stack.Screen name="HomeScreen" component={ScreenContent} />
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ title: 'Article Detail' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -33,11 +37,11 @@ function HomeStack() {
 function ExploreStack() {
   return (
     <Stack.Navigator
-    initialRouteName="ExploreScreen" 
+      initialRouteName="ExploreScreen"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="ExploreScreen"  component={Explore} />
+      <Stack.Screen name="ExploreScreen" component={Explore} />
     </Stack.Navigator>
   );
 }
@@ -62,7 +66,7 @@ function BookmarkStack() {
 function CustomizeStack() {
   return (
     <Stack.Navigator
-    initialRouteName="CustomizeScreen" 
+      initialRouteName="CustomizeScreen"
       screenOptions={{
         headerShown: false,
       }}>

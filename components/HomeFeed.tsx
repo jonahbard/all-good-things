@@ -23,7 +23,6 @@ export default function HomeFeed({
   navigation: HomeFeedNavigationProp;
   articles: Article[];
 }) {
-
   return (
     <SafeAreaView>
       {/* Use font-ibm-bold instead of font-ibm + font-bold */}
