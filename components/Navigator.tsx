@@ -74,18 +74,16 @@ function CustomizeStack() {
 
 export default function NavBar() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Bookmarks" component={BookmarkStack} />
-        <Tab.Screen name="Customize" component={CustomizeStack} />
-        {/* <Tab.Screen
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={HomeStack} />
+      {/* <Tab.Screen name="Explore" component={ExploreStack} /> */}
+      <Tab.Screen name="Bookmarks" component={BookmarkStack} />
+      <Tab.Screen name="Customize" component={CustomizeStack} />
+      {/* <Tab.Screen
           name="Onboarding"
           component={Onboarding}
           options={{ tabBarLabel: 'Onboarding' }}
         /> */}
-      </Tab.Navigator>
-    </NavigationContainer>
+    </Tab.Navigator>
   );
 }

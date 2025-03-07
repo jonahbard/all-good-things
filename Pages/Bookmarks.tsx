@@ -29,7 +29,7 @@ export default function Bookmarks({ navigation }: { navigation: BookmarksNavigat
 
   return (
     <SafeAreaView>
-      <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">bookmarks</Text>
+      <Text className="font-ibm-bold mb-2 ml-3 mt-10 text-4xl">bookmarks</Text>
       {bookmarks.length > 0 ? (
         <ScrollView>
           {bookmarks.map((article, index) => (

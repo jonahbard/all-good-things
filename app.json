@@ -36,6 +36,16 @@
         "projectId": "b7fc238b-8575-4ae1-ab94-64cd7e985939"
       }
     },
-    "owner": "jonahbard"
+    "owner": "jonahbard",
+    "fonts": [
+      {
+        "asset": "./assets/fonts/IBMPlexSerif-Regular.ttf",
+        "fontFamily": "IBMPlexSerif-Regular"
+      },
+      {
+        "asset": "./assets/fonts/IBMPlexSerif-Bold.ttf",
+        "fontFamily": "IBMPlexSerif-Bold"
+      }
+    ]
   }
 }

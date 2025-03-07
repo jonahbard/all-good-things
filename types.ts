@@ -5,5 +5,5 @@ export type Article = {
   tags: string[];
   link: string;
   source: string;
-  publishedDate: Date;
+  pubDate: Date;
 };

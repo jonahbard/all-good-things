@@ -50,10 +50,10 @@ export default function BookmarkArticlePreview({
               }
             }}
             className="mb-10">
-            <SymbolView name="square.and.arrow.up" style={{ margin: 3 }} />
+            <SymbolView name="square.and.arrow.up" style={{ margin: 3 }} tintColor="brown" />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleRemoveBookmark} style={{ marginLeft: 'auto' }}>
-            <SymbolView name="bookmark.fill" style={{ margin: 3 }} />
+            <SymbolView name="bookmark.fill" style={{ margin: 3 }} tintColor="brown" />
           </TouchableOpacity>
         </View>
       </View>
