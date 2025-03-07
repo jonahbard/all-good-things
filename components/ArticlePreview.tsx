@@ -1,8 +1,11 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Sharing from 'expo-sharing';
-import { Text, View, TouchableOpacity, Share } from 'react-native';
+import { SymbolView } from 'expo-symbols';
+import React, { useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-import { addBookmark } from '../lib/bookmark-functionality';
+import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
+import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
 import { Article } from '../types';
 
 // Define the type for the navigation prop
@@ -22,41 +25,67 @@ export default function ArticlePreview({
     navigation.navigate('ArticleDetail', { article });
   };
 
+  const [bookmarked, setBookmarked] = useState(false);
+
+  const checkBookmarkStatus = async () => {
+    const isBookmarkedStatus = await isBookmarked(article);
+    setBookmarked(isBookmarkedStatus);
+  };
+
+  useEffect(() => {
+    // Check initial bookmark status
+    checkBookmarkStatus();
+
+    // Set up event listener for bookmark changes
+    const handleBookmarkChange = () => {
+      checkBookmarkStatus();
+    };
+
+    bookmarkEvents.on(BOOKMARK_CHANGED, handleBookmarkChange);
+
+    // Clean up event listener
+    return () => {
+      bookmarkEvents.off(BOOKMARK_CHANGED, handleBookmarkChange);
+    };
+  }, [article]);
+
+  const handleBookmarkToggle = async () => {
+    if (bookmarked) {
+      await removeBookmark(article);
+    } else {
+      await addBookmark(article);
+    }
+    // No need to manually update state here as the event listener will handle it
+  };
+
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View className="mx-2 my-1 flex flex-col rounded-md bg-white p-3">
-        <Text className="font-bold">{article.title}</Text>
-        <Text>{article.description}</Text>
-        <TouchableOpacity
-          onPress={async () => {
-            if (await Sharing.isAvailableAsync()) {
-              await Sharing.shareAsync(article.link, {
-                dialogTitle: article.title,
-                UTI: 'public.url',
-              });
-            }
-          }}>
-          <Text className="text-blue-500">Share (pure native)</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={async () => {
-            try {
-              const shareText = 'Check out this good news! ' + article.link;
-              await Share.share({
-                message: shareText,
-                // For iOS, just use the message as the url to ensure text gets shared
-                url: shareText,
-                title: article.title,
-              });
-            } catch (error) {
-              console.error('Error sharing article:', error);
-            }
-          }}>
-          <Text className="text-blue-500">Share</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => addBookmark(article)}>
-          <Text className="text-blue-500">Bookmark</Text>
-        </TouchableOpacity>
+      <View className="mx-2 my-1 flex flex-row rounded-md bg-white p-3">
+        <View className="flex-1">
+          <Text className="font-bold">{article.title}</Text>
+          <Text>{article.description}</Text>
+        </View>
+        <View className="mx-3 flex flex-col justify-center">
+          <TouchableOpacity
+            onPress={async () => {
+              if (await Sharing.isAvailableAsync()) {
+                await Sharing.shareAsync(article.link, {
+                  dialogTitle: article.title,
+                  UTI: 'public.url',
+                });
+              }
+            }}
+            className="mb-10">
+            <SymbolView name="square.and.arrow.up" className="m-1" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleBookmarkToggle}>
+            {bookmarked ? (
+              <SymbolView name="bookmark.fill" className="m-1" type="hierarchical" />
+            ) : (
+              <SymbolView name="bookmark" className="m-1" type="hierarchical" />
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
