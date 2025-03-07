@@ -1,4 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as Sharing from 'expo-sharing';
 import { SymbolView } from 'expo-symbols';
 import React, { useEffect, useState } from 'react';
@@ -7,21 +9,23 @@ import { titleCase } from 'title-case';
 
 import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
 import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
-import { Article } from '../types';
+import { Article, RootStackParamList } from '../types';
+
 
 // Define the type for the navigation prop
-type ArticlePreviewNavigationProp = NativeStackNavigationProp<
-  { Home: undefined; ArticleDetail: { article: Article } },
-  'Home' | 'ArticleDetail'
->;
-
+// type ArticlePreviewNavigationProp = NativeStackNavigationProp<
+//   { Home: undefined; ArticleDetail: { article: Article } },
+//   'Home' | 'ArticleDetail'
+// >;
+type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
 export default function ArticlePreview({
-  navigation,
+  // navigateToArticle,
   article,
 }: {
-  navigation: ArticlePreviewNavigationProp;
+  // navigation: ArticlePreviewNavigationProp;
   article: Article;
 }) {
+  const navigation = useNavigation<ArticlePreviewNavigationProp>();
   const handlePress = () => {
     navigation.navigate('ArticleDetail', { article });
   };
