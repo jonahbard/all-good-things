@@ -1,41 +1,29 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { categoriesList, sourcesList } from './data';
 
 import CustomizeModal from '~/components/CustomizeModal';
+import FollowedItem from '~/components/FollowedItem';
 import { userStore } from '~/store/userStore';
-
-const categories = [
-  { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
-  { id: 2, name: 'Nature', image: require('../assets/categories/nature.png') },
-  { id: 3, name: 'Space', image: require('../assets/categories/space.png') },
-  { id: 4, name: 'Animals', image: require('../assets/categories/animal.png') },
-  { id: 5, name: 'Kindness', image: require('../assets/categories/default.png') },
-  { id: 6, name: 'Art', image: require('../assets/categories/default.png') },
-  { id: 7, name: 'Health', image: require('../assets/categories/default.png') },
-  { id: 8, name: 'Environment', image: require('../assets/categories/default.png') },
-  { id: 9, name: 'Archaeology', image: require('../assets/categories/default.png') },
-  { id: 10, name: 'Dinosaurs', image: require('../assets/categories/default.png') },
-  { id: 11, name: 'History', image: require('../assets/categories/default.png') },
-  { id: 12, name: 'Discovery', image: require('../assets/categories/default.png') },
-  { id: 13, name: 'Heartwarming', image: require('../assets/categories/default.png') },
-  { id: 14, name: 'Inspiring', image: require('../assets/categories/default.png') },
-  { id: 15, name: 'Friendship', image: require('../assets/categories/default.png') },
-  { id: 16, name: 'Community', image: require('../assets/categories/default.png') },
-  { id: 17, name: 'Charity', image: require('../assets/categories/default.png') },
-  { id: 18, name: 'Sustainability', image: require('../assets/categories/default.png') },
-  { id: 19, name: 'Social Progress', image: require('../assets/categories/default.png') },
-  { id: 20, name: 'Sports', image: require('../assets/categories/default.png') },
-  { id: 21, name: 'Technology', image: require('../assets/categories/default.png') },
-  { id: 22, name: 'Education', image: require('../assets/categories/default.png') },
-  { id: 23, name: 'Fashion', image: require('../assets/categories/default.png') },
-  { id: 24, name: 'Music', image: require('../assets/categories/default.png') },
-  { id: 25, name: 'Love', image: require('../assets/categories/default.png') },
-];
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const {
+    categories,
+    bookmarks,
+    sources,
+    fetchUserCateogries,
+    fetchUserSources,
+    updateUserSetting,
+  } = userStore((state) => state.userSlice);
+  const [parsedCategories, setParsedCategories] = useState<
+    { id: string; name: string; image: any }[]
+  >([]);
+  const [parsedSources, setParsedSources] = useState<{ id: string; name: string; image: any }[]>(
+    []
+  );
   useEffect(() => {
     const fetchUserID = async () => {
       try {
@@ -50,15 +38,48 @@ const Customize = () => {
         setIsLoading(false);
       }
     };
-
     fetchUserID();
   }, []);
 
+  useEffect(() => {
+    if (userID) {
+      fetchUserCateogries(userID);
+      fetchUserSources(userID);
+    }
+    // console.log(sources);
+  }, []);
+
+  useEffect(() => {
+    setParsedCategories(
+      categoriesList
+        .filter((category) => categories.includes(category.name))
+        .map((category) => ({ ...category, id: category.id.toString() }))
+    );
+
+    setParsedSources(
+      sourcesList
+        .filter((source) => sources.includes(source.name))
+        .map((source) => ({ ...source, id: source.id.toString() }))
+    );
+  }, [categories, sources]);
+
   return (
     <View style={styles.container}>
-      <Text>UserID: {userID || 'Not Found'}</Text>
-      <Text>News Sources</Text>
-      <CustomizeModal optionList={categories} />
+      <Text style={styles.header}>Personalize for you</Text>
+
+      {/* Followed Channels */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Followed Channels</Text>
+        <FollowedItem followedList={parsedSources} />
+        <CustomizeModal optionList={sourcesList} />
+      </View>
+
+      {/* Followed Topics */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Followed Topics</Text>
+        <FollowedItem followedList={parsedCategories} />
+        <CustomizeModal optionList={categoriesList} />
+      </View>
     </View>
   );
 };
@@ -66,15 +87,27 @@ const Customize = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
+    paddingTop: 100,
+    backgroundColor: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
   },
 });
-
 export default Customize;

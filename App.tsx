@@ -2,10 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import NavBar from 'components/Navigator';
 import OnboardingStack from 'components/OnboardingStack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { Text } from 'react-native';
 import { userStore } from './store/userStore';
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
     };
     checkNewUserStatus();
   }, []);
-  // moving this to outside of onboarding
+ 
   if (initialOpen === null) return null;
   return (
     <NavigationContainer>

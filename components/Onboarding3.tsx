@@ -27,7 +27,6 @@ const Onboarding3: React.FC = () => {
   const navigation = useNavigation<Onboarding3NavigationProp>();
   const selectedSources = userStore((state) => state.userSlice.sources);
   const setSelectedSources = userStore((state) => state.userSlice.setSources);
-  const { categories, bookmarks } = userStore((state) => state.userSlice);
   const createNewUser = userStore((state) => state.userSlice.createNewUser);
   const sources = [
     { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
@@ -64,7 +63,6 @@ const Onboarding3: React.FC = () => {
         bookmarks: userStore.getState().userSlice.bookmarks,
       };
       createNewUser(userData);
-      
       await AsyncStorage.setItem('user-storage', JSON.stringify(userData));
       navigation.navigate('Tabs'); // cannot use replace home as it is a tab navigator (note to self)
     } catch (error) {

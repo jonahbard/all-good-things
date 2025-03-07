@@ -8,7 +8,6 @@ export interface UserInfo {
   bookmarks: string[];
 }
 export interface UserSlice {
-  userID: string;
   categories: string[];
   sources: string[];
   bookmarks: [];
@@ -43,7 +42,6 @@ const API_URL = `https://project-api-all-good-things.onrender.com/api`;
 
 function createUserSlice(set: any, get: any): UserSlice {
   return {
-    userID: '',
     categories: [],
     sources: [],
     bookmarks: [],
@@ -91,7 +89,6 @@ function createUserSlice(set: any, get: any): UserSlice {
         handleApiError(error, get);
       }
     },
-    
     updateUserSetting: async (info: UserInfo, userID: string) => {
       try {
         const response = await fetch(`${API_URL}/user/updateUser/${userID}`, {
@@ -101,12 +98,11 @@ function createUserSlice(set: any, get: any): UserSlice {
         });
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        console.log("User settings updated successfully", data);
+        console.log('User settings updated successfully', data);
       } catch (error) {
         handleApiError(error, get);
       }
     },
-
     createNewUser: async (info: UserInfo) => {
       try {
         const response = await fetch(`${API_URL}/user/createUser`, {
@@ -117,9 +113,6 @@ function createUserSlice(set: any, get: any): UserSlice {
         const data = await handleApiResponse(response, set);
         if (!data) return;
         console.log('data', data);
-        set((state: { userSlice: UserSlice }) => {
-          state.userSlice.userID = data.uderId;
-        });
         const userData = {
           userID: data.userId,
         };
@@ -134,14 +127,8 @@ function createUserSlice(set: any, get: any): UserSlice {
 
 export const userStore = create<StoreState>()(
   devtools(
-    persist(
-      immer((set: any, get: any) => ({
-        userSlice: createUserSlice(set, get),
-      })),
-      {
-        name: 'user-storage', // unique name
-        storage: createJSONStorage(() => AsyncStorage), // storage provider
-      }
-    )
+    immer((set: any, get: any) => ({
+      userSlice: createUserSlice(set, get),
+    }))
   )
 );

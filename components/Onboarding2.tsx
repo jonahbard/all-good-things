@@ -18,6 +18,7 @@ interface Category {
 const Onboarding2: React.FC = () => {
   const navigation = useNavigation<Onboarding2NavigationProp>();
   const selectedCategories = userStore((state) => state.userSlice.categories);
+  // const setCategories = userStore((state) => state.userSlice.setCategories);
   const setCategories = userStore((state) => state.userSlice.setCategories);
 
   const categories = [
@@ -49,7 +50,11 @@ const Onboarding2: React.FC = () => {
   ];
 
   const handleSelect = (categoryName: string) => {
-    setCategories(categoryName);
+    if (setCategories) {
+      setCategories(categoryName);
+    } else {
+      console.error('setCategories is undefined!');
+    }
   };
 
   const displayCategories = (category: Category): JSX.Element => {
