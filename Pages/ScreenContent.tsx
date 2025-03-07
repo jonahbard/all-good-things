@@ -26,7 +26,10 @@ export default function ScreenContent({ navigation }: any) {
         console.log('balls');
         return response.json();
       })
-      .then((data: Article[]) => setArticles(data.slice(0, 10)));
+      .then((data: Article[]) => {
+        const shuffledData = data.sort(() => Math.random() - 0.5);
+        setArticles(shuffledData);
+      });
     console.log('articles:');
     console.log(articles);
   }, []);

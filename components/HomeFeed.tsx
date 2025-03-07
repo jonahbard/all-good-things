@@ -20,7 +20,7 @@ export default function HomeFeed({
 }) {
   return (
     <SafeAreaView>
-      <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">all good things</Text>
+      <Text className="font-ibm mb-2 ml-3 mt-10 text-4xl font-bold">all good things</Text>
       <ScrollView>
         {articles ? (
           articles.map((article, index) => (
