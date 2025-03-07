@@ -20,22 +20,12 @@ const Stack = createStackNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={ScreenContent} />
-      <Stack.Screen
-        name="ArticleDetail"
-        component={ArticleDetail}
-        options={{
-          title: 'Article Detail',
-          // headerShown: false,
-          headerStyle: {
-            backgroundColor: '#6C8D9F', // Set the same color as your header
-          },
-        }}
-      />
+     <Stack.Screen name="HomeScreen" component={ScreenContent} /> 
+     <Stack.Screen name="ArticleDetail" component={ArticleDetail} options={{ title: 'Article Detail' }} />
     </Stack.Navigator>
   );
 }
@@ -43,11 +33,11 @@ function HomeStack() {
 function ExploreStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Explore"
+    initialRouteName="ExploreScreen" 
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Explore" component={Explore} />
+      <Stack.Screen name="ExploreScreen"  component={Explore} />
     </Stack.Navigator>
   );
 }
@@ -72,11 +62,11 @@ function BookmarkStack() {
 function CustomizeStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Customize"
+    initialRouteName="CustomizeScreen" 
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Customize" component={Customize} />
+      <Stack.Screen name="CustomizeScreen" component={Customize} />
     </Stack.Navigator>
   );
 }

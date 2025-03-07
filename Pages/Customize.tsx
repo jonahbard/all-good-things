@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 import { categoriesList, sourcesList } from './data';
 
-import CustomizeModal from '~/components/CustomizeModal';
-import FollowedItem from '~/components/FollowedItem';
+import CustomizeModal from '~/components/ customization/CustomizeModal';
+import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
@@ -18,19 +18,21 @@ const Customize = () => {
     fetchUserSources,
     updateUserSetting,
   } = userStore((state) => state.userSlice);
+  const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
   const [parsedCategories, setParsedCategories] = useState<
     { id: string; name: string; image: any }[]
   >([]);
   const [parsedSources, setParsedSources] = useState<{ id: string; name: string; image: any }[]>(
     []
   );
+
   useEffect(() => {
     const fetchUserID = async () => {
       try {
         const storedUser = await AsyncStorage.getItem('user-storage');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
-          setUserID(parsedUser?.userID || 'Not Found'); // ✅ Get userID directly
+          setUserID(parsedUser?.userID || 'Not Found');
         }
       } catch (error) {
         console.error('Error fetching userID from AsyncStorage:', error);
@@ -39,15 +41,15 @@ const Customize = () => {
       }
     };
     fetchUserID();
-  }, []);
+  }, [userID]);
 
   useEffect(() => {
     if (userID) {
       fetchUserCateogries(userID);
       fetchUserSources(userID);
     }
-    // console.log(sources);
-  }, []);
+    console.log(sources);
+  }, [userID, refetchTrigger]);
 
   useEffect(() => {
     setParsedCategories(
@@ -64,23 +66,41 @@ const Customize = () => {
   }, [categories, sources]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Personalize for you</Text>
-
-      {/* Followed Channels */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Followed Channels</Text>
-        <FollowedItem followedList={parsedSources} />
-        <CustomizeModal optionList={sourcesList} />
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+      <View style={styles.container}>
+        <Text style={styles.header}>Personalize for you</Text>
+        {/* Followed Topics */}
+        <Text style={styles.sectionTitle}>Followed Topic</Text>
+        <View style={styles.section}>
+          <FollowedItem
+            followedList={parsedCategories}
+            userID={userID}
+            type="topic"
+            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+          />
+        </View>
+        <CustomizeModal
+          optionList={categoriesList}
+          id="categories-sheet"
+          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+        />
+        {/* Followed Channels */}
+        <Text style={styles.sectionTitle}>Followed Sources</Text>
+        <View style={styles.section}>
+          <FollowedItem
+            followedList={parsedSources}
+            userID={userID}
+            type="channel"
+            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+          />
+        </View>
+        <CustomizeModal
+          optionList={sourcesList}
+          id="sources-sheet"
+          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+        />
       </View>
-
-      {/* Followed Topics */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Followed Topics</Text>
-        <FollowedItem followedList={parsedCategories} />
-        <CustomizeModal optionList={categoriesList} />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -90,6 +110,7 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingTop: 100,
     backgroundColor: '#fff',
+    position: 'relative',
   },
   loadingContainer: {
     flex: 1,
@@ -102,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   section: {
-    marginBottom: 24,
+    marginBottom: 30,
   },
   sectionTitle: {
     fontSize: 18,

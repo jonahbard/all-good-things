@@ -7,7 +7,6 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import { RootStackParamList } from '../types';
 
-
 type OnboardingNavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding1'>;
 const Onboarding1: React.FC = () => {
   const [progress, setProgress] = useState(0);

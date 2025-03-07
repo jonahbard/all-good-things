@@ -1,41 +1,56 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Article } from '../types';
+import bookmarkEvents, { BOOKMARK_CHANGED } from './bookmark-events';
 
-const bookmarks_key = 'bookmarks';
+const BOOKMARKS_KEY = 'bookmarks';
 
-export const getBookmarks = async () => {
+export async function getBookmarks(): Promise<Article[]> {
   try {
-    const bookmarks = await AsyncStorage.getItem(bookmarks_key);
-    return bookmarks ? JSON.parse(bookmarks) : [];
+    const value = await AsyncStorage.getItem(BOOKMARKS_KEY);
+    if (value) {
+      return JSON.parse(value);
+    }
+    return [];
   } catch (error) {
-    console.error('Error getting bookmarks', error);
+    console.error('Error fetching bookmarks:', error);
     return [];
   }
-};
+}
 
-export const addBookmark = async (article: Article) => {
+export async function addBookmark(article: Article): Promise<void> {
   try {
     const bookmarks = await getBookmarks();
-    bookmarks.push(article);
-    await AsyncStorage.setItem(bookmarks_key, JSON.stringify(bookmarks));
+    const exists = bookmarks.some((b) => b.link === article.link);
+    if (!exists) {
+      bookmarks.push(article);
+      await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+      // Notify listeners that bookmarks changed
+      bookmarkEvents.emit(BOOKMARK_CHANGED);
+    }
   } catch (error) {
-    console.error('Error adding bookmark', error);
+    console.error('Error adding bookmark:', error);
   }
-};
+}
 
-export const removeBookmark = async (article: Article) => {
+export async function removeBookmark(article: Article): Promise<void> {
+  try {
+    let bookmarks = await getBookmarks();
+    bookmarks = bookmarks.filter((b) => b.link !== article.link);
+    await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    // Notify listeners that bookmarks changed
+    bookmarkEvents.emit(BOOKMARK_CHANGED);
+  } catch (error) {
+    console.error('Error removing bookmark:', error);
+  }
+}
+
+export async function isBookmarked(article: Article): Promise<boolean> {
   try {
     const bookmarks = await getBookmarks();
-    const newBookmarks = bookmarks.filter((b: Article) => b.link !== article.link);
-    await AsyncStorage.setItem(bookmarks_key, JSON.stringify(newBookmarks));
-    console.log('Bookmark removed');
+    return bookmarks.some((b) => b.link === article.link);
   } catch (error) {
-    console.error('Error removing bookmark', error);
+    console.error('Error checking if bookmarked:', error);
+    return false;
   }
-};
-
-export const isBookmarked = async (article: Article) => {
-  const bookmarks = await getBookmarks();
-  return bookmarks.some((b: Article) => b.link === article.link);
-};
+}

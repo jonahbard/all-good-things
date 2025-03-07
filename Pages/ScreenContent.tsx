@@ -15,11 +15,22 @@ export default function ScreenContent({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    fetch('https://project-api-all-good-things.onrender.com/api/articles')
-      .then((response) => response.json())
-      .then((data) => setArticles(data.slice(0, 10)));
-    // console.log('articles:', articles);
+    console.log('fetching articles');
+    fetch('https://project-api-all-good-things.onrender.com/api/articles', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        console.log('balls');
+        return response.json();
+      })
+      .then((data: Article[]) => setArticles(data.slice(0, 10)));
+    console.log('articles:');
+    console.log(articles);
   }, []);
+
   return (
     <View>
       <HomeFeed navigation={navigation} articles={articles} />
