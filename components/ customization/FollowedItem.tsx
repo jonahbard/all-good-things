@@ -20,7 +20,7 @@ const FollowedItem: React.FC<FollowedItemProps> = ({
     (state) => state.userSlice
   );
   const handleUnfollow = (itemName: string) => {
-    console.log('unfollowed item name', itemName);
+    // console.log('unfollowed item name', itemName);
     console.log('unfollowed item name', type);
     if (!userID) return;
     let updatedCategories = [...categories];
