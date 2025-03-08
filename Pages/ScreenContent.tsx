@@ -15,7 +15,6 @@ export default function ScreenContent({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    console.log('fetching articles');
     fetch('https://project-api-all-good-things.onrender.com/api/articles', {
       method: 'GET',
       headers: {
@@ -30,7 +29,6 @@ export default function ScreenContent({ navigation }: any) {
         const shuffledData = data.sort(() => Math.random() - 0.5);
         setArticles(shuffledData);
       });
-    console.log('articles:');
     console.log(articles);
   }, []);
 

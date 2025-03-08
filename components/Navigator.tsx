@@ -100,7 +100,7 @@ export default function NavBar() {
           tabBarActiveTintColor: '#E5A07D',
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Explore"
         component={ExploreStack}
         options={{
@@ -108,12 +108,12 @@ export default function NavBar() {
           tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
           tabBarActiveTintColor: '#E5A07D',
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Bookmark"
+        name="Bookmarks"
         component={BookmarkStack}
         options={{
-          tabBarLabel: 'Bookmark',
+          tabBarLabel: 'Bookmarks',
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="bookmark" color={color} size={size} />
           ),

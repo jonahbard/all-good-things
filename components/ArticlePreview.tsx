@@ -11,12 +11,6 @@ import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
 import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
 import { Article, RootStackParamList } from '../types';
 
-
-// Define the type for the navigation prop
-// type ArticlePreviewNavigationProp = NativeStackNavigationProp<
-//   { Home: undefined; ArticleDetail: { article: Article } },
-//   'Home' | 'ArticleDetail'
-// >;
 type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
 export default function ArticlePreview({
   // navigateToArticle,

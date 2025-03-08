@@ -1,7 +1,7 @@
 {
   "expo": {
     "newArchEnabled": true,
-    "name": "all-good-thing",
+    "name": "all good things",
     "slug": "all-good-things",
     "version": "1.0.0",
     "web": {
@@ -24,7 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jonahbard.allgoodthings"
+      "bundleIdentifier": "com.jonahbard.allgoodthings",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

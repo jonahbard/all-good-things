@@ -3,6 +3,7 @@ import * as Sharing from 'expo-sharing';
 import { SymbolView } from 'expo-symbols';
 import { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { titleCase } from 'title-case';
 
 import { removeBookmark } from '../lib/bookmark-functionality';
 import { Article } from '../types';
@@ -32,12 +33,26 @@ export default function BookmarkArticlePreview({
     // The event emitted in removeBookmark will notify ArticlePreview components
   };
 
+  const formatDate = (date: any): string => {
+    if (!date) return '';
+    if (date instanceof Date) return date.toLocaleDateString();
+    try {
+      return new Date(date).toLocaleDateString();
+    } catch (e) {
+      return '';
+    }
+  };
+
   return (
     <TouchableOpacity onPress={handlePress}>
       <View className="mx-2 my-1 flex flex-row items-center rounded-md bg-white p-3">
         <View className="flex-1">
-          <Text className="font-bold">{article.title}</Text>
-          <Text>{article.description}</Text>
+          <Text className="font-ibm-bold">{article.title}</Text>
+          <Text className=" text-gray-600">
+            <Text className="italic">{titleCase(article.source)}</Text>
+            {article.pubDate ? ` • ${formatDate(article.pubDate)}` : ''}
+          </Text>
+          <Text className="font-ibm">{article.description}</Text>
         </View>
         <View className="mx-3 flex flex-col">
           <TouchableOpacity

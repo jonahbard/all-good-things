@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-import { categoriesList, sourcesList } from './data';
+import { categoriesList, sourcesList } from '../data';
 
 import CustomizeModal from '~/components/ customization/CustomizeModal';
 import FollowedItem from '~/components/ customization/FollowedItem';
