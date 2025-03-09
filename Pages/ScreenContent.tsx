@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavBar from 'components/Navigator';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-
 import ArticleDetail from '../components/ArticleDetail';
 import ArticlePreview from '../components/ArticlePreview';
 import HomeFeed from '../components/HomeFeed';
@@ -19,14 +18,16 @@ export default function ScreenContent({ navigation }: any) {
   const sources = userStore((state) => state.userSlice.sources);
 
   // console.log('categories', categories);
-
   useEffect(() => {
-    fetchAllArticles(categories, sources);
-    setArticles(allArticles);
-  }, [categories, sources]);
-
-  // console.log('all articles', allArticles);
-
+    const fetchData = async () => {
+      await fetchAllArticles(categories, sources);
+      const updatedArticles = articleStore.getState().articleSlice.allArticles;
+      setArticles(updatedArticles);
+    };
+  
+    fetchData();
+  }, [categories, sources])
+  
   // useEffect(() => {
   //   fetch('https://project-api-all-good-things.onrender.com/api/articles', {
   //     method: 'GET',

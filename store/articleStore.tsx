@@ -34,8 +34,8 @@ type StoreState = {
   articleSlice: ArticleSlice;
 };
 
-// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-export const API_URL = `http://localhost:9090/api`;
+export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+// export const API_URL = `http://localhost:9090/api`;
 function createArticleSlice(set: any, get: any): ArticleSlice {
   return {
     allArticles: [],
@@ -54,7 +54,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
             (query ? '&' : '') +
             sources.map((source) => `source=${encodeURIComponent(source)}`).join('&');
         }
-        console.log('query string', query);
+        // console.log('query string', query);
         const response = await fetch(`${API_URL}/articles?${query}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
@@ -68,6 +68,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
           source: item.source,
           pubDate: new Date(item.pubDate),
         }));
+        // console.log(mappedArticles);
         set((state: { articleSlice: ArticleSlice }) => {
           state.articleSlice.allArticles = mappedArticles;
         });
