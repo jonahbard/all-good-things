@@ -1,13 +1,13 @@
-export type Article = {
-  title: string;
-  description: string;
-  img: string;
-  tags: string[];
-  link: string;
-  source: string;
-  pubDate: Date;
-};
-
+// export type Article = {
+//   title: string;
+//   description: string;
+//   img: string;
+//   tags: string[];
+//   link: string;
+//   source: string;
+//   pubDate: Date;
+// };
+import { Article } from "./store/articleStore";
 
 export type RootStackParamList = {
   Onboarding1: undefined;
@@ -18,5 +18,5 @@ export type RootStackParamList = {
   Explore: undefined;
   Bookmark: undefined;
   Customize: undefined;
-  ArticleDetail: { article: Article , }; //need list out prop that it recieves
+  ArticleDetail: { article: Article}; //need list out prop that it recieves
 };

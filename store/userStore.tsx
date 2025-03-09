@@ -8,9 +8,11 @@ export interface UserInfo {
   bookmarks: string[];
 }
 export interface UserSlice {
+  userID: string | null;
   categories: string[];
   sources: string[];
   bookmarks: [];
+  setUserID: (id: string) => void;
   setCategories: (categoryName: string) => void;
   setSources: (sourceName: string) => void;
   createNewUser: (info: UserInfo) => void;
@@ -39,9 +41,11 @@ export const handleApiError = (error: unknown, get: any) => {
 };
 
 export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+// export const API_URL = `http://localhost:9090/api`;
 
 function createUserSlice(set: any, get: any): UserSlice {
   return {
+    userID: null,
     categories: [],
     sources: [],
     bookmarks: [],
@@ -63,6 +67,11 @@ function createUserSlice(set: any, get: any): UserSlice {
         } else {
           state.userSlice.sources.push(sourceName);
         }
+      });
+    },
+    setUserID: (id: string) => {
+      set((state: { userSlice: UserSlice }) => {
+        state.userSlice.userID = id;
       });
     },
     fetchUserCateogries: async (userID: string) => {
@@ -99,6 +108,10 @@ function createUserSlice(set: any, get: any): UserSlice {
         const data = await handleApiResponse(response, set);
         if (!data) return;
         console.log('User settings updated successfully', data);
+        set((state: { userSlice: UserSlice }) => {
+          state.userSlice.categories = [...info.categories];
+          state.userSlice.sources = [...info.sources];
+        });
       } catch (error) {
         handleApiError(error, get);
       }

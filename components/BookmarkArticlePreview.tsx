@@ -6,7 +6,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { titleCase } from 'title-case';
 
 import { removeBookmark } from '../lib/bookmark-functionality';
-import { Article } from '../types';
+import { Article } from '~/store/articleStore';
 
 // Define the type for the navigation prop
 type ArticlePreviewNavigationProp = NativeStackNavigationProp<

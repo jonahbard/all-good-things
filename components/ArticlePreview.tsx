@@ -9,7 +9,8 @@ import { titleCase } from 'title-case';
 
 import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
 import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
-import { Article, RootStackParamList } from '../types';
+import {RootStackParamList } from '../types';
+import { Article } from '~/store/articleStore';
 
 type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
 export default function ArticlePreview({

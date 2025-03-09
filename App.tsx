@@ -10,6 +10,7 @@ import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text } from 'react-native';
 
+import { categoriesList, sourcesList } from './data';
 import { registerForPushNotifications, setupNotificationListeners } from './lib/notifications';
 import { userStore } from './store/userStore';
 
@@ -17,6 +18,16 @@ import { userStore } from './store/userStore';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
+  const categories = userStore((state) => state.userSlice.categories);
+  // const bookmarks = userStore((state) => state.userSlice.bookmarks);
+  const sources = userStore((state) => state.userSlice.sources);
+  const fetchUserCateogries = userStore((state) => state.userSlice.fetchUserCateogries);
+  const fetchUserSources = userStore((state) => state.userSlice.fetchUserSources);
+  const userID = userStore((state) => state.userSlice.userID);
+  const setUserID = userStore((state) => state.userSlice.setUserID);
+  // const updateUserSetting = userStore((state) => state.userSlice.updateUserSetting);
+  const [isLoading, setIsLoading] = useState(true);
   const [fontsLoaded] = useFonts({
     'IBMPlexSerif-Regular': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf'),
     'IBMPlexSerif-Bold': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf'),
@@ -32,6 +43,31 @@ export default function App() {
     registerForPushNotifications();
     setupNotificationListeners();
   }, []);
+
+  useEffect(() => {
+    const fetchUserID = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem('user-storage');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          setUserID(parsedUser?.userID || 'Not Found');
+        }
+      } catch (error) {
+        console.error('Error fetching userID from AsyncStorage:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUserID();
+  }, [userID]);
+
+  useEffect(() => {
+    if (userID) {
+      fetchUserCateogries(userID);
+      fetchUserSources(userID);
+    }
+    console.log(sources);
+  }, [userID]);
 
   if (!fontsLoaded) {
     return null;

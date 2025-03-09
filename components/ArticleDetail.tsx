@@ -1,12 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button, SafeAreaView, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { titleCase } from 'title-case';
 
-import { RootStackParamList, Article } from '../types';
+import { RootStackParamList } from '../types';
+
+import { Article, articleStore } from '~/store/articleStore';
 
 type ArticleDetailNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
 // Webview
@@ -14,6 +16,8 @@ export default function ArticleDetail() {
   const route = useRoute();
   const navigation = useNavigation<ArticleDetailNavigationProp>();
   const { article } = route.params as { article: Article };
+  const { articleView, fetchParsedArticle } = articleStore((state) => state.articleSlice);
+  console.log(article.link);
 
   // Crediting chatGPT for removing the Ads
   const injectScript = `
@@ -25,6 +29,11 @@ export default function ArticleDetail() {
   }
   enableReaderMode();
 `;
+  useEffect(() => {
+    fetchParsedArticle(article.link);
+  }, []);
+  // console.log(articleView);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#66858A' }}>
       <View

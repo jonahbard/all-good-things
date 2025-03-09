@@ -4,7 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
-import { RootStackParamList, Article } from '../types';
+import { RootStackParamList } from '../types';
+import { Article } from '~/store/articleStore';
 import ArticlePreview from './ArticlePreview';
 
 import { userStore } from '~/store/userStore';

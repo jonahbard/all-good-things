@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
@@ -10,39 +10,36 @@ interface FollowedItemProps {
   setRefetchTrigger: () => void;
 }
 
-const FollowedItem: React.FC<FollowedItemProps> = ({
-  followedList,
-  userID,
-  type,
-  setRefetchTrigger,
-}) => {
-  const { categories, bookmarks, sources, updateUserSetting } = userStore(
-    (state) => state.userSlice
-  );
-  const handleUnfollow = (itemName: string) => {
-    // console.log('unfollowed item name', itemName);
+const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefetchTrigger }) => {
+  const userID = userStore((state) => state.userSlice.userID);
+  const updateUserSetting = userStore((state) => state.userSlice.updateUserSetting);
+
+  const [localList, setLocalList] = useState(followedList);
+  useEffect(() => {
+    setLocalList(followedList);
+  }, [followedList]);
+
+  const handleUnfollow = async (itemName: string) => {
     console.log('unfollowed item name', type);
     if (!userID) return;
-    let updatedCategories = [...categories];
-    let updatedSources = [...sources];
+    setLocalList((prevList) => prevList.filter((item) => item.name !== itemName)); // instant update locally fitst
+    // update status
     if (type === 'topic') {
-      if (updatedCategories.includes(itemName)) {
-        updatedCategories = updatedCategories.filter((curr) => curr !== itemName);
-        console.log('Updated categories', updatedCategories);
-      }
+      userStore.getState().userSlice.setCategories(itemName);
     } else if (type === 'channel') {
-      if (updatedSources.includes(itemName)) {
-        updatedSources = updatedSources.filter((curr) => curr !== itemName);
-      }
+      userStore.getState().userSlice.setSources(itemName);
     }
-    const newPreferences = { categories: updatedCategories, sources: updatedSources, bookmarks };
-    updateUserSetting(newPreferences, userID);
-    setRefetchTrigger();
+    const { categories, sources, bookmarks } = userStore.getState().userSlice; // get directly most recent info
+    try {
+      await updateUserSetting({ categories, sources, bookmarks }, userID); // wait for fetching
+    } catch (error) {
+      console.error('Failed to update user settings', error);
+    }
   };
 
   return (
     <SwipeListView
-      data={followedList}
+      data={localList}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <View className="flex-row items-center border-b border-gray-200 bg-white p-4">

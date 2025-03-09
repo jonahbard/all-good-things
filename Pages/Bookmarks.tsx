@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import BookmarkArticlePreview from '~/components/BookmarkArticlePreview';
 import { getBookmarks } from '~/lib/bookmark-functionality';
-import { Article } from '~/types';
+import { Article } from '~/store/articleStore';
 
 type BookmarksNavigationProp = NativeStackNavigationProp<
   { Home: undefined; ArticleDetail: { article: Article } },
