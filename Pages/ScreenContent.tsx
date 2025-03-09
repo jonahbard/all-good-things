@@ -13,7 +13,7 @@ import { userStore } from '~/store/userStore';
 
 export default function ScreenContent({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
-  const { allArticles, fetchAllArticles } = articleStore((state) => state.articleSlice);
+  const fetchAllArticles = articleStore((state) => state.articleSlice.fetchAllArticles);
   const categories = userStore((state) => state.userSlice.categories);
   const sources = userStore((state) => state.userSlice.sources);
 
@@ -24,27 +24,8 @@ export default function ScreenContent({ navigation }: any) {
       const updatedArticles = articleStore.getState().articleSlice.allArticles;
       setArticles(updatedArticles);
     };
-  
     fetchData();
   }, [categories, sources])
-  
-  // useEffect(() => {
-  //   fetch('https://project-api-all-good-things.onrender.com/api/articles', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then((response) => {
-  //       // console.log('balls');
-  //       return response.json();
-  //     })
-  //     .then((data: Article[]) => {
-  //       const shuffledData = data.sort(() => Math.random() - 0.5);
-  //       setArticles(shuffledData);
-  //     });
-  //   console.log(articles);
-  // }, []);
 
   return (
     <View>
