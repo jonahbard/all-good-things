@@ -7,29 +7,43 @@ import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import ArticleDetail from '../components/ArticleDetail';
 import ArticlePreview from '../components/ArticlePreview';
 import HomeFeed from '../components/HomeFeed';
-import { Article } from '../types';
 
+import { Article, articleStore } from '~/store/articleStore';
+import { userStore } from '~/store/userStore';
 // const Stack = createNativeStackNavigator();
 
 export default function ScreenContent({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
+  const { allArticles, fetchAllArticles } = articleStore((state) => state.articleSlice);
+  const categories = userStore((state) => state.userSlice.categories);
+  const sources = userStore((state) => state.userSlice.sources);
+
+  // console.log('categories', categories);
 
   useEffect(() => {
-    console.log('fetching articles');
-    fetch('https://project-api-all-good-things.onrender.com/api/articles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        console.log('balls');
-        return response.json();
-      })
-      .then((data: Article[]) => setArticles(data.slice(0, 10)));
-    console.log('articles:');
-    console.log(articles);
-  }, []);
+    fetchAllArticles(categories, sources);
+    setArticles(allArticles);
+  }, [categories, sources]);
+
+  // console.log('all articles', allArticles);
+
+  // useEffect(() => {
+  //   fetch('https://project-api-all-good-things.onrender.com/api/articles', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((response) => {
+  //       // console.log('balls');
+  //       return response.json();
+  //     })
+  //     .then((data: Article[]) => {
+  //       const shuffledData = data.sort(() => Math.random() - 0.5);
+  //       setArticles(shuffledData);
+  //     });
+  //   console.log(articles);
+  // }, []);
 
   return (
     <View>

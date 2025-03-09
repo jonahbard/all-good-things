@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-import { categoriesList, sourcesList } from './data';
+import { categoriesList, sourcesList } from '../data';
 
 import CustomizeModal from '~/components/ customization/CustomizeModal';
 import FollowedItem from '~/components/ customization/FollowedItem';
@@ -27,37 +27,11 @@ const Customize = () => {
   );
 
   useEffect(() => {
-    const fetchUserID = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user-storage');
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          setUserID(parsedUser?.userID || 'Not Found');
-        }
-      } catch (error) {
-        console.error('Error fetching userID from AsyncStorage:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUserID();
-  }, [userID]);
-
-  useEffect(() => {
-    if (userID) {
-      fetchUserCateogries(userID);
-      fetchUserSources(userID);
-    }
-    console.log(sources);
-  }, [userID, refetchTrigger]);
-
-  useEffect(() => {
     setParsedCategories(
       categoriesList
         .filter((category) => categories.includes(category.name))
         .map((category) => ({ ...category, id: category.id.toString() }))
     );
-
     setParsedSources(
       sourcesList
         .filter((source) => sources.includes(source.name))
@@ -65,6 +39,7 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
+  // update the list such that we don't end up adding duplicate articles 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>

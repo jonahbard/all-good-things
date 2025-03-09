@@ -2,52 +2,81 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import NavBar from 'components/Navigator';
 import OnboardingStack from 'components/OnboardingStack';
-import React, { useEffect, useState } from 'react';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text } from 'react-native';
 
+import { categoriesList, sourcesList } from './data';
 import { registerForPushNotifications, setupNotificationListeners } from './lib/notifications';
 import { userStore } from './store/userStore';
 
+// Keep the splash screen visible while fonts are loading
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
-  const [initialOpen, setInitialOpen] = useState<boolean | null>(null);
-  const Stack = createStackNavigator();
+  const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
+  const categories = userStore((state) => state.userSlice.categories);
+  // const bookmarks = userStore((state) => state.userSlice.bookmarks);
+  const sources = userStore((state) => state.userSlice.sources);
+  const fetchUserCateogries = userStore((state) => state.userSlice.fetchUserCateogries);
+  const fetchUserSources = userStore((state) => state.userSlice.fetchUserSources);
+  const userID = userStore((state) => state.userSlice.userID);
+  const setUserID = userStore((state) => state.userSlice.setUserID);
+  // const updateUserSetting = userStore((state) => state.userSlice.updateUserSetting);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fontsLoaded] = useFonts({
+    'IBMPlexSerif-Regular': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf'),
+    'IBMPlexSerif-Bold': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf'),
+  });
 
-  // const resetAsyncStorage = async () => {
-  //   await AsyncStorage.clear();
-  //   console.log('AsyncStorage reset!');
-  // };
-
-  // AsyncStorage: {"userID":"67ca18d70f194467e4f39c15","categories":["Science","Animals"],"sources":["Science"],"bookmarks":[]}
-
-  useEffect(() => {
-    //  resetAsyncStorage();
-    const checkNewUserStatus = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem('user-storage');
-        const userData = storedUser ? JSON.parse(storedUser) : null; // can just chekc if
-        console.log('is id found', userData?.userSlice?.userID);
-        if (userData?.userID && userData?.userID !== '') {
-          setInitialOpen(false); // Skip onboarding
-          return;
-        }
-        setInitialOpen(true); // we need go through on boarding
-      } catch (error) {
-        console.error('Error checking onboarding status:', error);
-      }
-    };
-    checkNewUserStatus();
-  }, []);
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   useEffect(() => {
     registerForPushNotifications();
     setupNotificationListeners();
   }, []);
 
-  if (initialOpen === null) return null;
+  useEffect(() => {
+    const fetchUserID = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem('user-storage');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          setUserID(parsedUser?.userID || 'Not Found');
+        }
+      } catch (error) {
+        console.error('Error fetching userID from AsyncStorage:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUserID();
+  }, [userID]);
+
+  useEffect(() => {
+    if (userID) {
+      fetchUserCateogries(userID);
+      fetchUserSources(userID);
+    }
+    console.log(sources);
+  }, [userID]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  const Stack = createStackNavigator();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={onLayoutRootView}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Onboarding" component={OnboardingStack} />
         <Stack.Screen name="Tabs" component={NavBar} />

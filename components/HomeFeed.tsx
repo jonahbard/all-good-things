@@ -4,7 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
-import { RootStackParamList, Article } from '../types';
+import { RootStackParamList } from '../types';
+import { Article } from '~/store/articleStore';
 import ArticlePreview from './ArticlePreview';
 
 import { userStore } from '~/store/userStore';
@@ -23,10 +24,10 @@ export default function HomeFeed({
   navigation: HomeFeedNavigationProp;
   articles: Article[];
 }) {
-
   return (
     <SafeAreaView>
-      <Text className="mb-2 ml-3 mt-10 text-4xl font-bold">all good things</Text>
+      {/* Use font-ibm-bold instead of font-ibm + font-bold */}
+      <Text className="font-ibm-bold mb-2 ml-3 mt-10 text-4xl">all good things</Text>
       <ScrollView>
         {articles ? (
           articles.map((article, index) => (
