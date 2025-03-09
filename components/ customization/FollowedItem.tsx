@@ -22,15 +22,16 @@ const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefe
   const handleUnfollow = async (itemName: string) => {
     console.log('unfollowed item name', type);
     if (!userID) return;
-    setLocalList((prevList) => prevList.filter((item) => item.name !== itemName));
+    setLocalList((prevList) => prevList.filter((item) => item.name !== itemName)); // instant update locally fitst
+    // update status
     if (type === 'topic') {
       userStore.getState().userSlice.setCategories(itemName);
     } else if (type === 'channel') {
       userStore.getState().userSlice.setSources(itemName);
     }
-    const { categories, sources, bookmarks } = userStore.getState().userSlice;
+    const { categories, sources, bookmarks } = userStore.getState().userSlice; // get directly most recent info
     try {
-      await updateUserSetting({ categories, sources, bookmarks }, userID);
+      await updateUserSetting({ categories, sources, bookmarks }, userID); // wait for fetching
     } catch (error) {
       console.error('Failed to update user settings', error);
     }
