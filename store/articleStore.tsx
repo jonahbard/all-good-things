@@ -11,6 +11,7 @@ export interface Article {
   link: string;
   source: string;
   pubDate: Date;
+  categories: string[]
 }
 export interface ReaderView {
   title: string;
@@ -67,6 +68,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
           link: item.link,
           source: item.source,
           pubDate: new Date(item.pubDate),
+          categories: item.categories || []
         }));
         // console.log(mappedArticles);
         set((state: { articleSlice: ArticleSlice }) => {

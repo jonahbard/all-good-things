@@ -5,9 +5,9 @@ import React from 'react';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
 import { RootStackParamList } from '../types';
-import { Article } from '~/store/articleStore';
 import ArticlePreview from './ArticlePreview';
 
+import { Article } from '~/store/articleStore';
 import { userStore } from '~/store/userStore';
 
 // Define the type for the navigation prop
@@ -33,7 +33,7 @@ export default function HomeFeed({
           articles.map((article, index) => (
             <ArticlePreview
               key={index}
-              // navigateToArticle={(article) => navigation.navigate('ArticleDetail', { article })}
+              navigateToArticle={() => navigation.navigate('ArticleDetail', { article })}
               article={article}
             />
           ))

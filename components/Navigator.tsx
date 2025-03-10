@@ -42,6 +42,11 @@ function ExploreStack() {
         headerShown: false,
       }}>
       <Stack.Screen name="ExploreScreen" component={Explore} />
+      <Stack.Screen
+        name="ArticleDetail"
+        component={ArticleDetail}
+        options={{ title: 'Article Detail', headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

@@ -5,14 +5,15 @@ import OnboardingStack from 'components/OnboardingStack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useState } from 'react';
-
+import { LogBox, Text } from 'react-native';
 import './global.css';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text } from 'react-native';
 
 import { categoriesList, sourcesList } from './data';
 import { registerForPushNotifications, setupNotificationListeners } from './lib/notifications';
 import { userStore } from './store/userStore';
+
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']); // ignore scroll view error for now
 
 // Keep the splash screen visible while fonts are loading
 SplashScreen.preventAutoHideAsync();
