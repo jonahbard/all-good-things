@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +23,15 @@ const Explore = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <TextInput style={styles.input} value={searchString} onChangeText={setSearchString} />
+        <View style={styles.searchContainer}>
+          <Ionicons name="search-outline" size={20} color="#333" style={styles.searchIcon} />
+          <TextInput
+            style={styles.input}
+            value={searchString}
+            onChangeText={setSearchString}
+            placeholder="search for good news"
+          />
+        </View>
         <View style={styles.trendContainer}>
           <Text style={styles.headers}>Trending</Text>
           {topArticles
@@ -65,13 +74,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  input: {
-    height: 40,
-    margin: 15,
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#66858A',
+    borderColor: '#CBD5E1',
     borderRadius: 10,
-    padding: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    backgroundColor: '#F8FAFC',
+    marginHorizontal: 15,
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    paddingVertical: 5,
   },
   trendContainer: {
     marginHorizontal: 10,
