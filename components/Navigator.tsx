@@ -11,7 +11,7 @@ import Onboarding1 from './Onboarding1';
 import Onboarding2 from './Onboarding2';
 import Onboarding from '../Pages/Onboarding';
 import ScreenContent from '../Pages/ScreenContent';
-
+import ViewCategory from './explore/viewCategory';
 import Bookmarks from '~/Pages/Bookmarks';
 
 const Tab = createBottomTabNavigator();
@@ -46,6 +46,11 @@ function ExploreStack() {
         name="ArticleDetail"
         component={ArticleDetail}
         options={{ title: 'Article Detail', headerShown: false }}
+      />
+      <Stack.Screen
+        name="ViewCategory"
+        component={ViewCategory}
+        options={{ title: 'View Cateogory', headerShown: false }}
       />
     </Stack.Navigator>
   );

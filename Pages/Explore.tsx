@@ -23,7 +23,7 @@ const Explore = () => {
     <SafeAreaView>
       <ScrollView>
         <TextInput style={styles.input} value={searchString} onChangeText={setSearchString} />
-        <View>
+        <View style={styles.trendContainer}>
           <Text style={styles.headers}>Trending</Text>
           {topArticles
             ? topArticles
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     borderColor: '#66858A',
     borderRadius: 10,
     padding: 10,
+  },
+  trendContainer: {
+    marginHorizontal: 10,
   },
 });
 

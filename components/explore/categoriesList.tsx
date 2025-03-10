@@ -1,16 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { categoriesList } from '~/data';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '~/types';
+
+type ExploreNavigationProp = BottomTabNavigationProp<RootStackParamList, 'Explore'>;
 
 const Categories = () => {
+  const navigation = useNavigation<ExploreNavigationProp>();
   return (
     <View style={styles.container}>
       {categoriesList.map((category, index) => (
-        <View key={index} style={styles.categoryContainer}>
+        <TouchableOpacity
+          key={index}
+          style={styles.categoryContainer}
+          onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
           <Image source={category.image} className="mr-3 h-8 w-8" resizeMode="contain" />
           <Text>{category.name}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );

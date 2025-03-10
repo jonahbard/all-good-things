@@ -80,8 +80,8 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ navigateToArticle, arti
             <Text className="font-ibm mr-2">Tags:</Text>
             {article.categories && article.categories.length > 0 && (
               <View className="flex flex-row flex-wrap ">
-                {article.categories.map((category, index) => (
-                  <Text key={index} className="font-ibm mr-2">
+                {article.categories.slice(0,3).map((category, index) => (
+                  <Text key={index} className="font-ibm mr-2"  numberOfLines={1} >
                     {category}
                     {/* last item no comma, but feel free change this with styling. probably write 
                       a function

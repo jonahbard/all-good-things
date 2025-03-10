@@ -28,7 +28,6 @@ export default function App() {
   const userID = userStore((state) => state.userSlice.userID);
   const setUserID = userStore((state) => state.userSlice.setUserID);
   // const updateUserSetting = userStore((state) => state.userSlice.updateUserSetting);
-  const [isLoading, setIsLoading] = useState(true);
   const [fontsLoaded] = useFonts({
     'IBMPlexSerif-Regular': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf'),
     'IBMPlexSerif-Bold': require('./assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf'),
@@ -55,8 +54,6 @@ export default function App() {
         }
       } catch (error) {
         console.error('Error fetching userID from AsyncStorage:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchUserID();
