@@ -26,8 +26,8 @@ type StoreState = {
   userSlice: UserSlice;
 };
 
-export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-// export const API_URL = `http://localhost:9090/api`;
+// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+export const API_URL = `http://localhost:9090/api`;
 
 function createUserSlice(set: any, get: any): UserSlice {
   return {

@@ -7,6 +7,7 @@ import { WebView } from 'react-native-webview';
 import { titleCase } from 'title-case';
 
 import { RootStackParamList } from '../types';
+import ReaderViewComponent from './ReaderView';
 
 import { Article, articleStore } from '~/store/articleStore';
 
@@ -17,7 +18,6 @@ export default function ArticleDetail() {
   const navigation = useNavigation<ArticleDetailNavigationProp>();
   const { article } = route.params as { article: Article };
   const { articleView, fetchParsedArticle } = articleStore((state) => state.articleSlice);
-  console.log(article.link);
 
   // Crediting chatGPT for removing the Ads
   const injectScript = `
@@ -30,7 +30,10 @@ export default function ArticleDetail() {
   enableReaderMode();
 `;
   useEffect(() => {
-    fetchParsedArticle(article.link);
+    const fetch = async () => {
+      await fetchParsedArticle(article.link);
+    };
+    fetch();
   }, []);
   // console.log(articleView);
 
@@ -46,7 +49,7 @@ export default function ArticleDetail() {
         }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={{ backgroundColor: '#C1E1E0', padding: 2, borderRadius: 20 }}>
-            <Ionicons name="chevron-back" color="#000000" size={24} />,
+            <Ionicons name="chevron-back" color="#000000" size={24} />
           </View>
         </TouchableOpacity>
         <Text style={{ marginLeft: 10, fontWeight: 'bold', color: '#FFFF' }}>
@@ -54,16 +57,22 @@ export default function ArticleDetail() {
         </Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={{ backgroundColor: '#C1E1E0', padding: 2, borderRadius: 20 }}>
-            <Ionicons name="ellipsis-horizontal" color="#000000" size={24} />,
+            <Ionicons name="ellipsis-horizontal" color="#000000" size={24} />
           </View>
         </TouchableOpacity>
       </View>
-      <WebView
+      {/* <WebView
         source={{ uri: article.link }}
         style={{ flex: 1 }}
         injectedJavaScript={injectScript}
         javaScriptEnabled
         startInLoadingState
+      /> */}
+      <ReaderViewComponent
+        url={article.link}
+        title={article.title}
+        pubDate={article.pubDate}
+        source={article.source}
       />
     </SafeAreaView>
   );
