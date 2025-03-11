@@ -78,7 +78,10 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
         <View className="flex-1">
           <Text className="font-ibm-bold">{article.title}</Text>
           <Text className="mt-1 font-ibm text-gray-600">
-            {titleCase(article.source)} {article.pubDate ? `• ${formatDate(article.pubDate)}` : ''}
+            {titleCase(article.source)}{' '}
+            {article.pubDate && formatDate(article.pubDate) !== 'Invalid Date'
+              ? `• ${formatDate(article.pubDate)}`
+              : ''}
           </Text>
           <Text
             className="mt-1 font-ibm"

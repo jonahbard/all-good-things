@@ -46,7 +46,12 @@ const Customize = () => {
           />
         </View>
         <CustomizeModal
-          optionList={categoriesList}
+          optionList={categoriesList.filter(
+            (category) =>
+              !parsedCategories.some(
+                (parsedCategory) => parsedCategory.id === category.id.toString()
+              )
+          )}
           id="categories-sheet"
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
@@ -61,7 +66,10 @@ const Customize = () => {
           />
         </View>
         <CustomizeModal
-          optionList={sourcesList}
+          optionList={sourcesList.filter(
+            (source) =>
+              !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
+          )}
           id="sources-sheet"
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />

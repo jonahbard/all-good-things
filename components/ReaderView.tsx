@@ -37,8 +37,12 @@ const ReaderViewComponent: React.FC<ReaderViewProps> = ({
         <Text style={styles.title}>{title}</Text>
         <View style={styles.belowTitle}>
           <Text>{titleCase(source)}</Text>
-          <Text> • </Text>
-          <Text>{formatDate(pubDate)}</Text>
+          {formatDate(pubDate) !== 'Invalid Date' && (
+            <>
+              <Text> • </Text>
+              <Text>{formatDate(pubDate)}</Text>
+            </>
+          )}
         </View>
       </View>
       <RenderHtml
