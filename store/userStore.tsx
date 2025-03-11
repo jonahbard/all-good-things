@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { devtools, persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+
 import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 export interface UserInfo {
   categories: string[];
@@ -65,6 +66,7 @@ function createUserSlice(set: any, get: any): UserSlice {
         set((state: { userSlice: UserSlice }) => {
           state.userSlice.categories = data;
         });
+        console.log('categories', data);
       } catch (error) {
         handleApiError(error, get);
       }
