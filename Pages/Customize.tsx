@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
 
 import CustomizeModal from '~/components/ customization/CustomizeModal';
 import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
+
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
   const { categories, sources } = userStore((state) => state.userSlice);
@@ -30,79 +31,54 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
-  // update the list such that we don't end up adding duplicate articles
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-      <View style={styles.container}>
-        <Text style={styles.header}>Personalize for you</Text>
-        {/* Followed Topics */}
-        <Text style={styles.sectionTitle}>Followed Topic</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedCategories}
-            userID={userID}
-            type="topic"
+    <SafeAreaView className="px-1">
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">customize</Text>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+        <View className="relative flex-1 bg-white p-4 pt-[100px]">
+          {/* Followed Topics */}
+          <Text className="mb-2 font-ibm-bold text-gray-500">followed topics</Text>
+          <View className="mb-[30px] font-ibm">
+            <FollowedItem
+              followedList={parsedCategories}
+              userID={userID}
+              type="topic"
+              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+            />
+          </View>
+          <CustomizeModal
+            optionList={categoriesList.filter(
+              (category) =>
+                !parsedCategories.some(
+                  (parsedCategory) => parsedCategory.id === category.id.toString()
+                )
+            )}
+            id="categories-sheet"
+            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+          />
+          {/* Followed Channels */}
+          <Text className="mb-2 font-ibm-bold text-gray-500">followed sources</Text>
+          <View className="mb-[30px] font-ibm">
+            <FollowedItem
+              followedList={parsedSources}
+              userID={userID}
+              type="channel"
+              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+            />
+          </View>
+          <CustomizeModal
+            optionList={sourcesList.filter(
+              (source) =>
+                !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
+            )}
+            id="sources-sheet"
             setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
           />
         </View>
-        <CustomizeModal
-          optionList={categoriesList.filter(
-            (category) =>
-              !parsedCategories.some(
-                (parsedCategory) => parsedCategory.id === category.id.toString()
-              )
-          )}
-          id="categories-sheet"
-          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-        />
-        {/* Followed Channels */}
-        <Text style={styles.sectionTitle}>Followed Sources</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedSources}
-            userID={userID}
-            type="channel"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-          />
-        </View>
-        <CustomizeModal
-          optionList={sourcesList.filter(
-            (source) =>
-              !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
-          )}
-          id="sources-sheet"
-          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-        />
-      </View>
-    </ScrollView>
+        <View style={{ height: 80 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    paddingTop: 100,
-    backgroundColor: '#fff',
-    position: 'relative',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  section: {
-    marginBottom: 30,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-});
 export default Customize;

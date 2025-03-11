@@ -44,7 +44,7 @@ const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefe
       renderItem={({ item }) => (
         <View className="flex-row items-center border-b border-gray-200 bg-white p-4">
           <Image source={item.image} className="mr-3 h-8 w-8" resizeMode="contain" />
-          <Text className="text-lg font-medium">{item.name}</Text>
+          <Text className="font-ibm text-lg">{item.name}</Text>
         </View>
       )}
       renderHiddenItem={({ item }) => (
@@ -52,7 +52,7 @@ const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefe
           <TouchableOpacity
             className="rounded-md bg-red-500 px-4 py-2"
             onPress={() => handleUnfollow(item.name)}>
-            <Text className="font-bold text-white">Unfollow</Text>
+            <Text className="font-ibm-bold text-white">Unfollow</Text>
           </TouchableOpacity>
         </View>
       )}
