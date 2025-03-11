@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Article } from '../types';
 import bookmarkEvents, { BOOKMARK_CHANGED } from './bookmark-events';
+
+import { Article } from '~/store/articleStore';
 
 const BOOKMARKS_KEY = 'bookmarks';
 

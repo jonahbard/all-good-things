@@ -1,10 +1,8 @@
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 
-import { RootStackParamList } from '/Applications/Academics /Winter 2025/CS52/goodNews/project-all-good-things/types';
-
+import { RootStackParamList } from '../../types';
 import ArticlePreview from '../ArticlePreview';
 
 import { Article } from '~/store/articleStore';
@@ -32,7 +30,9 @@ const ViewCategory: React.FC<ViewCategoryProps> = () => {
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
-        <Text style={styles.text}>{categoryName}</Text>
+        <Text className="font-ibm-bold" style={styles.text}>
+          {categoryName}
+        </Text>
         {articles
           ? articles.map((article, index) => (
               <ArticlePreview

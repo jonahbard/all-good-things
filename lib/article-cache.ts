@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Article } from '../types';
+import { Article } from '~/store/articleStore';
 
 const cache_key = 'article_cache';
 

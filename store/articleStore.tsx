@@ -2,7 +2,8 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { handleApiError, handleApiResponse } from '~/utils/apiUtils';
+import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
+
 export interface Article {
   title: string;
   description: string;
@@ -37,8 +38,6 @@ type StoreState = {
   articleSlice: ArticleSlice;
 };
 
-// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-export const API_URL = `http://localhost:9090/api`;
 function createArticleSlice(set: any, get: any): ArticleSlice {
   return {
     allArticles: [],
@@ -58,22 +57,28 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
             (query ? '&' : '') +
             sources.map((source) => `source=${encodeURIComponent(source)}`).join('&');
         }
-        // console.log('query string', query);
+
         const response = await fetch(`${API_URL}/articles?${query}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        // console.log('retrieved data', data);
-        const mappedArticles: Article[] = data.map((item: any) => ({
-          title: item.title,
-          description: item.description,
-          img: item.img || '',
-          tags: item.categories || [],
-          link: item.link,
-          source: item.source,
-          pubDate: new Date(item.pubDate),
-          categories: item.categories || [],
-        }));
-        // console.log(mappedArticles);
+
+        const mappedArticles: Article[] = data
+          .map((item: any) => ({
+            title: item.title,
+            description: item.description,
+            img: item.img || '',
+            tags: item.categories || [],
+            link: item.link,
+            source: item.source,
+            pubDate: new Date(item.pubDate),
+            categories: item.categories || [],
+          }))
+          .sort((a: Article, b: Article) => {
+            const dateA = new Date(a.pubDate);
+            const dateB = new Date(b.pubDate);
+            return dateB.getTime() - dateA.getTime();
+          });
+
         set((state: { articleSlice: ArticleSlice }) => {
           state.articleSlice.allArticles = mappedArticles;
         });
@@ -90,7 +95,6 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
         set((state: { articleSlice: ArticleSlice }) => {
           state.articleSlice.readerView = data;
         });
-
       } catch (error) {
         handleApiError(error, get);
       }

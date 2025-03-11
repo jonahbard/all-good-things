@@ -1,11 +1,11 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Sharing from 'expo-sharing';
 import { SymbolView } from 'expo-symbols';
-import { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { titleCase } from 'title-case';
 
 import { removeBookmark } from '../lib/bookmark-functionality';
+
 import { Article } from '~/store/articleStore';
 
 // Define the type for the navigation prop

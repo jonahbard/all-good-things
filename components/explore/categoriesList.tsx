@@ -1,10 +1,9 @@
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { categoriesList } from '~/data';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '~/types';
 
 type ExploreNavigationProp = BottomTabNavigationProp<RootStackParamList, 'Explore'>;
@@ -18,8 +17,8 @@ const Categories = () => {
           key={index}
           style={styles.categoryContainer}
           onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
-          <Image source={category.image} className="mr-3 h-8 w-8" resizeMode="contain" />
-          <Text>{category.name}</Text>
+          <Image source={category.image} className="mr-3 h-20 w-20 rounded" resizeMode="contain" />
+          <Text className="font-ibm">{category.name}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
-    padding: 16,
+    padding: 8,
   },
 });
 
