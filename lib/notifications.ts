@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-import { API_URL } from '~/store/userStore';
+import { API_URL } from '../utils/apiUtils';
 
 const API_REGISTER_PUSH_TOKEN = `${API_URL}/register-token`;
 

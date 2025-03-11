@@ -5,7 +5,6 @@ import HomeFeed from '../components/HomeFeed';
 
 import { Article, articleStore } from '~/store/articleStore';
 import { userStore } from '~/store/userStore';
-// const Stack = createNativeStackNavigator();
 
 export default function ScreenContent({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);

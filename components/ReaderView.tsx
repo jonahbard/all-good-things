@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { titleCase } from 'title-case';
 
-import { ReaderView, articleStore } from '~/store/articleStore';
+import { ReaderView } from '~/store/articleStore';
 
 interface ReaderViewProps {
   url: string;
@@ -20,16 +20,6 @@ const ReaderViewComponent: React.FC<ReaderViewProps> = ({
   readerDetails,
 }) => {
   const { width } = useWindowDimensions();
-  //   const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
-  //   const { fetchParsedArticle } = articleStore.getState().articleSlice;
-  //   useEffect(() => {
-  //     const fetch = async () => {
-  //       await fetchParsedArticle(url);
-  //       const details = articleStore.getState().articleSlice.readerView;
-  //       setReaderDetails(details);
-  //     };
-  //     fetch();
-  //   }, [url]);
 
   const formatDate = (date: any): string => {
     if (!date) return '';

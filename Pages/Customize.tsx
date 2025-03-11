@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
 
@@ -9,15 +8,7 @@ import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const {
-    categories,
-    bookmarks,
-    sources,
-    fetchUserCateogries,
-    fetchUserSources,
-    updateUserSetting,
-  } = userStore((state) => state.userSlice);
+  const { categories, sources } = userStore((state) => state.userSlice);
   const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
   const [parsedCategories, setParsedCategories] = useState<
     { id: string; name: string; image: any }[]
@@ -39,7 +30,7 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
-  // update the list such that we don't end up adding duplicate articles 
+  // update the list such that we don't end up adding duplicate articles
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>

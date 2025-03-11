@@ -1,8 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 
 import BookmarkArticlePreview from '~/components/BookmarkArticlePreview';
 import { getBookmarks } from '~/lib/bookmark-functionality';

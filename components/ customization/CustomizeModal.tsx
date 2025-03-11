@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react
 import ActionSheet, { SheetManager, SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import PlusButton from './PlusButton';
 
 import { userStore } from '~/store/userStore';

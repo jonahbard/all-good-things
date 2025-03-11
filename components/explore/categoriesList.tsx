@@ -1,10 +1,9 @@
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { categoriesList } from '~/data';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '~/types';
 
 type ExploreNavigationProp = BottomTabNavigationProp<RootStackParamList, 'Explore'>;

@@ -1,7 +1,6 @@
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 
 import { RootStackParamList } from '../../types';
 

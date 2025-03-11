@@ -1,6 +1,4 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
@@ -8,7 +6,6 @@ import { RootStackParamList } from '../types';
 import ArticlePreview from './ArticlePreview';
 
 import { Article } from '~/store/articleStore';
-import { userStore } from '~/store/userStore';
 
 type HomeFeedNavigationProp = BottomTabNavigationProp<RootStackParamList, 'Home'>;
 export default function HomeFeed({
@@ -20,7 +17,6 @@ export default function HomeFeed({
 }) {
   return (
     <SafeAreaView>
-      {/* Use font-ibm-bold instead of font-ibm + font-bold */}
       <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">all good things</Text>
       <ScrollView>
         {articles ? (

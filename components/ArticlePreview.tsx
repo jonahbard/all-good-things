@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Sharing from 'expo-sharing';
 import { SymbolView } from 'expo-symbols';
@@ -24,6 +23,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   descriptionLines,
 }) => {
   const navigation = useNavigation<ArticlePreviewNavigationProp>();
+
   const handlePress = () => {
     // navigation.navigate('ArticleDetail', { article });
     navigateToArticle();
