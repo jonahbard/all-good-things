@@ -10,20 +10,36 @@ interface ReaderViewProps {
   title: string;
   pubDate: Date;
   source: string;
-  readerDetails: ReaderView
+  readerDetails: ReaderView;
 }
-const ReaderViewComponent: React.FC<ReaderViewProps> = ({ url, title, pubDate, source, readerDetails }) => {
-    const { width } = useWindowDimensions();
-//   const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
-//   const { fetchParsedArticle } = articleStore.getState().articleSlice;
-//   useEffect(() => {
-//     const fetch = async () => {
-//       await fetchParsedArticle(url);
-//       const details = articleStore.getState().articleSlice.readerView;
-//       setReaderDetails(details);
-//     };
-//     fetch();
-//   }, [url]);
+const ReaderViewComponent: React.FC<ReaderViewProps> = ({
+  url,
+  title,
+  pubDate,
+  source,
+  readerDetails,
+}) => {
+  const { width } = useWindowDimensions();
+  //   const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
+  //   const { fetchParsedArticle } = articleStore.getState().articleSlice;
+  //   useEffect(() => {
+  //     const fetch = async () => {
+  //       await fetchParsedArticle(url);
+  //       const details = articleStore.getState().articleSlice.readerView;
+  //       setReaderDetails(details);
+  //     };
+  //     fetch();
+  //   }, [url]);
+
+  const formatDate = (date: any): string => {
+    if (!date) return '';
+    if (date instanceof Date) return date.toLocaleDateString();
+    try {
+      return new Date(date).toLocaleDateString();
+    } catch (e) {
+      return '';
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -32,14 +48,7 @@ const ReaderViewComponent: React.FC<ReaderViewProps> = ({ url, title, pubDate, s
         <View style={styles.belowTitle}>
           <Text>{titleCase(source)}</Text>
           <Text> • </Text>
-          <Text>
-            {/* GPT parsing this */}
-            {pubDate.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </Text>
+          <Text>{formatDate(pubDate)}</Text>
         </View>
       </View>
       <RenderHtml

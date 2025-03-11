@@ -24,6 +24,7 @@ export default function ArticleDetail() {
   const { showActionSheetWithOptions } = useActionSheet();
   const [isReaderView, setIsReaderView] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const handleOptions = () => {
     showActionSheetWithOptions(
       {
@@ -35,6 +36,7 @@ export default function ArticleDetail() {
       }
     );
   };
+
   const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
   const { fetchParsedArticle } = articleStore.getState().articleSlice;
   useEffect(() => {
@@ -55,6 +57,8 @@ export default function ArticleDetail() {
   }, [article.link]);
 
   // console.log(articleView);
+
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#66858A' }}>
