@@ -92,16 +92,18 @@ function createExploreStore(set: any, get: any): ExploreSlice {
         const response = await fetch(`${API_URL}/articles?category=${categoryName}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        const mappedArticles: Article[] = data.map((item: any) => ({
-          title: item.title,
-          description: item.description,
-          img: item.img || '',
-          tags: item.categories || [],
-          link: item.link,
-          source: item.source,
-          pubDate: new Date(item.pubDate),
-          categories: item.categories || [],
-        }));
+        const mappedArticles: Article[] = data
+          .map((item: any) => ({
+            title: item.title,
+            description: item.description,
+            img: item.img || '',
+            tags: item.categories || [],
+            link: item.link,
+            source: item.source,
+            pubDate: new Date(item.pubDate),
+            categories: item.categories || [],
+          }))
+          .sort((a: Article, b: Article) => b.pubDate.getTime() - a.pubDate.getTime());
         set((state: { exploreSlice: ExploreSlice }) => {
           state.exploreSlice.categorizedArticles = mappedArticles;
         });

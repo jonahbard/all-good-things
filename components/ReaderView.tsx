@@ -26,7 +26,7 @@ const ReaderViewComponent: React.FC<ReaderViewProps> = ({
     if (date instanceof Date) return date.toLocaleDateString();
     try {
       return new Date(date).toLocaleDateString();
-    } catch (e) {
+    } catch  {
       return '';
     }
   };
