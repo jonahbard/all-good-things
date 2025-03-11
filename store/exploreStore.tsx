@@ -13,6 +13,7 @@ export interface ExploreSlice {
   fetchArticleByCategory: (categoryName: string) => void;
   fetchTrendingArticles: () => void;
   searchArticles: (searchString: string) => void;
+  clearSearchedArticles: () => void;
 }
 
 type StoreState = {
@@ -25,6 +26,12 @@ function createExploreStore(set: any, get: any): ExploreSlice {
     trendingArticles: [],
     searchedArticles: [],
     loadingSearchedArticles: false,
+
+    clearSearchedArticles: () => {
+      set((state: { exploreSlice: ExploreSlice }) => {
+        state.exploreSlice.searchedArticles = [];
+      });
+    },
 
     searchArticles: async (searchString: string) => {
       try {

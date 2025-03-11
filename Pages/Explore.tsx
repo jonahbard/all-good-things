@@ -26,11 +26,13 @@ const Explore = () => {
   const topArticles = exploreStore((state) => state.exploreSlice.trendingArticles);
   const searchResults = exploreStore((state) => state.exploreSlice.searchedArticles);
   const fetchTrendingArticles = exploreStore((state) => state.exploreSlice.fetchTrendingArticles);
+  const clearSearchedArticles = exploreStore((state) => state.exploreSlice.clearSearchedArticles);
   const navigation = useNavigation<ExploreNavigationProp>();
   const searchArticles = exploreStore((state) => state.exploreSlice.searchArticles);
   const isSearchLoading = exploreStore((state) => state.exploreSlice.loadingSearchedArticles);
 
   useEffect(() => {
+    // clearSearchedArticles();
     fetchTrendingArticles();
   }, []);
 
@@ -46,15 +48,16 @@ const Explore = () => {
 
   // Handle text input changes
   const handleSearchChange = (text: string) => {
-    setSearchString(text);
-    if (text.trim().length === 0) {
-      return;
+    if (text.trim() === '') {
+      clearSearchedArticles();
     }
+    setSearchString(text);
     debouncedSearch(text);
   };
 
   const clearSearch = () => {
     setSearchString('');
+    clearSearchedArticles();
   };
 
   return (
@@ -73,28 +76,8 @@ const Explore = () => {
           </TouchableOpacity>
         )}
       </View>
-      {searchString.trim() !== '' && !isSearchLoading && searchResults.length === 0 ? (
-        <View className="h-screen flex-1 items-center justify-center">
-          <Text className="text-center font-ibm text-lg text-gray-500">
-            No results found for "{searchString}"
-          </Text>
-        </View>
-      ) : searchResults.length > 0 ? (
-        <ScrollView>
-          {searchResults.map((article, index) => (
-            <ArticlePreview
-              key={index}
-              navigateToArticle={() => navigation.navigate('ArticleDetail', { article })}
-              article={article}
-              descriptionLines={2}
-            />
-          ))}
-        </ScrollView>
-      ) : isSearchLoading ? (
-        <View className="h-screen flex-1 items-center justify-center">
-          <Text className="text-center font-ibm text-xl text-gray-500">Searching...</Text>
-        </View>
-      ) : (
+
+      {searchString.trim() === '' ? (
         <ScrollView>
           <View style={styles.trendContainer}>
             <Text className="font-ibm-bold" style={styles.headers}>
@@ -116,6 +99,27 @@ const Explore = () => {
             <Categories />
           </View>
         </ScrollView>
+      ) : searchString.trim() !== '' && isSearchLoading ? (
+        <View className="h-screen flex-1 items-center justify-center">
+          <Text className="text-center font-ibm text-xl text-gray-500">Searching...</Text>
+        </View>
+      ) : searchString.trim() !== '' && !isSearchLoading && searchResults.length > 0 ? (
+        <ScrollView>
+          {searchResults.map((article, index) => (
+            <ArticlePreview
+              key={index}
+              navigateToArticle={() => navigation.navigate('ArticleDetail', { article })}
+              article={article}
+              descriptionLines={2}
+            />
+          ))}
+        </ScrollView>
+      ) : (
+        <View className="h-screen flex-1 items-center justify-center">
+          <Text className="text-center font-ibm text-lg text-gray-500">
+            No results found for "{searchString}"
+          </Text>
+        </View>
       )}
     </SafeAreaView>
   );
