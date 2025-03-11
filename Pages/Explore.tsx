@@ -96,7 +96,7 @@ const Explore = () => {
           ))}
         </ScrollView>
       ) : searchString.trim() !== '' ? (
-        <View className="h-screen flex-1 items-center justify-center">
+        <View style={{ height: '95%', justifyContent: 'center', alignItems: 'center' }}>
           <Text className="text-center font-ibm text-lg text-gray-500">
             No results found for "{searchString}"
           </Text>
