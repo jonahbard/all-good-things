@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Sharing from 'expo-sharing';
 import { SymbolView } from 'expo-symbols';
@@ -15,13 +14,19 @@ import { Article } from '~/store/articleStore';
 type ArticlePreviewProps = {
   article: Article;
   navigateToArticle: () => void;
+  descriptionLines?: number;
 };
 type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
-const ArticlePreview: React.FC<ArticlePreviewProps> = ({ navigateToArticle, article }) => {
+const ArticlePreview: React.FC<ArticlePreviewProps> = ({
+  navigateToArticle,
+  article,
+  descriptionLines,
+}) => {
   const navigation = useNavigation<ArticlePreviewNavigationProp>();
+
   const handlePress = () => {
     // navigation.navigate('ArticleDetail', { article });
-    navigateToArticle()
+    navigateToArticle();
   };
 
   const [bookmarked, setBookmarked] = useState(false);
@@ -72,26 +77,29 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ navigateToArticle, arti
       <View className="mx-2 my-1 flex flex-row rounded-md bg-white p-3">
         <View className="flex-1">
           <Text className="font-ibm-bold">{article.title}</Text>
-          <Text className="font-ibm text-gray-600">
-            {titleCase(article.source)} {article.pubDate ? `• ${formatDate(article.pubDate)}` : ''}
+          <Text className="mt-1 font-ibm text-gray-600">
+            {titleCase(article.source)}{' '}
+            {article.pubDate && formatDate(article.pubDate) !== 'Invalid Date'
+              ? `• ${formatDate(article.pubDate)}`
+              : ''}
           </Text>
-          <Text className="font-ibm">{article.description}</Text>
-          <View className="flex flex-row">
-            <Text className="font-ibm mr-2">Tags:</Text>
-            {article.categories && article.categories.length > 0 && (
-              <View className="flex flex-row flex-wrap ">
-                {article.categories.slice(0,3).map((category, index) => (
-                  <Text key={index} className="font-ibm mr-2"  numberOfLines={1} >
+          <Text
+            className="mt-1 font-ibm"
+            numberOfLines={descriptionLines || undefined}
+            ellipsizeMode="tail">
+            {article.description}
+          </Text>
+          {article.categories && article.categories.length > 0 && (
+            <View className="mt-2 flex flex-row flex-wrap">
+              {article.categories.slice(0, 3).map((category, index) => (
+                <View key={index} className="mb-1 mr-2 rounded-full bg-gray-100 px-3 py-2">
+                  <Text className="font-ibm text-xs text-gray-700" numberOfLines={1}>
                     {category}
-                    {/* last item no comma, but feel free change this with styling. probably write 
-                      a function
-                     */}
-                    {index < article.categories.length - 1 && ','}
                   </Text>
-                ))}
-              </View>
-            )}
-          </View>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
         <View className="mx-3 flex flex-col justify-center">
           <TouchableOpacity
@@ -122,6 +130,6 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({ navigateToArticle, arti
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export default ArticlePreview;

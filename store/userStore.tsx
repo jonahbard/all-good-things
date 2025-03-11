@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { devtools, persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { handleApiError, handleApiResponse } from '~/utils/apiUtils';
+import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 export interface UserInfo {
   categories: string[];
   sources: string[];
@@ -25,9 +25,6 @@ export interface UserSlice {
 type StoreState = {
   userSlice: UserSlice;
 };
-
-// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-export const API_URL = `http://localhost:9090/api`;
 
 function createUserSlice(set: any, get: any): UserSlice {
   return {

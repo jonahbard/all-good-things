@@ -14,7 +14,6 @@ const Onboarding1: React.FC = () => {
   const barWidth = 300;
   const barHeight = 23;
 
-  
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {

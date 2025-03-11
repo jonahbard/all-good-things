@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useState, useEffect } from 'react';
-import { View, Button, SafeAreaView, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { View, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { titleCase } from 'title-case';
 
@@ -55,10 +55,6 @@ export default function ArticleDetail() {
     };
     fetch();
   }, [article.link]);
-
-  // console.log(articleView);
-
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#66858A' }}>

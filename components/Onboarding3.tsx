@@ -1,16 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 
 import { RootStackParamList } from '../types';
@@ -29,7 +21,7 @@ const Onboarding3: React.FC = () => {
   const setSelectedSources = userStore((state) => state.userSlice.setSources);
   const createNewUser = userStore((state) => state.userSlice.createNewUser);
   const sources = [
-    { id: 1, name: 'Good News Network',image: require('../assets/categories/default.png') },
+    { id: 1, name: 'Good News Network', image: require('../assets/categories/default.png') },
     { id: 2, name: 'Positive News', image: require('../assets/categories/default.png') },
     { id: 3, name: 'Reasons to be Cheerful', image: require('../assets/categories/default.png') },
     { id: 4, name: 'Yes Magazine', image: require('../assets/categories/default.png') },
@@ -131,18 +123,5 @@ const Onboarding3: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 20,
-    color: '#333',
-  },
-});
 
 export default Onboarding3;
