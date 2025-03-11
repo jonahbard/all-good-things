@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
+import { handleApiError, handleApiResponse, API_URL, PARSE_API_URL } from '~/utils/apiUtils';
 
 export interface Article {
   title: string;
