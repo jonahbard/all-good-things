@@ -9,15 +9,7 @@ import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const {
-    categories,
-    bookmarks,
-    sources,
-    fetchUserCateogries,
-    fetchUserSources,
-    updateUserSetting,
-  } = userStore((state) => state.userSlice);
+  const { categories, sources } = userStore((state) => state.userSlice);
   const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
   const [parsedCategories, setParsedCategories] = useState<
     { id: string; name: string; image: any }[]
@@ -57,8 +49,10 @@ const Customize = () => {
           type={type}
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
-        <CustomizeModal 
-          optionList={allList.filter((listItem) => !parsedList.some((parsedItem) => parsedItem.id === listItem.id.toString()))}
+        <CustomizeModal
+          optionList={allList.filter(
+            (listItem) => !parsedList.some((parsedItem) => parsedItem.id === listItem.id.toString())
+          )}
           id={type === 'topic' ? 'categories-sheet' : 'sources-sheet'}
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
@@ -66,20 +60,9 @@ const Customize = () => {
     );
   };
 
-//   <CustomizeModal
-//   optionList={categoriesList.filter(
-//     (category) =>
-//       !parsedCategories.some(
-//         (parsedCategory) => parsedCategory.id === category.id.toString()
-//       )
-//   )}
-//   id="categories-sheet"
-//   setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-// />
-  // update the list such that we don't end up adding duplicate articles
   return (
     <FlatList
-      data={[]} // Empty data because we're rendering custom components
+      data={[]}
       keyExtractor={() => 'customize'}
       renderItem={null}
       ListHeaderComponent={
