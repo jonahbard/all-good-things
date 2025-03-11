@@ -10,19 +10,20 @@ interface ReaderViewProps {
   title: string;
   pubDate: Date;
   source: string;
+  readerDetails: ReaderView
 }
-const ReaderViewComponent: React.FC<ReaderViewProps> = ({ url, title, pubDate, source }) => {
-  const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
-  const { fetchParsedArticle } = articleStore.getState().articleSlice;
-  const { width } = useWindowDimensions();
-  useEffect(() => {
-    const fetch = async () => {
-      await fetchParsedArticle(url);
-      const details = articleStore.getState().articleSlice.readerView;
-      setReaderDetails(details);
-    };
-    fetch();
-  }, [url]);
+const ReaderViewComponent: React.FC<ReaderViewProps> = ({ url, title, pubDate, source, readerDetails }) => {
+    const { width } = useWindowDimensions();
+//   const [readerDetails, setReaderDetails] = useState<ReaderView | null>(null);
+//   const { fetchParsedArticle } = articleStore.getState().articleSlice;
+//   useEffect(() => {
+//     const fetch = async () => {
+//       await fetchParsedArticle(url);
+//       const details = articleStore.getState().articleSlice.readerView;
+//       setReaderDetails(details);
+//     };
+//     fetch();
+//   }, [url]);
 
   return (
     <ScrollView style={styles.container}>
