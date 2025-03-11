@@ -88,7 +88,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
     },
     fetchParsedArticle: async (url: string) => {
       try {
-        const response = await fetch(`${API_URL}/parse?url=${url}`);
+        const response = await fetch(`${PARSE_API_URL}/parse?url=${url}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
         // console.log('retrieved reader view data', data);
