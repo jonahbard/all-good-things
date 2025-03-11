@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Customize from 'Pages/Customize';
 import Explore from 'Pages/Explore';
@@ -99,7 +100,16 @@ function OnboardingStack() {
 
 export default function NavBar() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: ((route) => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+          if (routeName === 'ArticleDetail') {
+            return { display: 'none' };
+          }
+        })(route),
+      })}>
       <Tab.Screen
         name="Home"
         component={HomeStack}

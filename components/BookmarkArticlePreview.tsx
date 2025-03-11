@@ -48,7 +48,7 @@ export default function BookmarkArticlePreview({
       <View className="mx-2 my-1 flex flex-row items-center rounded-md bg-white p-3">
         <View className="flex-1">
           <Text className="font-ibm-bold">{article.title}</Text>
-          <Text className=" text-gray-600">
+          <Text className=" font-ibm text-gray-600">
             <Text className="italic">{titleCase(article.source)}</Text>
             {article.pubDate ? ` • ${formatDate(article.pubDate)}` : ''}
           </Text>

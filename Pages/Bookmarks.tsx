@@ -28,17 +28,20 @@ export default function Bookmarks({ navigation }: { navigation: BookmarksNavigat
 
   return (
     <SafeAreaView>
-      <Text className="font-ibm-bold mb-2 ml-3 mt-10 text-4xl">bookmarks</Text>
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">bookmarks</Text>
       {bookmarks.length > 0 ? (
         <ScrollView>
-          {bookmarks.map((article, index) => (
-            <BookmarkArticlePreview
-              key={index}
-              navigation={navigation}
-              article={article}
-              onRemove={fetchBookmarks}
-            />
-          ))}
+          {bookmarks
+            .slice(0)
+            .reverse()
+            .map((article, index) => (
+              <BookmarkArticlePreview
+                key={index}
+                navigation={navigation}
+                article={article}
+                onRemove={fetchBookmarks}
+              />
+            ))}
           <View style={{ height: 80 }} />
         </ScrollView>
       ) : (
