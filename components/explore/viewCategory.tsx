@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 
 import { RootStackParamList } from '../../types';
-
 import ArticlePreview from '../ArticlePreview';
 
 import { Article } from '~/store/articleStore';
@@ -31,7 +30,9 @@ const ViewCategory: React.FC<ViewCategoryProps> = () => {
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
-        <Text className="font-ibm-bold" style={styles.text}>{categoryName}</Text>
+        <Text className="font-ibm-bold" style={styles.text}>
+          {categoryName}
+        </Text>
         {articles
           ? articles.map((article, index) => (
               <ArticlePreview

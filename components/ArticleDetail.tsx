@@ -56,10 +56,6 @@ export default function ArticleDetail() {
     fetch();
   }, [article.link]);
 
-  // console.log(articleView);
-
-
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#66858A' }}>
       <View
