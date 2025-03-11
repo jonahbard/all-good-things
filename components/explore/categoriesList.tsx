@@ -19,7 +19,7 @@ const Categories = () => {
           style={styles.categoryContainer}
           onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
           <Image source={category.image} className="mr-3 h-20 w-20 rounded" resizeMode="contain" />
-          <Text>{category.name}</Text>
+          <Text className="font-ibm">{category.name}</Text>
         </TouchableOpacity>
       ))}
     </View>

@@ -11,6 +11,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import { RootStackParamList } from '../types';
@@ -77,7 +78,30 @@ const Explore = () => {
         )}
       </View>
 
-      {searchString.trim() === '' ? (
+      {searchString.trim() !== '' && isSearchLoading ? (
+        <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <View className="items-center rounded-xl bg-gray-100 p-6 shadow-md">
+            <ActivityIndicator size="large" color="#8B4513" />
+          </View>
+        </View>
+      ) : searchString.trim() !== '' && searchResults.length > 0 ? (
+        <ScrollView style={{ marginTop: 10 }}>
+          {searchResults.map((article, index) => (
+            <ArticlePreview
+              key={index}
+              navigateToArticle={() => navigation.navigate('ArticleDetail', { article })}
+              article={article}
+              descriptionLines={2}
+            />
+          ))}
+        </ScrollView>
+      ) : searchString.trim() !== '' ? (
+        <View className="h-screen flex-1 items-center justify-center">
+          <Text className="text-center font-ibm text-lg text-gray-500">
+            No results found for "{searchString}"
+          </Text>
+        </View>
+      ) : (
         <ScrollView>
           <View style={styles.trendContainer}>
             <Text className="font-ibm-bold" style={styles.headers}>
@@ -99,27 +123,6 @@ const Explore = () => {
             <Categories />
           </View>
         </ScrollView>
-      ) : searchString.trim() !== '' && isSearchLoading ? (
-        <View className="h-screen flex-1 items-center justify-center">
-          <Text className="text-center font-ibm text-xl text-gray-500">Searching...</Text>
-        </View>
-      ) : searchString.trim() !== '' && !isSearchLoading && searchResults.length > 0 ? (
-        <ScrollView>
-          {searchResults.map((article, index) => (
-            <ArticlePreview
-              key={index}
-              navigateToArticle={() => navigation.navigate('ArticleDetail', { article })}
-              article={article}
-              descriptionLines={2}
-            />
-          ))}
-        </ScrollView>
-      ) : (
-        <View className="h-screen flex-1 items-center justify-center">
-          <Text className="text-center font-ibm text-lg text-gray-500">
-            No results found for "{searchString}"
-          </Text>
-        </View>
       )}
     </SafeAreaView>
   );
