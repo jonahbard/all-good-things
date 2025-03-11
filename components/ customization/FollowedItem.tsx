@@ -8,9 +8,17 @@ interface FollowedItemProps {
   userID: string | null;
   type: string;
   setRefetchTrigger: () => void;
+  scrollStatus: boolean;
+  setScrollEnabled: (ScrollEnabled: boolean) => void;
 }
 
-const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefetchTrigger }) => {
+const FollowedItem: React.FC<FollowedItemProps> = ({
+  followedList,
+  type,
+  setRefetchTrigger,
+  scrollStatus,
+  setScrollEnabled,
+}) => {
   const userID = userStore((state) => state.userSlice.userID);
   const updateUserSetting = userStore((state) => state.userSlice.updateUserSetting);
 
@@ -36,10 +44,20 @@ const FollowedItem: React.FC<FollowedItemProps> = ({ followedList, type, setRefe
       console.error('Failed to update user settings', error);
     }
   };
+  const handleSwipe = () => {
+    setScrollEnabled(false);
+  };
 
+  const handleUnswipe = () => {
+    setScrollEnabled(true);
+  };
+  // Tried to update it such that when you swipe the screen won't move
   return (
     <SwipeListView
       data={localList}
+      scrollEnabled={scrollStatus}
+      onRowOpen={handleSwipe}
+      onRowClose={handleUnswipe}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <View className="flex-row items-center border-b border-gray-200 bg-white p-4">
