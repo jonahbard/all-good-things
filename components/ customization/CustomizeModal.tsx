@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react
 import ActionSheet, { SheetManager, SheetProvider } from 'react-native-actions-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import PlusButton from './PlusButton';
 
 import { userStore } from '~/store/userStore';
@@ -72,7 +73,10 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
       <GestureHandlerRootView style={styles.flexContainer}>
         <SheetProvider context="global">
           {/* The plus button to open the sheet, id = reference to which modal*/}
-          <PlusButton onPress={() => SheetManager.show(id)} text="Follow more topics" />
+          <PlusButton
+            onPress={() => SheetManager.show(id)}
+            text={id === 'sources-sheet' ? 'Follow more channels' : 'Follow more topics'}
+          />
           {/* the sliding pop up  */}
           <ActionSheet
             id={id}

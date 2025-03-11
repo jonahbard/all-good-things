@@ -39,13 +39,13 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
-  // update the list such that we don't end up adding duplicate articles 
+  // update the list such that we don't end up adding duplicate articles
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <Text style={styles.header}>Personalize for you</Text>
         {/* Followed Topics */}
-        <Text style={styles.sectionTitle}>Followed Topic</Text>
+        <Text style={styles.sectionTitle}>Followed topics</Text>
         <View style={styles.section}>
           <FollowedItem
             followedList={parsedCategories}
@@ -60,7 +60,7 @@ const Customize = () => {
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
         {/* Followed Channels */}
-        <Text style={styles.sectionTitle}>Followed Sources</Text>
+        <Text style={styles.sectionTitle}>Followed channels</Text>
         <View style={styles.section}>
           <FollowedItem
             followedList={parsedSources}
