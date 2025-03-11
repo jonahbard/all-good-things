@@ -1,6 +1,7 @@
 import { connectActionSheet, ActionSheetProvider } from '@expo/react-native-action-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import NavBar from 'components/Navigator';
 import OnboardingStack from 'components/OnboardingStack';
 import { useFonts } from 'expo-font';
@@ -8,7 +9,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogBox, Text } from 'react-native';
 import './global.css';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { categoriesList, sourcesList } from './data';
 import { registerForPushNotifications, setupNotificationListeners } from './lib/notifications';
@@ -57,14 +57,20 @@ function App() {
       }
     };
     fetchUserID();
-  }, [userID]);
+  }, []);
 
   useEffect(() => {
-    if (userID) {
-      fetchUserCateogries(userID);
-      fetchUserSources(userID);
-    }
-    console.log(sources);
+    const fetchUserPref = async () => {
+      if (!userID || userID ==='') return;
+      try {
+        console.log('Fetching categories with userID:', userID);
+        await fetchUserCateogries(userID);
+        await fetchUserSources(userID);
+      } catch (error) {
+        console.log('Error fetching preference', error);
+      }
+    };
+    fetchUserPref();
   }, [userID]);
 
   if (!fontsLoaded) {
@@ -84,6 +90,5 @@ function App() {
     </ActionSheetProvider>
   );
 }
-
 
 export default App;

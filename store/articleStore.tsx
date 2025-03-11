@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { handleApiError, handleApiResponse, API_URL, PARSE_API_URL } from '~/utils/apiUtils';
+import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 
 export interface Article {
   title: string;
@@ -88,7 +88,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
     },
     fetchParsedArticle: async (url: string) => {
       try {
-        const response = await fetch(`${PARSE_API_URL}/parse?url=${url}`);
+        const response = await fetch(`${API_URL}/parse?url=${url}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
         // console.log('retrieved reader view data', data);
