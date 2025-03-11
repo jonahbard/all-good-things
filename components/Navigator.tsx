@@ -116,7 +116,7 @@ export default function NavBar() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
-          tabBarActiveTintColor: '#E5A07D',
+          tabBarActiveTintColor: '#f5a612',
         }}
       />
       <Tab.Screen
@@ -125,7 +125,7 @@ export default function NavBar() {
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => <Ionicons name="search" color={color} size={size} />,
-          tabBarActiveTintColor: '#E5A07D',
+          tabBarActiveTintColor: '#f5a612',
         }}
       />
       <Tab.Screen
@@ -136,7 +136,7 @@ export default function NavBar() {
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="bookmark" color={color} size={size} />
           ),
-          tabBarActiveTintColor: '#E5A07D',
+          tabBarActiveTintColor: '#f5a612',
         }}
       />
       <Tab.Screen
@@ -146,7 +146,7 @@ export default function NavBar() {
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <Ionicons name="options" size={size} color={color} />
           ),
-          tabBarActiveTintColor: '#E5A07D',
+          tabBarActiveTintColor: '#f5a612',
         }}
       />
       {/* <Tab.Screen

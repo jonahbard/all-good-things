@@ -42,9 +42,8 @@ const Onboarding1: React.FC = () => {
   // console.log('userid', userID);
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={{ width: 214, height: 209 }} />
-      <Text className="text-center text-[48px] font-bold leading-[45px] tracking-[-0.96px] text-black">
-        GoodNews
+      <Text className="text-center font-ibm-bold text-5xl leading-[45px] text-black">
+        all good things
       </Text>
       <View className="mt-6 items-center">
         <ProgressBarAnimated
