@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
 
@@ -8,7 +9,15 @@ import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
-  const { categories, sources } = userStore((state) => state.userSlice);
+  const [isLoading, setIsLoading] = useState(true);
+  const {
+    categories,
+    bookmarks,
+    sources,
+    fetchUserCateogries,
+    fetchUserSources,
+    updateUserSetting,
+  } = userStore((state) => state.userSlice);
   const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
   const [parsedCategories, setParsedCategories] = useState<
     { id: string; name: string; image: any }[]
@@ -30,51 +39,70 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
-  // update the list such that we don't end up adding duplicate articles
-  return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-      <View style={styles.container}>
-        <Text style={styles.header}>Personalize for you</Text>
-        {/* Followed Topics */}
-        <Text style={styles.sectionTitle}>Followed topics</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedCategories}
-            userID={userID}
-            type="topic"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-          />
-        </View>
-        <CustomizeModal
-          optionList={categoriesList.filter(
-            (category) =>
-              !parsedCategories.some(
-                (parsedCategory) => parsedCategory.id === category.id.toString()
-              )
-          )}
-          id="categories-sheet"
+  interface FollowedItemProps {
+    header: string;
+    items: { id: string; name: string; image: any }[];
+    type: string;
+    allList: { id: number; name: string; image: any }[];
+    parsedList: { id: string; name: string; image: any }[];
+  }
+
+  const renderFollowedItem = ({ header, items, allList, parsedList, type }: FollowedItemProps) => {
+    return (
+      <View>
+        <Text style={styles.sectionTitle}>{header}</Text>
+        <FollowedItem
+          followedList={items}
+          userID={userID}
+          type={type}
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
-        {/* Followed Channels */}
-        <Text style={styles.sectionTitle}>Followed channels</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedSources}
-            userID={userID}
-            type="channel"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-          />
-        </View>
-        <CustomizeModal
-          optionList={sourcesList.filter(
-            (source) =>
-              !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
-          )}
-          id="sources-sheet"
+        <CustomizeModal 
+          optionList={allList.filter((listItem) => !parsedList.some((parsedItem) => parsedItem.id === listItem.id.toString()))}
+          id={type === 'topic' ? 'categories-sheet' : 'sources-sheet'}
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
       </View>
-    </ScrollView>
+    );
+  };
+
+//   <CustomizeModal
+//   optionList={categoriesList.filter(
+//     (category) =>
+//       !parsedCategories.some(
+//         (parsedCategory) => parsedCategory.id === category.id.toString()
+//       )
+//   )}
+//   id="categories-sheet"
+//   setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+// />
+  // update the list such that we don't end up adding duplicate articles
+  return (
+    <FlatList
+      data={[]} // Empty data because we're rendering custom components
+      keyExtractor={() => 'customize'}
+      renderItem={null}
+      ListHeaderComponent={
+        <View style={styles.container}>
+          <Text style={styles.header}>Personalize for you</Text>
+          {renderFollowedItem({
+            header: 'Followed topics',
+            items: parsedCategories,
+            allList: categoriesList,
+            parsedList: parsedCategories,
+            type: 'topic',
+          })}
+          {renderFollowedItem({
+            header: 'Followed channels',
+            items: parsedSources,
+            allList: sourcesList,
+            parsedList: parsedSources,
+            type: 'channel',
+          })}
+        </View>
+      }
+      contentContainerStyle={{ flexGrow: 1 }}
+    />
   );
 };
 

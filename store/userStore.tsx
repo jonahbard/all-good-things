@@ -63,6 +63,7 @@ function createUserSlice(set: any, get: any): UserSlice {
         const response = await fetch(`${API_URL}/user/categories/${userID}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
+        console.log('fetched categories', data)
         set((state: { userSlice: UserSlice }) => {
           state.userSlice.categories = data;
         });

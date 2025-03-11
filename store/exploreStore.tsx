@@ -38,6 +38,7 @@ function createExploreStore(set: any, get: any): ExploreSlice {
         set((state: { exploreSlice: ExploreSlice }) => {
           state.exploreSlice.loadingSearchedArticles = true;
         });
+        console.log('api_url: ', `${API_URL}/articles/search?query=${searchString}`);
         const response = await fetch(`${API_URL}/articles/search?query=${searchString}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
