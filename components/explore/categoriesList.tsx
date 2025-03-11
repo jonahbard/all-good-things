@@ -18,7 +18,7 @@ const Categories = () => {
           key={index}
           style={styles.categoryContainer}
           onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
-          <Image source={category.image} className="mr-3 h-8 w-8" resizeMode="contain" />
+          <Image source={category.image} className="mr-3 h-20 w-20 rounded" resizeMode="contain" />
           <Text>{category.name}</Text>
         </TouchableOpacity>
       ))}
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
-    padding: 16,
+    padding: 8,
   },
 });
 

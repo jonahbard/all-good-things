@@ -12,3 +12,6 @@ export const handleApiError = (error: unknown, get: any) => {
   get().errorSlice?.newError?.(message);
   console.error('Fetch Error:', message);
 };
+
+// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+export const API_URL = `http://localhost:9090/api`;

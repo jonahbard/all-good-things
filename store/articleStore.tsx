@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { handleApiError, handleApiResponse } from '~/utils/apiUtils';
+import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 export interface Article {
   title: string;
   description: string;
@@ -37,8 +37,6 @@ type StoreState = {
   articleSlice: ArticleSlice;
 };
 
-// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-export const API_URL = `http://localhost:9090/api`;
 function createArticleSlice(set: any, get: any): ArticleSlice {
   return {
     allArticles: [],
