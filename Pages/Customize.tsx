@@ -17,6 +17,7 @@ const Customize = () => {
   const [parsedSources, setParsedSources] = useState<{ id: string; name: string; image: any }[]>(
     []
   );
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   useEffect(() => {
     setParsedCategories(
@@ -47,6 +48,8 @@ const Customize = () => {
           followedList={items}
           userID={userID}
           type={type}
+          scrollStatus={scrollEnabled}
+          setScrollEnabled={setScrollEnabled}
           setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
         />
         <CustomizeModal
@@ -59,12 +62,13 @@ const Customize = () => {
       </View>
     );
   };
-
+  // Citing chat here for boiler template but it was too complex and stylstically looks horrible, so just scraped out what i needed from there
   return (
     <FlatList
       data={[]}
       keyExtractor={() => 'customize'}
       renderItem={null}
+      scrollEnabled={scrollEnabled}
       ListHeaderComponent={
         <View style={styles.container}>
           <Text style={styles.header}>Personalize for you</Text>
