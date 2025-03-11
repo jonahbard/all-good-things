@@ -13,6 +13,7 @@ export interface ExploreSlice {
 type StoreState = {
   exploreSlice: ExploreSlice;
 };
+
 // export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
 export const API_URL = `http://localhost:9090/api`;
 function createExploreStore(set: any, get: any): ExploreSlice {
