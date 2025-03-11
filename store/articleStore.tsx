@@ -11,20 +11,23 @@ export interface Article {
   link: string;
   source: string;
   pubDate: Date;
+  categories: string[];
 }
 export interface ReaderView {
   title: string;
-  link: string;
-  pubDate: string;
-  creator?: string;
-  description: string;
-  source: string;
-  categories: string[];
-  img?: string;
-  shareCount: number;
+  byline: string;
+  dir: string | null;
+  lang: string;
+  content: string;
+  textContent: string;
+  length: number;
+  excerpt: string;
+  siteName: string;
+  publishedTime: string;
 }
 export interface ArticleSlice {
   allArticles: Article[];
+  readerView: ReaderView | null;
   articleView: Article | null;
   fetchAllArticles: (categories: string[], sources: string[]) => void;
   fetchParsedArticle: (url: string) => void;
@@ -34,12 +37,13 @@ type StoreState = {
   articleSlice: ArticleSlice;
 };
 
-export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
-// export const API_URL = `http://localhost:9090/api`;
+// export const API_URL = `https://project-api-all-good-things.onrender.com/api`;
+export const API_URL = `http://localhost:9090/api`;
 function createArticleSlice(set: any, get: any): ArticleSlice {
   return {
     allArticles: [],
     articleView: null,
+    readerView: null,
     fetchAllArticles: async (categories: string[], sources: string[]) => {
       try {
         // example string: /api/articles?category=Science&category=Health&source=yes%20magazine&source=NYTimes%20Magazine
@@ -67,6 +71,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
           link: item.link,
           source: item.source,
           pubDate: new Date(item.pubDate),
+          categories: item.categories || [],
         }));
         // console.log(mappedArticles);
         set((state: { articleSlice: ArticleSlice }) => {
@@ -81,10 +86,11 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
         const response = await fetch(`${API_URL}/parse?url=${url}`);
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        console.log('retrieved reader view data', data);
+        // console.log('retrieved reader view data', data);
         set((state: { articleSlice: ArticleSlice }) => {
-          state.articleSlice.articleView = data;
+          state.articleSlice.readerView = data;
         });
+
       } catch (error) {
         handleApiError(error, get);
       }

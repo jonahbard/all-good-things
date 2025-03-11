@@ -9,20 +9,19 @@ import { titleCase } from 'title-case';
 
 import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
 import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
-import {RootStackParamList } from '../types';
-import { Article } from '~/store/articleStore';
+import { RootStackParamList } from '../types';
 
-type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
-export default function ArticlePreview({
-  // navigateToArticle,
-  article,
-}: {
-  // navigation: ArticlePreviewNavigationProp;
+import { Article } from '~/store/articleStore';
+type ArticlePreviewProps = {
   article: Article;
-}) {
+  navigateToArticle: () => void;
+};
+type ArticlePreviewNavigationProp = StackNavigationProp<RootStackParamList, 'ArticleDetail'>;
+const ArticlePreview: React.FC<ArticlePreviewProps> = ({ navigateToArticle, article }) => {
   const navigation = useNavigation<ArticlePreviewNavigationProp>();
   const handlePress = () => {
-    navigation.navigate('ArticleDetail', { article });
+    // navigation.navigate('ArticleDetail', { article });
+    navigateToArticle()
   };
 
   const [bookmarked, setBookmarked] = useState(false);
@@ -69,7 +68,7 @@ export default function ArticlePreview({
   };
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={navigateToArticle}>
       <View className="mx-2 my-1 flex flex-row rounded-md bg-white p-3">
         <View className="flex-1">
           <Text className="font-ibm-bold">{article.title}</Text>
@@ -77,6 +76,22 @@ export default function ArticlePreview({
             {titleCase(article.source)} {article.pubDate ? `• ${formatDate(article.pubDate)}` : ''}
           </Text>
           <Text className="font-ibm">{article.description}</Text>
+          <View className="flex flex-row">
+            <Text className="font-ibm mr-2">Tags:</Text>
+            {article.categories && article.categories.length > 0 && (
+              <View className="flex flex-row flex-wrap ">
+                {article.categories.slice(0,3).map((category, index) => (
+                  <Text key={index} className="font-ibm mr-2"  numberOfLines={1} >
+                    {category}
+                    {/* last item no comma, but feel free change this with styling. probably write 
+                      a function
+                     */}
+                    {index < article.categories.length - 1 && ','}
+                  </Text>
+                ))}
+              </View>
+            )}
+          </View>
         </View>
         <View className="mx-3 flex flex-col justify-center">
           <TouchableOpacity
@@ -108,3 +123,5 @@ export default function ArticlePreview({
     </TouchableOpacity>
   );
 }
+
+export default ArticlePreview;

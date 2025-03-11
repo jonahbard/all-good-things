@@ -25,7 +25,7 @@ export default function ScreenContent({ navigation }: any) {
       setArticles(updatedArticles);
     };
     fetchData();
-  }, [categories, sources])
+  }, [categories, sources]) // update everytime we make customziation for testing purpose that it works
 
   return (
     <View>
