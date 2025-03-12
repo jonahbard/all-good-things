@@ -121,8 +121,10 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
           )}
         </View>
         <View className="mx-3 flex flex-col justify-center">
+
           <TouchableOpacity onPress={handlePressShare} className="mb-10">
             <SymbolView name="square.and.arrow.up" className="m-1" tintColor="brown" />
+
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleBookmarkToggle}>
             {bookmarked ? (
@@ -130,10 +132,10 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
                 name="bookmark.fill"
                 className="m-1"
                 type="hierarchical"
-                tintColor="brown"
+                tintColor="#f5a612"
               />
             ) : (
-              <SymbolView name="bookmark" className="m-1" type="hierarchical" tintColor="brown" />
+              <SymbolView name="bookmark" className="m-1" type="hierarchical" tintColor="#f5a612" />
             )}
           </TouchableOpacity>
         </View>
