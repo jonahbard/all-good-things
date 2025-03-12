@@ -1,6 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  FlatList,
+} from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
 
@@ -64,38 +72,39 @@ const Customize = () => {
   };
   // Citing chat here for boiler template but it was too complex and stylstically looks horrible, so just scraped out what i needed from there
   return (
-    <FlatList
-      data={[]}
-      keyExtractor={() => 'customize'}
-      renderItem={null}
-      scrollEnabled={scrollEnabled}
-      ListHeaderComponent={
-        <View style={styles.container}>
-          <Text style={styles.header}>Personalize for you</Text>
-          {renderFollowedItem({
-            header: 'Followed topics',
-            items: parsedCategories,
-            allList: categoriesList,
-            parsedList: parsedCategories,
-            type: 'topic',
-          })}
-          {renderFollowedItem({
-            header: 'Followed channels',
-            items: parsedSources,
-            allList: sourcesList,
-            parsedList: parsedSources,
-            type: 'channel',
-          })}
-        </View>
-      }
-      contentContainerStyle={{ flexGrow: 1 }}
-    />
+    <SafeAreaView style={{ flex: 1, marginTop: -50, backgroundColor: '#ffffff' }}>
+      <FlatList
+        data={[]}
+        keyExtractor={() => 'customize'}
+        renderItem={null}
+        scrollEnabled={scrollEnabled}
+        ListHeaderComponent={
+          <View style={styles.container}>
+            <Text style={styles.header}>Personalize for you</Text>
+            {renderFollowedItem({
+              header: 'Followed topics',
+              items: parsedCategories,
+              allList: categoriesList,
+              parsedList: parsedCategories,
+              type: 'topic',
+            })}
+            {renderFollowedItem({
+              header: 'Followed channels',
+              items: parsedSources,
+              allList: sourcesList,
+              parsedList: parsedSources,
+              type: 'channel',
+            })}
+          </View>
+        }
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 16,
     paddingTop: 100,
     backgroundColor: '#fff',

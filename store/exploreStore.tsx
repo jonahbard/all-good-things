@@ -43,6 +43,7 @@ function createExploreStore(set: any, get: any): ExploreSlice {
         const data = await handleApiResponse(response, set);
         if (!data) return;
         const mappedArticles: Article[] = data.map((item: any) => ({
+          id: item.id,
           title: item.title,
           description: item.description,
           img: item.img || '',
@@ -70,6 +71,7 @@ function createExploreStore(set: any, get: any): ExploreSlice {
         const data = await handleApiResponse(response, set);
         if (!data) return;
         const mappedArticles: Article[] = data.map((item: any) => ({
+          id: item.id,
           title: item.title,
           description: item.description,
           img: item.img || '',
@@ -95,6 +97,7 @@ function createExploreStore(set: any, get: any): ExploreSlice {
         if (!data) return;
         const mappedArticles: Article[] = data
           .map((item: any) => ({
+            id: item.id,
             title: item.title,
             description: item.description,
             img: item.img || '',
