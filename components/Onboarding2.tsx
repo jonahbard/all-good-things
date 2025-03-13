@@ -4,8 +4,10 @@ import React from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { userStore } from 'store/userStore';
-import { categoriesList as categories } from '~/data';
+
 import { RootStackParamList } from '../types'; // Adjust the import path as necessary
+
+import { categoriesList as categories } from '~/data';
 
 type Onboarding2NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
 
@@ -20,7 +22,6 @@ const Onboarding2: React.FC = () => {
   const selectedCategories = userStore((state) => state.userSlice.categories);
   // const setCategories = userStore((state) => state.userSlice.setCategories);
   const setCategories = userStore((state) => state.userSlice.setCategories);
-
 
   const handleSelect = (categoryName: string) => {
     if (setCategories) {

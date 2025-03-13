@@ -14,14 +14,15 @@ const Onboarding1: React.FC = () => {
   const barWidth = 300;
   const barHeight = 23;
 
-  const clearAsyncStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      console.log('AsyncStorage cleared');
-    } catch (error) {
-      console.error('Failed to clear AsyncStorage:', error);
-    }
-  };
+  // To check onboarding process, click clear async storage 
+  // const clearAsyncStorage = async () => {
+  //   try {
+  //     await AsyncStorage.clear();
+  //     console.log('AsyncStorage cleared');
+  //   } catch (error) {
+  //     console.error('Failed to clear AsyncStorage:', error);
+  //   }
+  // };
   
 
   useEffect(() => {
