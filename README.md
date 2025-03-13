@@ -29,40 +29,41 @@ In the output, you'll find options to open the app in a
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 
+Of course! Here’s a cleaner Markdown (md) version of your architecture with a different layout and description style:
+
 ## Architecture
 
-### Components 
-components/
-├── customization/
-│   ├── CustomizeModal.tsx
-│   ├── FollowedItem.tsx
-│   └── PlusButton.tsx
-├── explore/
-│   ├── ArticleDetail.tsx
-│   └── ArticlePreview.tsx
-├── HomeFeed.tsx
-├── Navigator.tsx
-├── Onboarding1.tsx
-├── Onboarding2.tsx
-├── Onboarding3.tsx
-├── OnboardingStack.tsx  // handles navigation for onboarding flow
-├── ReaderView.tsx
-└── Share.tsx
+### Components
+	•	customization/
+	•	CustomizeModal.tsx — Modal for user customization.
+	•	FollowedItem.tsx — Displays followed items.
+	•	PlusButton.tsx — Button component for adding items.
+	•	explore/
+	•	ArticleDetail.tsx — Displays detailed content of an article.
+	•	ArticlePreview.tsx — Previews article information in list views.
+	•	Common components:
+	•	HomeFeed.tsx — Displays the main home feed.
+	•	Navigator.tsx — Manages app navigation.
+	•	Onboarding1.tsx
+	•	Onboarding2.tsx
+	•	Onboarding3.tsx
+	•	OnboardingStack.tsx — Handles navigation for the onboarding flow.
+	•	ReaderView.tsx — Displays reading content.
+	•	Share.tsx — Sharing functionality.
+
 ### Pages
-   Pages/
-├── Bookmarks.tsx
-├── Customize.tsx
-├── Explore.tsx
-├── Onboarding.tsx
-└── ScreenContent.tsx
+	•	Bookmarks.tsx
+	•	Customize.tsx
+	•	Explore.tsx
+	•	Onboarding.tsx
+	•	ScreenContent.tsx
 ### Store
-  store/
-├── articleStore.tsx
-├── exploreStore.tsx
-└── userStore.tsx
+	•	articleStore.tsx — Manages article data.
+	•	exploreStore.tsx — Manages exploration feature data.
+	•	userStore.tsx — Manages user-related state.
+
 ### Utils
-utils/
-└── apiUtils.tsx
+	•	apiUtils.tsx — Functions for API interactions.
 
 ## Library Used
 
