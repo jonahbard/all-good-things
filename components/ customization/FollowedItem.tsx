@@ -61,7 +61,7 @@ const FollowedItem: React.FC<FollowedItemProps> = ({
       onRowClose={handleUnswipe}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View className="flex-row items-center border-b border-gray-200 bg-white py-4 px-1">
+        <View className="flex-row items-center border-b border-gray-200 bg-white px-1 py-4">
           <Image source={item.image} className="mr-3 h-8 w-8" resizeMode="contain" />
           <Text className="font-ibm text-lg">{titleCase(item.name)}</Text>
         </View>

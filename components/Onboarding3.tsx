@@ -62,8 +62,8 @@ const Onboarding3: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Text className="z-50 mt-10 text-center font-[SourceSerif4] text-[24px] font-medium leading-[45px] tracking-[-0.48px] text-black">
-        Which news sources you follow?
+      <Text className="z-50 mt-10 text-center font-ibm-bold text-[24px] font-medium leading-[45px] tracking-[-0.48px] text-black">
+        Choose some sources to follow!
       </Text>
       <View className="absolute left-[-5px] top-[-75px] h-[250px] w-full">
         <Svg width="100%" height="500" viewBox="0 0 390 316" fill="none">

@@ -123,6 +123,7 @@ const Explore = () => {
             </Text>
             <Categories />
           </View>
+          <View style={{ height: 150 }} />
         </ScrollView>
       )}
     </SafeAreaView>

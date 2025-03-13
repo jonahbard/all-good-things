@@ -59,8 +59,8 @@ const Onboarding2: React.FC = () => {
       </View>
 
       <View className="items-left flex-1 px-6">
-        <Text className="mt-10 text-center font-[SourceSerif4] text-[24px] font-medium leading-[45px] tracking-[-0.48px] text-black">
-          What makes you happy?
+        <Text className="mt-10 text-center font-ibm-bold text-[24px] font-medium leading-[45px] tracking-[-0.48px] text-black">
+          What brings you joy?
         </Text>
 
         <View className="absolute bottom-[100px] left-[0px] h-[250px] w-full">
