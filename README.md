@@ -29,35 +29,41 @@ In the output, you'll find options to open the app in a
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 
+Of course! Here’s a cleaner Markdown (md) version of your architecture with a different layout and description style:
+
 ## Architecture
 
--- Components
-  	•  customization/
-      •	CustomizeModal.tsx
+### Components
+	•	customization/
+      •	CustomizeModal.tsx 
       •	FollowedItem.tsx
-      •	PlusButton.tsx
+      •	PlusButton.tsx 
 	•	explore/
-      •	ArticleDetail.tsx
-      •	ArticlePreview.tsx
-	•	Other components:
-      •	HomeFeed.tsx
-      •	Navigator.tsx
-      •	Onboarding1.tsx, Onboarding2.tsx, Onboarding3.tsx
-      •	OnboardingStack.tsx (suggests navigation stack handling for onboarding flow)
-      •	ReaderView.tsx
-      •	Share.tsx
--- Pages
-   •	Bookmark.tsx
-   •	Customize.tsx
-   •	Explore.tsx
-   •	Onboarding.tsx
-   •	ScreenContent.tsx
---Store
-   •  articleStore.tsx
-   •  exploreStore.tsx
-   •  userStore.tsx
---Utils
-   •  apiUtils.tsx
+      •	ArticleDetail.tsx 
+      •	ArticlePreview.tsx 
+	•	Common components:
+	•	HomeFeed.tsx
+	•	Navigator.tsx
+	•	Onboarding1.tsx
+	•	Onboarding2.tsx
+	•	Onboarding3.tsx
+	•	OnboardingStack.tsx 
+	•	ReaderView.tsx 
+	•	Share.tsx 
+
+### Pages
+	•	Bookmarks.tsx
+	•	Customize.tsx
+	•	Explore.tsx
+	•	Onboarding.tsx
+	•	ScreenContent.tsx
+### Store
+	•	articleStore.tsx 
+	•	exploreStore.tsx 
+	•	userStore.tsx 
+
+### Utils
+	•	apiUtils.tsx — Functions for API interactions.
 
 ## Library Used
 
