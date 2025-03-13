@@ -55,7 +55,6 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   }, [article]);
 
   const handleBookmarkToggle = async () => {
-    console.log('Bookmark toggle');
     if (bookmarked) {
       await removeBookmark(article);
     } else {
