@@ -31,33 +31,38 @@ You can start developing by editing the files inside the **app** directory. This
 
 ## Architecture
 
--- Components
-  	•  customization/
-      •	CustomizeModal.tsx
-      •	FollowedItem.tsx
-      •	PlusButton.tsx
-	•	explore/
-      •	ArticleDetail.tsx
-      •	ArticlePreview.tsx
-	•	Other components:
-      •	HomeFeed.tsx
-      •	Navigator.tsx
-      •	Onboarding1.tsx, Onboarding2.tsx, Onboarding3.tsx
-      •	OnboardingStack.tsx (suggests navigation stack handling for onboarding flow)
-      •	ReaderView.tsx
-      •	Share.tsx
--- Pages
-   •	Bookmark.tsx
-   •	Customize.tsx
-   •	Explore.tsx
-   •	Onboarding.tsx
-   •	ScreenContent.tsx
---Store
-   •  articleStore.tsx
-   •  exploreStore.tsx
-   •  userStore.tsx
---Utils
-   •  apiUtils.tsx
+### Components 
+components/
+├── customization/
+│   ├── CustomizeModal.tsx
+│   ├── FollowedItem.tsx
+│   └── PlusButton.tsx
+├── explore/
+│   ├── ArticleDetail.tsx
+│   └── ArticlePreview.tsx
+├── HomeFeed.tsx
+├── Navigator.tsx
+├── Onboarding1.tsx
+├── Onboarding2.tsx
+├── Onboarding3.tsx
+├── OnboardingStack.tsx  // handles navigation for onboarding flow
+├── ReaderView.tsx
+└── Share.tsx
+### Pages
+   Pages/
+├── Bookmarks.tsx
+├── Customize.tsx
+├── Explore.tsx
+├── Onboarding.tsx
+└── ScreenContent.tsx
+### Store
+  store/
+├── articleStore.tsx
+├── exploreStore.tsx
+└── userStore.tsx
+### Utils
+utils/
+└── apiUtils.tsx
 
 ## Library Used
 
