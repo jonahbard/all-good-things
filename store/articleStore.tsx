@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-
 import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 
 export interface Article {
+  id: string;
   title: string;
   description: string;
   img: string;
@@ -32,6 +32,7 @@ export interface ArticleSlice {
   articleView: Article | null;
   fetchAllArticles: (categories: string[], sources: string[]) => void;
   fetchParsedArticle: (url: string) => void;
+  updateShare: (articleID: string) => void;
 }
 
 type StoreState = {
@@ -64,6 +65,7 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
 
         const mappedArticles: Article[] = data
           .map((item: any) => ({
+            id: item.id,
             title: item.title,
             description: item.description,
             img: item.img || '',
@@ -95,6 +97,19 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
         set((state: { articleSlice: ArticleSlice }) => {
           state.articleSlice.readerView = data;
         });
+      } catch (error) {
+        handleApiError(error, get);
+      }
+    },
+    updateShare: async (articleID: string) => {
+      try {
+        const response = await fetch(`${API_URL}/articles/share/${articleID}`, {
+          method:'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const data = await handleApiResponse(response, set);
+        if (!data) return;
+        console.log('Returned response for share update', data)
       } catch (error) {
         handleApiError(error, get);
       }

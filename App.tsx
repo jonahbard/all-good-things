@@ -61,7 +61,7 @@ function App() {
 
   useEffect(() => {
     const fetchUserPref = async () => {
-      if (!userID || userID ==='') return;
+      if (!userID || userID === '') return;
       try {
         console.log('Fetching categories with userID:', userID);
         await fetchUserCateogries(userID);
@@ -82,7 +82,7 @@ function App() {
   return (
     <ActionSheetProvider>
       <NavigationContainer onReady={onLayoutRootView}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen name="Onboarding" component={OnboardingStack} />
           <Stack.Screen name="Tabs" component={NavBar} />
         </Stack.Navigator>

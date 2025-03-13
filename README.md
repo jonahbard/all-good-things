@@ -4,10 +4,6 @@
 
 Sometimes, it seems like all news is bad news. This can make people avoidant of news/current events altogether, which is bad for democracy and can increase people seeking out congenial information, which can lead to echo chambers and polarization. Current media landscapes also are driven by incentives to increase click/share rates, which often leads to bad news being more widely shared/read than good news; we want to circumvent these incentives and allow people to learn about inspiring and positive developments in the world.
 
-## Architecture
-
-TODO:  descriptions of code organization and tools and libraries used
-
 ## Set Up
 1. Install dependencies
 
@@ -19,6 +15,8 @@ TODO:  descriptions of code organization and tools and libraries used
 
    ```bash
     npx expo start
+    press s
+    press i
    ```
 
 In the output, you'll find options to open the app in a
@@ -30,29 +28,60 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
 
-When you're ready, run:
+Of course! Here’s a cleaner Markdown (md) version of your architecture with a different layout and description style:
 
-```bash
-npm run reset-project
-```
+## Architecture
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Components
+	•	customization/
+      •	CustomizeModal.tsx 
+      •	FollowedItem.tsx
+      •	PlusButton.tsx 
+	•	explore/
+      •	ArticleDetail.tsx 
+      •	ArticlePreview.tsx 
+	•	Common components:
+	•	HomeFeed.tsx
+	•	Navigator.tsx
+	•	Onboarding1.tsx
+	•	Onboarding2.tsx
+	•	Onboarding3.tsx
+	•	OnboardingStack.tsx 
+	•	ReaderView.tsx 
+	•	Share.tsx 
 
-## Learn more
+### Pages
+	•	Bookmarks.tsx
+	•	Customize.tsx
+	•	Explore.tsx
+	•	Onboarding.tsx
+	•	ScreenContent.tsx
+### Store
+	•	articleStore.tsx 
+	•	exploreStore.tsx 
+	•	userStore.tsx 
 
-To learn more about developing your project with Expo, look at the following resources:
+### Utils
+	•	apiUtils.tsx — Functions for API interactions.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Library Used
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Overall
+- **Zustand**
+- **@react-native-async-storage/async-storage**  
+- **expo-sharing**
+### Navigation
+- **@react-navigation/native**  
+- **@react-navigation/stack**  
+### Article Detal
+- **react-native-svg**  
+- **react-native-render-html**  
+- **title-case**  
+- **@expo/react-native-action-sheet**
+### Customization
+- **react-native-swipe-list-view'**
+- **react-native-actions-sheet**
 
 ## Deployment
 
@@ -62,4 +91,9 @@ Potentially test flight
 
 Aneesh Patnaik '25, Leyla Jacoby '25, Nand Patel '27, Joyce Zou '27, Jonah Bard '27
 
-## Acknowledgments
+## Notes
+- There warning pop up in the reader view, however those are caused by renderhtml library being old. 
+
+## Extra credit
+- Reader view: We implenmented this by scraping html websites to be displayed in the app, this is intended to improve user experience by removing ads and unecessary links to unrelated things. You should be able to click between reader and web view
+- Push notification in expo 

@@ -10,7 +10,8 @@ import bookmarkEvents, { BOOKMARK_CHANGED } from '../lib/bookmark-events';
 import { addBookmark, removeBookmark, isBookmarked } from '../lib/bookmark-functionality';
 import { RootStackParamList } from '../types';
 
-import { Article } from '~/store/articleStore';
+import { Article, articleStore } from '~/store/articleStore';
+import { API_URL } from '~/utils/apiUtils';
 type ArticlePreviewProps = {
   article: Article;
   navigateToArticle: () => void;
@@ -23,7 +24,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   descriptionLines,
 }) => {
   const navigation = useNavigation<ArticlePreviewNavigationProp>();
-
+  const updateShare = articleStore((state) => state.articleSlice.updateShare);
   const handlePress = () => {
     // navigation.navigate('ArticleDetail', { article });
     navigateToArticle();
@@ -71,7 +72,25 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
       return '';
     }
   };
-
+  const handlePressShare = async () => {
+    if (!article.id) {
+      console.log('No article ID');
+      return;
+    }
+    try {
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(article.link, {
+          dialogTitle: article.title,
+          UTI: 'public.url',
+        });
+        await updateShare(article.id);
+      }
+    } catch (error) {
+      console.log('Failed to share article', error);
+    } finally {
+      console.log('updated share');
+    }
+  };
   return (
     <TouchableOpacity onPress={navigateToArticle}>
       <View className="mx-2 my-1 flex flex-row rounded-md bg-white p-3">
@@ -102,19 +121,10 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
           )}
         </View>
         <View className="mx-3 flex flex-col justify-center">
-          <TouchableOpacity
-            onPress={async () => {
-              if (await Sharing.isAvailableAsync()) {
-                await Sharing.shareAsync(article.link, {
-                  dialogTitle: article.title,
-                  UTI: 'public.url',
-                });
-              }
-            }}
-            className="mb-10">
+          <TouchableOpacity onPress={handlePressShare} className="mb-10">
             <SymbolView name="square.and.arrow.up" className="m-1" tintColor="#f5a612" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleBookmarkToggle}>
+          <TouchableOpacity onPress={() => handleBookmarkToggle}>
             {bookmarked ? (
               <SymbolView
                 name="bookmark.fill"

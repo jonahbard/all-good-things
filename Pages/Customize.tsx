@@ -41,60 +41,63 @@ const Customize = () => {
     );
   }, [categories, sources]);
 
+  interface FollowedItemProps {
+    header: string;
+    items: { id: string; name: string; image: any }[];
+    type: string;
+    allList: { id: number; name: string; image: any }[];
+    parsedList: { id: string; name: string; image: any }[];
+  }
+
+  const renderFollowedItem = ({ header, items, allList, parsedList, type }: FollowedItemProps) => {
+    return (
+      <View>
+        <Text className="font-ibm-bold" style={{ fontSize: 18, color: '#737373' }}>
+          {header}
+        </Text>
+        <FollowedItem
+          followedList={items}
+          userID={userID}
+          type={type}
+          scrollStatus={scrollEnabled}
+          setScrollEnabled={setScrollEnabled}
+          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+        />
+        <CustomizeModal
+          optionList={allList.filter(
+            (listItem) => !parsedList.some((parsedItem) => parsedItem.id === listItem.id.toString())
+          )}
+          id={type === 'topic' ? 'categories-sheet' : 'sources-sheet'}
+          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+        />
+      </View>
+    );
+  };
+
   // update the list such that we don't end up adding duplicate articles
   return (
     <SafeAreaView>
       <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">customize</Text>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={scrollEnabled}>
         <View style={styles.container}>
-          {/* Followed Topics */}
-          <Text className="font-ibm-bold" style={{ fontSize: 18, color: '#737373' }}>
-            My Topics
-          </Text>
-          <View>
-            <FollowedItem
-              followedList={parsedCategories}
-              userID={userID}
-              type="topic"
-              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-              scrollStatus={scrollEnabled}
-              setScrollEnabled={setScrollEnabled}
-            />
-          </View>
-          <CustomizeModal
-            optionList={categoriesList.filter(
-              (category) =>
-                !parsedCategories.some(
-                  (parsedCategory) => parsedCategory.id === category.id.toString()
-                )
-            )}
-            id="categories-sheet"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-          />
-          {/* Followed Channels */}
-          <Text
-            className="font-ibm-bold"
-            style={{ fontSize: 18, marginBottom: 3, color: '#737373' }}>
-            My Sources
-          </Text>
-          <View>
-            <FollowedItem
-              followedList={parsedSources}
-              userID={userID}
-              type="channel"
-              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-              scrollStatus={scrollEnabled}
-              setScrollEnabled={setScrollEnabled}
-            />
-          </View>
-          <CustomizeModal
-            optionList={sourcesList.filter(
-              (source) =>
-                !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
-            )}
-            id="sources-sheet"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-          />
+          {renderFollowedItem({
+            header: 'My Topics',
+            items: parsedCategories,
+            allList: categoriesList,
+            parsedList: parsedCategories,
+            type: 'topic',
+          })}
+
+          {renderFollowedItem({
+            header: 'My Sources',
+            items: parsedSources,
+            allList: sourcesList,
+            parsedList: parsedSources,
+            type: 'channel',
+          })}
         </View>
         <View style={{ height: 50 }} />
       </ScrollView>
@@ -104,7 +107,6 @@ const Customize = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 16,
     backgroundColor: '#fff',
     position: 'relative',
