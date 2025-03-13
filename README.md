@@ -91,4 +91,9 @@ Potentially test flight
 
 Aneesh Patnaik '25, Leyla Jacoby '25, Nand Patel '27, Joyce Zou '27, Jonah Bard '27
 
-## Acknowledgments
+## Notes
+- There warning pop up in the reader view, however those are caused by renderhtml library being old. 
+
+## Extra credit
+- Reader view: We implenmented this by scraping html websites to be displayed in the app, this is intended to improve user experience by removing ads and unecessary links to unrelated things. You should be able to click between reader and web view
+- Push notification in expo 
