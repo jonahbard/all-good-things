@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
   FlatList,
+  StyleSheet,
 } from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
@@ -15,6 +15,7 @@ import { categoriesList, sourcesList } from '../data';
 import CustomizeModal from '~/components/ customization/CustomizeModal';
 import FollowedItem from '~/components/ customization/FollowedItem';
 import { userStore } from '~/store/userStore';
+
 const Customize = () => {
   const [userID, setUserID] = useState<string | null>(null);
   const { categories, sources } = userStore((state) => state.userSlice);
@@ -51,7 +52,9 @@ const Customize = () => {
   const renderFollowedItem = ({ header, items, allList, parsedList, type }: FollowedItemProps) => {
     return (
       <View>
-        <Text style={styles.sectionTitle}>{header}</Text>
+        <Text className="font-ibm-bold" style={{ fontSize: 18, color: '#737373' }}>
+          {header}
+        </Text>
         <FollowedItem
           followedList={items}
           userID={userID}
@@ -71,35 +74,33 @@ const Customize = () => {
     );
   };
 
-  // Citing chat here for boiler template but it was too complex and stylstically looks horrible, so just scraped out what i needed from there
+  // update the list such that we don't end up adding duplicate articles
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: -50, backgroundColor: '#ffffff' }}>
-      <FlatList
-        data={[]}
-        keyExtractor={() => 'customize'}
-        renderItem={null}
-        scrollEnabled={scrollEnabled}
-        ListHeaderComponent={
-          <View style={styles.container}>
-            <Text style={styles.header}>Personalize for you</Text>
-            {renderFollowedItem({
-              header: 'Followed topics',
-              items: parsedCategories,
-              allList: categoriesList,
-              parsedList: parsedCategories,
-              type: 'topic',
-            })}
-            {renderFollowedItem({
-              header: 'Followed channels',
-              items: parsedSources,
-              allList: sourcesList,
-              parsedList: parsedSources,
-              type: 'channel',
-            })}
-          </View>
-        }
+    <SafeAreaView>
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">customize</Text>
+      <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
-      />
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={scrollEnabled}>
+        <View style={styles.container}>
+          {renderFollowedItem({
+            header: 'My Topics',
+            items: parsedCategories,
+            allList: categoriesList,
+            parsedList: parsedCategories,
+            type: 'topic',
+          })}
+
+          {renderFollowedItem({
+            header: 'My Sources',
+            items: parsedSources,
+            allList: sourcesList,
+            parsedList: parsedSources,
+            type: 'channel',
+          })}
+        </View>
+        <View style={{ height: 50 }} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -107,7 +108,6 @@ const Customize = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop: 100,
     backgroundColor: '#fff',
     position: 'relative',
   },
@@ -120,9 +120,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 12,
-  },
-  section: {
-    marginBottom: 30,
   },
   sectionTitle: {
     fontSize: 18,

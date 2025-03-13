@@ -18,7 +18,7 @@ const Categories = () => {
           style={styles.categoryContainer}
           onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
           <Image source={category.image} className="mr-3 h-20 w-20 rounded" resizeMode="contain" />
-          <Text className="font-ibm">{category.name}</Text>
+          <Text className="font-ibm text-lg">{category.name}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -28,7 +28,6 @@ const Categories = () => {
 const styles = StyleSheet.create({
   container: {},
   text: {
-    fontSize: 20,
     textAlign: 'center',
     margin: 10,
   },
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
-    padding: 8,
+    padding: 3,
   },
 });
 

@@ -12,7 +12,9 @@ const PlusButton: React.FC<PlusButtonProps> = ({ onPress, text }) => {
       <View style={styles.iconContainer}>
         <Text style={styles.plus}>+</Text>
       </View>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text} className="font-ibm">
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -22,9 +24,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
-    marginTop: -30, // brute forcing alignment here
-    paddingLeft: 10,
-    paddingBottom: 20,
+    marginTop: 0, // brute forcing alignment here
+    paddingLeft: 1.8,
+    paddingBottom: 2,
   },
   iconContainer: {
     width: 32,
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+    paddingBottom: 2,
   },
   plus: {
     fontSize: 20,

@@ -63,6 +63,7 @@ const Explore = () => {
 
   return (
     <SafeAreaView>
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">explore</Text>
       <View style={styles.searchContainer}>
         <Ionicons name="search-outline" size={20} color="#333" style={styles.searchIcon} />
         <TextInput
@@ -103,7 +104,7 @@ const Explore = () => {
         </View>
       ) : (
         <ScrollView>
-          <View style={styles.trendContainer}>
+          <View>
             <Text className="font-ibm-bold" style={styles.headers}>
               Trending
             </Text>
@@ -140,7 +141,9 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     textAlign: 'left',
     alignItems: 'flex-start',
-    margin: 15,
+    marginTop: 15,
+    marginLeft: 10,
+    color: '#737373',
   },
   text: {
     fontSize: 20,
@@ -156,7 +159,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 12,
     backgroundColor: '#F8FAFC',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
   searchIcon: {
     marginRight: 8,
@@ -166,9 +170,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     paddingVertical: 5,
-  },
-  trendContainer: {
-    marginHorizontal: 10,
   },
 });
 

@@ -1,7 +1,6 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { isSameMonth, isAfter, isBefore } from 'date-fns';
 import React, { useState } from 'react';
 import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 
@@ -31,7 +30,7 @@ export default function HomeFeed({
 
   // Sorting written by Deepseek because don't want to deal with the dates on spring break
   // just sorting by time didn't work and feb stuff appearing on top for some reason
-  // if a item don't have date, its at bottom... 
+  // if a item don't have date, its at bottom...
   const isSameMonth = (date1: Date, date2: Date) => {
     return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth();
   };
@@ -61,7 +60,7 @@ export default function HomeFeed({
   return (
     <SafeAreaView>
       {/* Use font-ibm-bold instead of font-ibm + font-bold */}
-      <Text className="font-ibm-bold mb-2 ml-3 mt-10 text-4xl">all good things</Text>
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">all good things</Text>
       <ScrollView>
         {articles ? (
           sortedArticles.map((article, index) => (

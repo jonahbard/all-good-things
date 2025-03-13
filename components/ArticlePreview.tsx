@@ -96,14 +96,14 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
       <View className="mx-2 my-1 flex flex-row rounded-md bg-white p-3">
         <View className="flex-1">
           <Text className="font-ibm-bold">{article.title}</Text>
-          <Text className="font-ibm mt-1 text-gray-600">
+          <Text className="mt-1 font-ibm text-gray-600">
             {titleCase(article.source)}{' '}
             {article.pubDate && formatDate(article.pubDate) !== 'Invalid Date'
               ? `• ${formatDate(article.pubDate)}`
               : ''}
           </Text>
           <Text
-            className="font-ibm mt-1"
+            className="mt-1 font-ibm"
             numberOfLines={descriptionLines || undefined}
             ellipsizeMode="tail">
             {article.description}
@@ -121,10 +121,8 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
           )}
         </View>
         <View className="mx-3 flex flex-col justify-center">
-
           <TouchableOpacity onPress={handlePressShare} className="mb-10">
-            <SymbolView name="square.and.arrow.up" className="m-1" tintColor="brown" />
-
+            <SymbolView name="square.and.arrow.up" className="m-1" tintColor="#f5a612" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleBookmarkToggle}>
             {bookmarked ? (

@@ -61,7 +61,9 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
   const renderItem = ({ item }: { item: ListStructure }) => (
     <TouchableOpacity style={styles.option}>
       <Image source={item.image} style={styles.optionImage} />
-      <Text style={styles.optionText}>{item.name}</Text>
+      <Text style={styles.optionText} className="font-ibm">
+        {item.name}
+      </Text>
       <TouchableOpacity style={styles.addButton} onPress={() => handleAddPreference(item.name)}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
@@ -69,7 +71,7 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
   );
 
   return (
-    <SafeAreaProvider style={{ marginVertical: 30 }}>
+    <SafeAreaProvider style={{ marginBottom: 25 }}>
       <GestureHandlerRootView style={styles.flexContainer}>
         <SheetProvider context="global">
           {/* The plus button to open the sheet, id = reference to which modal*/}
@@ -84,7 +86,9 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
             closeOnTouchBackdrop
             onClose={() => console.log('Sheet closed')}>
             <View style={styles.sheetContainer}>
-              <Text style={styles.sheetTitle}>Suggested</Text>
+              <Text style={styles.sheetTitle} className="font-ibm-bold">
+                Suggested
+              </Text>
               <FlatList
                 data={optionList}
                 keyExtractor={(item) => item.id.toString()}
