@@ -28,6 +28,7 @@ export async function addBookmark(article: Article): Promise<void> {
       await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
       // Notify listeners that bookmarks changed
       bookmarkEvents.emit(BOOKMARK_CHANGED);
+      console.log('Added bookmark');
     }
   } catch (error) {
     console.error('Error adding bookmark:', error);

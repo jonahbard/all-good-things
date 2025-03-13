@@ -55,6 +55,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   }, [article]);
 
   const handleBookmarkToggle = async () => {
+    console.log('Bookmark toggle');
     if (bookmarked) {
       await removeBookmark(article);
     } else {
@@ -124,7 +125,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
           <TouchableOpacity onPress={handlePressShare} className="mb-10">
             <SymbolView name="square.and.arrow.up" className="m-1" tintColor="#f5a612" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleBookmarkToggle}>
+          <TouchableOpacity onPress={handleBookmarkToggle}>
             {bookmarked ? (
               <SymbolView
                 name="bookmark.fill"
