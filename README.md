@@ -35,21 +35,21 @@ Of course! Here’s a cleaner Markdown (md) version of your architecture with a 
 
 ### Components
 	•	customization/
-	•	CustomizeModal.tsx — Modal for user customization.
-	•	FollowedItem.tsx — Displays followed items.
-	•	PlusButton.tsx — Button component for adding items.
+      •	CustomizeModal.tsx 
+      •	FollowedItem.tsx
+      •	PlusButton.tsx 
 	•	explore/
-	•	ArticleDetail.tsx — Displays detailed content of an article.
-	•	ArticlePreview.tsx — Previews article information in list views.
+      •	ArticleDetail.tsx 
+      •	ArticlePreview.tsx 
 	•	Common components:
-	•	HomeFeed.tsx — Displays the main home feed.
-	•	Navigator.tsx — Manages app navigation.
+	•	HomeFeed.tsx
+	•	Navigator.tsx
 	•	Onboarding1.tsx
 	•	Onboarding2.tsx
 	•	Onboarding3.tsx
-	•	OnboardingStack.tsx — Handles navigation for the onboarding flow.
-	•	ReaderView.tsx — Displays reading content.
-	•	Share.tsx — Sharing functionality.
+	•	OnboardingStack.tsx 
+	•	ReaderView.tsx 
+	•	Share.tsx 
 
 ### Pages
 	•	Bookmarks.tsx
@@ -58,9 +58,9 @@ Of course! Here’s a cleaner Markdown (md) version of your architecture with a 
 	•	Onboarding.tsx
 	•	ScreenContent.tsx
 ### Store
-	•	articleStore.tsx — Manages article data.
-	•	exploreStore.tsx — Manages exploration feature data.
-	•	userStore.tsx — Manages user-related state.
+	•	articleStore.tsx 
+	•	exploreStore.tsx 
+	•	userStore.tsx 
 
 ### Utils
 	•	apiUtils.tsx — Functions for API interactions.
