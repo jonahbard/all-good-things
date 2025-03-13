@@ -70,6 +70,7 @@ const Customize = () => {
       </View>
     );
   };
+
   // Citing chat here for boiler template but it was too complex and stylstically looks horrible, so just scraped out what i needed from there
   return (
     <SafeAreaView style={{ flex: 1, marginTop: -50, backgroundColor: '#ffffff' }}>

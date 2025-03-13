@@ -4,9 +4,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-import { sourcesList as sources } from '~/data';
+
 import { RootStackParamList } from '../types';
 
+import { sourcesList as sources } from '~/data';
 import { userStore } from '~/store/userStore';
 
 type Onboarding3NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
@@ -15,6 +16,7 @@ interface Source {
   name: string;
   image: any;
 }
+
 const Onboarding3: React.FC = () => {
   const navigation = useNavigation<Onboarding3NavigationProp>();
   const selectedSources = userStore((state) => state.userSlice.sources);
@@ -71,20 +73,6 @@ const Onboarding3: React.FC = () => {
           />
         </Svg>
       </View>
-
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View className="mt-[0] flex-col justify-center space-x-4 px-4">
-          <View className="flex-row">
-            {sources.filter((_, index) => index % 3 === 0).map(displayCategories)}
-          </View>
-          <View className="flex-row">
-            {sources.filter((_, index) => index % 3 === 1).map(displayCategories)}
-          </View>
-          <View className="flex-row">
-            {sources.filter((_, index) => index % 3 === 2).map(displayCategories)}
-          </View>
-        </View>
-      </ScrollView>
       <View className="absolute bottom-[200px] right-[-40px] h-[250px] w-full">
         <Svg width="100%" height="500" viewBox="0 0 390 316" fill="none">
           <Path
@@ -93,6 +81,36 @@ const Onboarding3: React.FC = () => {
           />
         </Svg>
       </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
+        <View className="mt-[0] flex-col justify-center space-x-4 px-4">
+          <View className="flex-row space-x-4 px-4">
+            {sources
+              .filter((_, index) => index % 3 === 0)
+              .map((source) => (
+                <View key={source.id}>{displayCategories(source)}</View>
+              ))}
+          </View>
+          <View className="flex-row space-x-4 px-4">
+            {sources
+              .filter((_, index) => index % 3 === 1)
+              .map((source) => (
+                <View key={source.id}>{displayCategories(source)}</View>
+              ))}
+          </View>
+          <View className="flex-row space-x-4 px-4">
+            {sources
+              .filter((_, index) => index % 3 === 2)
+              .map((source) => (
+                <View key={source.id}>{displayCategories(source)}</View>
+              ))}
+          </View>
+        </View>
+      </ScrollView>
+
       <View className="flex-1 items-center justify-center">
         <TouchableOpacity
           onPress={completeOnboarding}
