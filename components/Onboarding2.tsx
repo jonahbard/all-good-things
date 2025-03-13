@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { userStore } from 'store/userStore';
-
+import { categoriesList as categories } from '~/data';
 import { RootStackParamList } from '../types'; // Adjust the import path as necessary
 
 type Onboarding2NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
@@ -21,33 +21,6 @@ const Onboarding2: React.FC = () => {
   // const setCategories = userStore((state) => state.userSlice.setCategories);
   const setCategories = userStore((state) => state.userSlice.setCategories);
 
-  const categories = [
-    { id: 1, name: 'Science', image: require('../assets/categories/science.png') },
-    { id: 2, name: 'Nature', image: require('../assets/categories/nature.png') },
-    { id: 3, name: 'Space', image: require('../assets/categories/space.png') },
-    { id: 4, name: 'Animals', image: require('../assets/categories/animal.png') },
-    { id: 5, name: 'Kindness', image: require('../assets/categories/default.png') },
-    { id: 6, name: 'Art', image: require('../assets/categories/default.png') },
-    { id: 7, name: 'Health', image: require('../assets/categories/default.png') },
-    { id: 8, name: 'Environment', image: require('../assets/categories/default.png') },
-    { id: 9, name: 'Archaeology', image: require('../assets/categories/default.png') },
-    { id: 10, name: 'Dinosaurs', image: require('../assets/categories/default.png') },
-    { id: 11, name: 'History', image: require('../assets/categories/default.png') },
-    { id: 12, name: 'Discovery', image: require('../assets/categories/default.png') },
-    { id: 13, name: 'Heartwarming', image: require('../assets/categories/default.png') },
-    { id: 14, name: 'Inspiring', image: require('../assets/categories/default.png') },
-    { id: 15, name: 'Friendship', image: require('../assets/categories/default.png') },
-    { id: 16, name: 'Community', image: require('../assets/categories/default.png') },
-    { id: 17, name: 'Charity', image: require('../assets/categories/default.png') },
-    { id: 18, name: 'Sustainability', image: require('../assets/categories/default.png') },
-    { id: 19, name: 'Social Progress', image: require('../assets/categories/default.png') },
-    { id: 20, name: 'Sports', image: require('../assets/categories/default.png') },
-    { id: 21, name: 'Technology', image: require('../assets/categories/default.png') },
-    { id: 22, name: 'Education', image: require('../assets/categories/default.png') },
-    { id: 23, name: 'Fashion', image: require('../assets/categories/default.png') },
-    { id: 24, name: 'Music', image: require('../assets/categories/default.png') },
-    { id: 25, name: 'Love', image: require('../assets/categories/default.png') },
-  ];
 
   const handleSelect = (categoryName: string) => {
     if (setCategories) {

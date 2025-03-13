@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
-
+import { sourcesList as sources } from '~/data';
 import { RootStackParamList } from '../types';
 
 import { userStore } from '~/store/userStore';
@@ -20,26 +20,6 @@ const Onboarding3: React.FC = () => {
   const selectedSources = userStore((state) => state.userSlice.sources);
   const setSelectedSources = userStore((state) => state.userSlice.setSources);
   const createNewUser = userStore((state) => state.userSlice.createNewUser);
-  const sources = [
-    { id: 1, name: 'Good News Network', image: require('../assets/categories/default.png') },
-    { id: 2, name: 'Positive News', image: require('../assets/categories/default.png') },
-    { id: 3, name: 'Reasons to be Cheerful', image: require('../assets/categories/default.png') },
-    { id: 4, name: 'Yes Magazine', image: require('../assets/categories/default.png') },
-    { id: 5, name: 'NYTimes Science', image: require('../assets/categories/default.png') },
-    { id: 6, name: 'WSJ Lifestyle', image: require('../assets/categories/default.png') },
-    { id: 7, name: 'NYTimes Tech', image: require('../assets/categories/default.png') },
-    { id: 8, name: 'NYTimes Personal Tech', image: require('../assets/categories/default.png') },
-    { id: 9, name: 'NYTimes Space', image: require('../assets/categories/default.png') },
-    { id: 10, name: 'NYTimes Weddings', image: require('../assets/categories/default.png') },
-    { id: 11, name: 'NYTimes Arts/Design', image: require('../assets/categories/default.png') },
-    { id: 12, name: 'Scientific American', image: require('../assets/categories/default.png') },
-    { id: 13, name: 'Archaeology Mag', image: require('../assets/categories/default.png') },
-    { id: 14, name: 'NPR Music', image: require('../assets/categories/default.png') },
-    { id: 15, name: 'NASA', image: require('../assets/categories/default.png') },
-    { id: 16, name: 'Optimist Daily', image: require('../assets/categories/animal.png') },
-    { id: 17, name: 'GoodGoodGood', image: require('../assets/categories/default.png') },
-  ];
-
   const completeOnboarding = async () => {
     try {
       const userData = {

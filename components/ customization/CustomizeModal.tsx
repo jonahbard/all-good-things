@@ -71,11 +71,14 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
   );
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ marginVertical: 30 }}>
       <GestureHandlerRootView style={styles.flexContainer}>
         <SheetProvider context="global">
           {/* The plus button to open the sheet, id = reference to which modal*/}
-          <PlusButton onPress={() => SheetManager.show(id)} text="Add" />
+          <PlusButton
+            onPress={() => SheetManager.show(id)}
+            text={id === 'sources-sheet' ? 'Follow more channels' : 'Follow more topics'}
+          />
           {/* the sliding pop up  */}
           <ActionSheet
             id={id}

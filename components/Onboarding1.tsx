@@ -14,12 +14,23 @@ const Onboarding1: React.FC = () => {
   const barWidth = 300;
   const barHeight = 23;
 
+  const clearAsyncStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log('AsyncStorage cleared');
+    } catch (error) {
+      console.error('Failed to clear AsyncStorage:', error);
+    }
+  };
+  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(async () => {
+            // clearAsyncStorage()
             const storedUser = await AsyncStorage.getItem('user-storage');
             const userData = storedUser ? JSON.parse(storedUser) : null; // can just chekc if
             if (userData?.userID && userData?.userID !== '') {
