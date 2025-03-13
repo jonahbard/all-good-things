@@ -71,7 +71,7 @@ const CustomizeModal: React.FC<CustomizeModalProps> = ({ optionList, id, setRefe
   );
 
   return (
-    <SafeAreaProvider style={{ marginVertical: 30 }}>
+    <SafeAreaProvider style={{ marginBottom: 25 }}>
       <GestureHandlerRootView style={styles.flexContainer}>
         <SheetProvider context="global">
           {/* The plus button to open the sheet, id = reference to which modal*/}

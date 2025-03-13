@@ -22,7 +22,6 @@ const Onboarding1: React.FC = () => {
       console.error('Failed to clear AsyncStorage:', error);
     }
   };
-  
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     marginTop: 0, // brute forcing alignment here
-    paddingLeft: 10,
-    paddingBottom: 20,
+    paddingLeft: 1.8,
+    paddingBottom: 2,
   },
   iconContainer: {
     width: 32,
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+    paddingBottom: 2,
   },
   plus: {
     fontSize: 20,

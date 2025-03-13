@@ -1,6 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
 
 import { categoriesList, sourcesList } from '../data';
 
@@ -35,53 +43,62 @@ const Customize = () => {
 
   // update the list such that we don't end up adding duplicate articles
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-      <View style={styles.container}>
-        <Text style={styles.header}>Personalize for you</Text>
-        {/* Followed Topics */}
-        <Text style={styles.sectionTitle}>Followed Topic</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedCategories}
-            userID={userID}
-            type="topic"
+    <SafeAreaView>
+      <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">customize</Text>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+        <View style={styles.container}>
+          {/* Followed Topics */}
+          <Text className="font-ibm-bold" style={{ fontSize: 18, color: '#737373' }}>
+            My Topics
+          </Text>
+          <View>
+            <FollowedItem
+              followedList={parsedCategories}
+              userID={userID}
+              type="topic"
+              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+              scrollStatus={scrollEnabled}
+              setScrollEnabled={setScrollEnabled}
+            />
+          </View>
+          <CustomizeModal
+            optionList={categoriesList.filter(
+              (category) =>
+                !parsedCategories.some(
+                  (parsedCategory) => parsedCategory.id === category.id.toString()
+                )
+            )}
+            id="categories-sheet"
             setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-            scrollStatus={scrollEnabled}
-            setScrollEnabled={setScrollEnabled}
+          />
+          {/* Followed Channels */}
+          <Text
+            className="font-ibm-bold"
+            style={{ fontSize: 18, marginBottom: 3, color: '#737373' }}>
+            My Sources
+          </Text>
+          <View>
+            <FollowedItem
+              followedList={parsedSources}
+              userID={userID}
+              type="channel"
+              setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
+              scrollStatus={scrollEnabled}
+              setScrollEnabled={setScrollEnabled}
+            />
+          </View>
+          <CustomizeModal
+            optionList={sourcesList.filter(
+              (source) =>
+                !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
+            )}
+            id="sources-sheet"
+            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
           />
         </View>
-        <CustomizeModal
-          optionList={categoriesList.filter(
-            (category) =>
-              !parsedCategories.some(
-                (parsedCategory) => parsedCategory.id === category.id.toString()
-              )
-          )}
-          id="categories-sheet"
-          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-        />
-        {/* Followed Channels */}
-        <Text style={styles.sectionTitle}>Followed Sources</Text>
-        <View style={styles.section}>
-          <FollowedItem
-            followedList={parsedSources}
-            userID={userID}
-            type="channel"
-            setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-            scrollStatus={scrollEnabled}
-            setScrollEnabled={setScrollEnabled}
-          />
-        </View>
-        <CustomizeModal
-          optionList={sourcesList.filter(
-            (source) =>
-              !parsedSources.some((parsedSources) => parsedSources.id === source.id.toString())
-          )}
-          id="sources-sheet"
-          setRefetchTrigger={() => setRefetchTrigger((prev) => prev + 1)}
-        />
-      </View>
-    </ScrollView>
+        <View style={{ height: 50 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -89,7 +106,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    paddingTop: 100,
     backgroundColor: '#fff',
     position: 'relative',
   },
@@ -102,9 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 12,
-  },
-  section: {
-    marginBottom: 30,
   },
   sectionTitle: {
     fontSize: 18,

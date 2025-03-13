@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { titleCase } from 'title-case';
 
 import { userStore } from '~/store/userStore';
 interface FollowedItemProps {
@@ -60,9 +61,9 @@ const FollowedItem: React.FC<FollowedItemProps> = ({
       onRowClose={handleUnswipe}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View className="flex-row items-center border-b border-gray-200 bg-white p-4">
+        <View className="flex-row items-center border-b border-gray-200 bg-white py-4 px-1">
           <Image source={item.image} className="mr-3 h-8 w-8" resizeMode="contain" />
-          <Text className="font-ibm text-lg">{item.name}</Text>
+          <Text className="font-ibm text-lg">{titleCase(item.name)}</Text>
         </View>
       )}
       renderHiddenItem={({ item }) => (
