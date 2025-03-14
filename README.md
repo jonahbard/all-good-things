@@ -28,6 +28,10 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+Expo login credentials:
+username: jonahbard
+password: this is my expo password
+
 
 Of course! Here’s a cleaner Markdown (md) version of your architecture with a different layout and description style:
 
