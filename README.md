@@ -28,13 +28,6 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-Expo login credentials:
-username: jonahbard
-password: this is my expo password
-
-
-Of course! Here’s a cleaner Markdown (md) version of your architecture with a different layout and description style:
-
 ## Architecture
 
 ### Components
@@ -78,7 +71,7 @@ Of course! Here’s a cleaner Markdown (md) version of your architecture with a 
 ### Navigation
 - **@react-navigation/native**  
 - **@react-navigation/stack**  
-### Article Detal
+### Article Detail
 - **react-native-svg**  
 - **react-native-render-html**  
 - **title-case**  
@@ -89,15 +82,15 @@ Of course! Here’s a cleaner Markdown (md) version of your architecture with a 
 
 ## Deployment
 
-Potentially test flight
+Coming soon!
 
 ## Authors
 
-Aneesh Patnaik '25, Leyla Jacoby '25, Nand Patel '27, Joyce Zou '27, Jonah Bard '27
+Made by Aneesh Patnaik '25, Leyla Jacoby '25, Nand Patel '27, Joyce Zou '27, Jonah Bard '27
 
 ## Notes
 - There warning pop up in the reader view, however those are caused by renderhtml library being old. 
 
 ## Extra credit
-- Reader view: We implenmented this by scraping html websites to be displayed in the app, this is intended to improve user experience by removing ads and unecessary links to unrelated things. You should be able to click between reader and web view
+- Reader view: We implemented this by scraping html websites to be displayed in the app, this is intended to improve user experience by removing ads and unecessary links to unrelated things. You should be able to click between reader and web view
 - Push notification in expo 
