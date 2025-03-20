@@ -15,5 +15,4 @@ export const handleApiError = (error: unknown, get: any) => {
 };
 
 // primary API url goes here:
-// export const API_URL
-
+export const API_URL = "https://project-api-all-good-things.onrender.com/api";
