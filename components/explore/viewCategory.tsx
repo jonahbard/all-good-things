@@ -7,9 +7,9 @@ import ArticlePreview from '../ArticlePreview';
 
 import { Article } from '~/store/articleStore';
 import { exploreStore } from '~/store/exploreStore';
+
 type ViewCategoryProps = {
   [x: string]: any;
-  //   navigateToViewCategory: () => void;
 };
 
 type ViewCategoryRouteProp = RouteProp<RootStackParamList, 'ViewCategory'>;

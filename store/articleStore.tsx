@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+
 import { handleApiError, handleApiResponse, API_URL } from '~/utils/apiUtils';
 
 export interface Article {
@@ -104,12 +105,12 @@ function createArticleSlice(set: any, get: any): ArticleSlice {
     updateShare: async (articleID: string) => {
       try {
         const response = await fetch(`${API_URL}/articles/share/${articleID}`, {
-          method:'PATCH',
+          method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
         });
         const data = await handleApiResponse(response, set);
         if (!data) return;
-        console.log('Returned response for share update', data)
+        console.log('Returned response for share update', data);
       } catch (error) {
         handleApiError(error, get);
       }

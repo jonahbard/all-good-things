@@ -6,7 +6,7 @@ import HomeFeed from '../components/HomeFeed';
 import { Article, articleStore } from '~/store/articleStore';
 import { userStore } from '~/store/userStore';
 
-export default function ScreenContent({ navigation }: any) {
+export default function HomePage({ navigation }: any) {
   const [articles, setArticles] = useState<Article[]>([]);
   const fetchAllArticles = articleStore((state) => state.articleSlice.fetchAllArticles);
   const categories = userStore((state) => state.userSlice.categories);

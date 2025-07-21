@@ -53,7 +53,7 @@ You can start developing by editing the files inside the **app** directory. This
 	•	Customize.tsx
 	•	Explore.tsx
 	•	Onboarding.tsx
-	•	ScreenContent.tsx
+	•	HomePage.tsx
 ### Store
 	•	articleStore.tsx 
 	•	exploreStore.tsx 

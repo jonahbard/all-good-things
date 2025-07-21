@@ -9,7 +9,7 @@ import React from 'react';
 import ArticleDetail from './ArticleDetail';
 import Onboarding1 from './Onboarding1';
 import Onboarding2 from './Onboarding2';
-import ScreenContent from '../Pages/ScreenContent';
+import HomePage from '../Pages/HomePage';
 import ViewCategory from './explore/viewCategory';
 
 import Bookmarks from '~/Pages/Bookmarks';
@@ -24,7 +24,7 @@ function HomeStack() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="HomeScreen" component={ScreenContent} />
+      <Stack.Screen name="HomeScreen" component={HomePage} />
       <Stack.Screen
         name="ArticleDetail"
         component={ArticleDetail}

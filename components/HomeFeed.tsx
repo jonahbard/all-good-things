@@ -59,10 +59,9 @@ export default function HomeFeed({
 
   return (
     <SafeAreaView>
-      {/* Use font-ibm-bold instead of font-ibm + font-bold */}
       <Text className="mb-2 ml-3 mt-10 font-ibm-bold text-4xl">all good things</Text>
       <ScrollView>
-        {articles ? (
+        {sortedArticles.length > 0 ? (
           sortedArticles.map((article, index) => (
             <ArticlePreview
               key={index}
@@ -71,7 +70,7 @@ export default function HomeFeed({
             />
           ))
         ) : (
-          <Text>Loading...</Text>
+          <Text className="mt-40 justify-center self-center font-ibm">fetching good news...</Text>
         )}
         <View style={{ height: 160 }} />
       </ScrollView>

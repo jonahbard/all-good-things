@@ -1,7 +1,7 @@
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { categoriesList } from '~/data';
 import { RootStackParamList } from '~/types';
@@ -17,7 +17,7 @@ const Categories = () => {
           key={index}
           style={styles.categoryContainer}
           onPress={() => navigation.navigate('ViewCategory', { categoryName: category.name })}>
-          <Image source={category.image} className="mr-3 h-20 w-20 rounded" resizeMode="contain" />
+          <Text className="m-3 pr-3 font-ibm text-3xl">{category.emoji}</Text>
           <Text className="font-ibm text-lg">{category.name}</Text>
         </TouchableOpacity>
       ))}

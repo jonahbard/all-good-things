@@ -18,7 +18,6 @@ import { RootStackParamList } from '../types';
 
 import ArticlePreview from '~/components//ArticlePreview';
 import Categories from '~/components/explore/categoriesList';
-// import { Article } from '~/store/articleStore';
 import { exploreStore } from '~/store/exploreStore';
 
 type ExploreNavigationProp = BottomTabNavigationProp<RootStackParamList, 'Explore'>;
