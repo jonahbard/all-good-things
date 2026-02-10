@@ -1,6 +1,9 @@
 # All Good Things
 
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+<img width="386" height="804" alt="Screenshot 2026-02-10 at 1 15 54 AM" src="https://github.com/user-attachments/assets/8cf75deb-6a04-4099-bf23-bcc4ddfadac9" />
+<img width="397" height="810" alt="Screenshot 2026-02-10 at 1 16 24 AM" src="https://github.com/user-attachments/assets/60e93055-71fd-4a51-8982-ca5ca09e2f8a" />
+<img width="394" height="811" alt="Screenshot 2026-02-10 at 1 16 34 AM" src="https://github.com/user-attachments/assets/197effd7-f0cd-4295-a687-479e475094d3" />
+<img width="391" height="806" alt="Screenshot 2026-02-10 at 1 25 29 AM" src="https://github.com/user-attachments/assets/e5ba3947-64e1-4e6c-b35a-4552711e638a" />
 
 Sometimes, it seems like all news is bad news. This can make people avoidant of news/current events altogether, which is bad for democracy and can increase people seeking out congenial information, which can lead to echo chambers and polarization. Current media landscapes also are driven by incentives to increase click/share rates, which often leads to bad news being more widely shared/read than good news; we want to circumvent these incentives and allow people to learn about inspiring and positive developments in the world.
 
@@ -25,8 +28,6 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 ## Architecture
 
@@ -86,10 +87,7 @@ Coming soon!
 
 ## Authors
 
-Made by Aneesh Patnaik '25, Leyla Jacoby '25, Nand Patel '27, Joyce Zou '27, Jonah Bard '27
-
-## Notes
-- There warning pop up in the reader view, however those are caused by renderhtml library being old. 
+Made by Jonah Bard '27, Aneesh Patnaik '25, Joyce Zou '27, Leyla Jacoby '25, Nand Patel '27
 
 ## Extra credit
 - Reader view: We implemented this by scraping html websites to be displayed in the app, this is intended to improve user experience by removing ads and unecessary links to unrelated things. You should be able to click between reader and web view
